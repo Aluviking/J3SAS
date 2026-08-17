@@ -48,8 +48,6 @@ export default function MobileBottomNav({ onCartClick }: { onCartClick: () => vo
       </Link>
       <Link
         href={user ? "/cuenta" : "/login"}
-        target={user ? undefined : "_blank"}
-        rel={user ? undefined : "noopener noreferrer"}
         className={itemClass(pathname === "/cuenta" || pathname === "/login")}
       >
         <User size={19} />
