@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Keep source raster images locally; the application uses their WebP equivalents.
+/public/**/*.png
+/public/**/*.jpg
+/public/**/*.jpeg

@@ -2,25 +2,103 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #14161c;
+  --canvas: #f4f4f5;
+
+  --brand: #1b2a4a;
+  --brand-dark: #101a30;
+  --brand-soft: #e8ecf3;
+
+  --cta: #ff5a1f;
+  --cta-dark: #e04a15;
+  --cta-soft: #ffece3;
+
+  --accent: #a3241f;
+  --accent-soft: #f5e9e8;
+
+  --ink: #14161c;
+  --muted: #71717a;
+  --surface: #ffffff;
+  --surface-alt: #f0f0f1;
+  --border: #e4e4e7;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-brand: var(--brand);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-soft: var(--brand-soft);
+  --color-cta: var(--cta);
+  --color-cta-dark: var(--cta-dark);
+  --color-cta-soft: var(--cta-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: var(--canvas);
+  color: var(--foreground);
+}
+
+html,
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink) var(--surface-alt);
+}
+
+*::-webkit-scrollbar,
+html::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track {
+  background: var(--surface-alt);
+}
+
+*::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb {
+  background: var(--ink);
+  border-radius: 6px 0 0 0;
+  border: 2px solid var(--surface-alt);
+}
+
+*::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--cta);
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+*::-webkit-scrollbar-corner {
+  background: var(--surface-alt);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: no-preference) {
+  .animate-marquee {
+    animation: marquee 26s linear infinite;
+  }
 }
