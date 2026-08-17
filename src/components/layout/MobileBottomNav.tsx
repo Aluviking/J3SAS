@@ -1,15 +1,17 @@
 "use client";
 
-import { Heart, Home, LayoutGrid, ShoppingBag, User } from "lucide-react";
+import { Factory, Heart, Home, LayoutGrid, ShoppingBag, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
 import { useCart } from "@/lib/cart-context";
+import { useFabricanteAuth } from "@/lib/fabricante-auth-context";
 import { useFavorites } from "@/lib/favorites-context";
 
 export default function MobileBottomNav({ onCartClick }: { onCartClick: () => void }) {
   const pathname = usePathname();
   const { user } = useAuth();
+  const { fabricante } = useFabricanteAuth();
   const { count } = useCart();
   const { ids: favoriteIds } = useFavorites();
 
@@ -47,11 +49,13 @@ export default function MobileBottomNav({ onCartClick }: { onCartClick: () => vo
         )}
       </Link>
       <Link
-        href={user ? "/cuenta" : "/login"}
-        className={itemClass(pathname === "/cuenta" || pathname === "/login")}
+        href={fabricante ? "/fabricantes/dashboard" : user ? "/cuenta" : "/login"}
+        className={itemClass(
+          pathname === "/cuenta" || pathname === "/login" || pathname?.startsWith("/fabricantes")
+        )}
       >
-        <User size={19} />
-        Cuenta
+        {fabricante ? <Factory size={19} /> : user ? <span className="text-xs font-semibold">{user.name.charAt(0).toUpperCase()}</span> : <User size={19} />}
+        {fabricante ? "Fabricante" : user ? "Mi cuenta" : "Cuenta"}
       </Link>
     </nav>
   );

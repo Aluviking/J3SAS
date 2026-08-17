@@ -1,11 +1,12 @@
 "use client";
 
-import { Bell, Heart, LogOut, Menu, Package, Search, Settings, ShoppingBag, User } from "lucide-react";
+import { Bell, Factory, Heart, LogOut, Menu, Package, Search, Settings, ShoppingBag, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 import { useCart } from "@/lib/cart-context";
+import { useFabricanteAuth } from "@/lib/fabricante-auth-context";
 import { useFavorites } from "@/lib/favorites-context";
 
 export default function TopBar({
@@ -21,6 +22,7 @@ export default function TopBar({
 }) {
   const { count } = useCart();
   const { user, logout } = useAuth();
+  const { fabricante } = useFabricanteAuth();
   const { ids: favoriteIds } = useFavorites();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -147,6 +149,17 @@ export default function TopBar({
             </>
           )}
         </div>
+      ) : fabricante ? (
+        <Link
+          href="/fabricantes/dashboard"
+          aria-label={`Sesión de fabricante activa: ${fabricante.businessName}`}
+          className="hidden md:flex items-center gap-2 h-10 rounded-tl-lg bg-brand-soft border border-brand/20 px-3 text-brand transition-colors hover:border-brand shrink-0"
+        >
+          <Factory size={17} />
+          <span className="hidden xl:block max-w-36 truncate text-xs font-semibold">
+            {fabricante.businessName}
+          </span>
+        </Link>
       ) : (
         <Link
           href="/login"

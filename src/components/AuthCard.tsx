@@ -28,7 +28,7 @@ function FacebookIcon() {
 type Tab = "login" | "registro";
 
 export default function AuthCard({ initialTab }: { initialTab: Tab }) {
-  const { login, register } = useAuth();
+  const { user, loading, login, register } = useAuth();
   const router = useRouter();
   const [tab, setTab] = useState<Tab>(initialTab);
 
@@ -110,6 +110,38 @@ export default function AuthCard({ initialTab }: { initialTab: Tab }) {
       router.push("/cuenta");
     }
   };
+
+  if (!loading && user) {
+    return (
+      <div className="relative min-h-dvh flex items-center justify-center px-4 py-8 overflow-x-hidden">
+        <Image
+          src="/banners/banner1.webp"
+          alt=""
+          fill
+          priority
+          className="object-cover"
+          style={{ filter: "blur(20px) brightness(0.6)", transform: "scale(1.1)" }}
+        />
+        <div className="relative w-full max-w-md rounded-tl-3xl bg-white p-6 sm:p-8 text-center shadow-2xl">
+          <div className="relative mx-auto h-12 w-12">
+            <Image src="/logo-j3.webp" alt="Comercializadora J3" fill className="object-contain" />
+          </div>
+          <h1 className="mt-4 text-xl font-semibold text-ink">Ya tienes una sesión activa</h1>
+          <p className="mt-2 text-sm text-muted">
+            Estás conectado como <span className="font-medium text-ink">{user.name}</span>.
+          </p>
+          <div className="mt-6 grid grid-cols-2 gap-3">
+            <Link href="/" className="rounded-tl-md border border-border px-4 py-2.5 text-sm font-semibold text-ink hover:border-ink">
+              Volver al sitio
+            </Link>
+            <Link href="/cuenta" className="rounded-tl-md bg-cta px-4 py-2.5 text-sm font-semibold text-white hover:bg-cta-dark">
+              Mi cuenta
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-dvh grid grid-rows-[auto_1fr_auto] items-center justify-items-center px-4 py-4 overflow-x-hidden">
