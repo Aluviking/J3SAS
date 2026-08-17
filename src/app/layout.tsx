@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "J3SAS",
   description: "Tienda en línea",
+  icons: {
+    icon: [{ url: "/favicon.webp", type: "image/webp", sizes: "512x512" }],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
