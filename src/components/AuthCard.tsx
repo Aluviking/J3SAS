@@ -112,7 +112,7 @@ export default function AuthCard({ initialTab }: { initialTab: Tab }) {
   };
 
   return (
-    <div className="relative h-screen grid grid-rows-[auto_1fr_auto] items-center justify-items-center px-4 py-4 overflow-hidden">
+    <div className="relative min-h-dvh grid grid-rows-[auto_1fr_auto] items-center justify-items-center px-4 py-4 overflow-x-hidden">
       {/* Blurred backdrop */}
       <Image
         src="/banners/banner1.webp"
@@ -133,7 +133,7 @@ export default function AuthCard({ initialTab }: { initialTab: Tab }) {
         </Link>
       </div>
 
-      <div className="relative w-full h-full max-w-6xl border border-white/20 rounded-tl-3xl overflow-hidden shadow-2xl">
+      <div className="relative w-full h-auto lg:h-full max-w-6xl border border-white/20 rounded-tl-3xl overflow-hidden shadow-2xl">
         {/* Graphic panel: absolutely positioned so form content can never affect its size */}
         <div className="hidden lg:block absolute inset-y-0 left-0 w-1/2">
           <Image
@@ -146,12 +146,14 @@ export default function AuthCard({ initialTab }: { initialTab: Tab }) {
         </div>
 
         {/* Form panel */}
-        <div className="relative w-full lg:w-1/2 lg:ml-[50%] h-full p-6 sm:p-8 lg:p-9 flex flex-col justify-center bg-white overflow-hidden">
-          <Link href="/" className="absolute top-8 right-8 sm:top-9 sm:right-9 lg:top-10 lg:right-10">
-            <div className="relative w-10 h-20">
-              <Image src="/logo-j3.webp" alt="Comercializadora J3" fill className="object-contain" />
-            </div>
-          </Link>
+        <div className="relative w-full lg:w-1/2 lg:ml-[50%] h-auto lg:h-full p-6 sm:p-8 lg:p-9 flex flex-col justify-start lg:justify-center bg-white overflow-hidden">
+          <div className="mb-4 flex justify-end lg:mb-0 lg:block">
+            <Link href="/" className="lg:absolute lg:top-10 lg:right-10">
+              <div className="relative w-10 h-10 lg:h-20">
+                <Image src="/logo-j3.webp" alt="Comercializadora J3" fill className="object-contain" />
+              </div>
+            </Link>
+          </div>
 
           {/* Tabs */}
           <div className="flex border-b border-border">
