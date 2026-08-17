@@ -9,6 +9,10 @@ const slugMap: Record<string, string> = {
   busos: "Busos",
 };
 
+export function generateStaticParams() {
+  return Object.keys(slugMap).map((slug) => ({ slug }));
+}
+
 export default async function CategoriaPage({
   params,
 }: {

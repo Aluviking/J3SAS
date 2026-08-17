@@ -2,6 +2,10 @@ import { notFound } from "next/navigation";
 import ProductDetailClient from "@/components/ProductDetailClient";
 import { products } from "@/lib/mock-data";
 
+export function generateStaticParams() {
+  return products.map(({ id }) => ({ id }));
+}
+
 export default async function ProductDetail({
   params,
 }: {
