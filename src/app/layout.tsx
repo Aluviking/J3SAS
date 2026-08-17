@@ -13,11 +13,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   title: "J3SAS",
   description: "Tienda en línea",
   icons: {
-    icon: [{ url: "/favicon.webp", type: "image/webp", sizes: "512x512" }],
+    icon: [{ url: `${basePath}/favicon.webp`, type: "image/webp", sizes: "512x512" }],
   },
 };
 
