@@ -150,6 +150,8 @@ export default function TopBar({
       ) : (
         <Link
           href="/login"
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label="Iniciar sesión"
           className="hidden md:flex w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink"
         >
