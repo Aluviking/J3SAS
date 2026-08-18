@@ -71,7 +71,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   const related = products.filter((p) => p.id !== product.id).slice(0, 4);
   const breakdown = ratingBreakdown();
-  const isBasicCatalogPhoto = product.category === "Polos" || product.category === "Busos";
+  const isBasicCatalogPhoto = product.category === "Polos" || product.category === "Buzos";
   const gallery = [
     { src: product.image, label: "Frente" },
     ...(product.backImage ? [{ src: product.backImage, label: "Espalda" }] : []),

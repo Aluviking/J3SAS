@@ -9,10 +9,10 @@ function Message() {
     <span className="inline-flex items-center gap-1.5 px-8 shrink-0">
       <span className="font-semibold uppercase tracking-wide">Nuevos productos</span>
       <Link
-        href="/categorias/busos"
+        href="/categorias/buzos"
         className="rounded-tl-sm bg-cta px-2 py-0.5 font-semibold hover:bg-cta-dark transition-colors"
       >
-        Busos
+        Buzos
       </Link>
       <Link
         href="/categorias/polos"

@@ -6,7 +6,7 @@ const slugMap: Record<string, string> = {
   camisetas: "Camisetas",
   pantalonetas: "Pantalonetas",
   polos: "Polos",
-  busos: "Busos",
+  buzos: "Buzos",
 };
 
 export function generateStaticParams() {

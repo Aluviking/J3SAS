@@ -20,7 +20,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const discount = product.originalPrice
     ? Math.round(100 - (product.price / product.originalPrice) * 100)
     : null;
-  const isBasicCatalogPhoto = product.category === "Polos" || product.category === "Busos";
+  const isBasicCatalogPhoto = product.category === "Polos" || product.category === "Buzos";
 
   return (
     <div className="group">

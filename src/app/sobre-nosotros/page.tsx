@@ -10,7 +10,7 @@ export default function Page() {
     >
       <p>
         J3SAS es una marca colombiana dedicada al diseño y venta de camisetas,
-        pantalonetas, polos y busos de calidad, directo al consumidor.
+        pantalonetas, polos y buzos de calidad, directo al consumidor.
         Trabajamos con estampados propios y colecciones inspiradas en la
         cultura urbana, deportiva y pop.
       </p>

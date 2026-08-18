@@ -32,7 +32,7 @@ export default function ComingSoon({ title }: { title: string }) {
         </div>
         <p className="mt-4 font-semibold text-ink">Todavía no está disponible</p>
         <p className="mt-1 text-sm text-muted max-w-sm">
-          Por ahora J3SAS vende camisetas, pantalonetas, polos y busos. Esta parte del sitio va a
+          Por ahora J3SAS vende camisetas, pantalonetas, polos y buzos. Esta parte del sitio va a
           estar disponible más adelante.
         </p>
         <Link

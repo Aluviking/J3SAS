@@ -22,7 +22,7 @@ const polos = [
   { talla: "XL", pecho: "108-113", largo: "73" },
 ];
 
-const busos = [
+const buzos = [
   { talla: "S", pecho: "96-101", largo: "66" },
   { talla: "M", pecho: "102-107", largo: "68" },
   { talla: "L", pecho: "108-113", largo: "70" },
@@ -91,8 +91,8 @@ export default function Page() {
         ]}
       />
       <Table
-        title="Busos"
-        rows={busos}
+        title="Buzos"
+        rows={buzos}
         columns={[
           { key: "talla", label: "Talla" },
           { key: "pecho", label: "Contorno de pecho (cm)" },
