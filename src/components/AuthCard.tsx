@@ -277,6 +277,9 @@ export default function AuthCard({ initialTab }: { initialTab: Tab }) {
                       {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
+                  {fieldErrors.password && fieldErrors.password.trim() && (
+                    <p className="mt-1 text-xs text-accent">{fieldErrors.password}</p>
+                  )}
                 </div>
                 <div>
                   <label className="text-xs font-medium text-ink">Confirmar</label>

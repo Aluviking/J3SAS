@@ -6,6 +6,7 @@ type User = {
   id: string;
   name: string;
   email: string;
+  phone?: string;
 };
 
 type StoredCustomer = User & { password: string };
@@ -17,6 +18,7 @@ type AuthContextValue = {
   loading: boolean;
   login: (email: string, password: string) => AuthResult;
   register: (name: string, email: string, password: string) => AuthResult;
+  updateProfile: (updates: Partial<Pick<User, "name" | "email" | "phone">>) => AuthResult;
   logout: () => void;
 };
 
@@ -35,7 +37,11 @@ function getCustomers(): StoredCustomer[] {
 }
 
 function saveCustomers(list: StoredCustomer[]) {
-  localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(list));
+  try {
+    localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(list));
+  } catch {
+    // storage unavailable (private browsing, quota, blocked)
+  }
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -59,8 +65,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const persist = (u: User | null) => {
     setUser(u);
-    if (u) localStorage.setItem(SESSION_KEY, JSON.stringify(u));
-    else localStorage.removeItem(SESSION_KEY);
+    try {
+      if (u) localStorage.setItem(SESSION_KEY, JSON.stringify(u));
+      else localStorage.removeItem(SESSION_KEY);
+    } catch {
+      // storage unavailable (private browsing, quota, blocked) — session still works in-memory
+    }
   };
 
   const login = (email: string, password: string): AuthResult => {
@@ -90,10 +100,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { ok: true };
   };
 
+  const updateProfile = (updates: Partial<Pick<User, "name" | "email" | "phone">>): AuthResult => {
+    if (!user) return { ok: false, error: "No has iniciado sesión." };
+
+    if (updates.email) {
+      const normalized = updates.email.trim().toLowerCase();
+      const clash = getCustomers().some(
+        (c) => c.id !== user.id && c.email.toLowerCase() === normalized
+      );
+      if (clash) return { ok: false, error: "Ya existe una cuenta registrada con ese correo." };
+    }
+
+    const customers = getCustomers();
+    const updatedCustomers = customers.map((c) => (c.id === user.id ? { ...c, ...updates } : c));
+    saveCustomers(updatedCustomers);
+    persist({ ...user, ...updates });
+    return { ok: true };
+  };
+
   const logout = () => persist(null);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, updateProfile, logout }}>
       {children}
     </AuthContext.Provider>
   );

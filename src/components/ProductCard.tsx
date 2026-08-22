@@ -5,13 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useFavorites } from "@/lib/favorites-context";
-import type { Product } from "@/lib/mock-data";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
+import { currency, isBasicCatalogPhoto, type Product } from "@/lib/mock-data";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
@@ -20,14 +14,14 @@ export default function ProductCard({ product }: { product: Product }) {
   const discount = product.originalPrice
     ? Math.round(100 - (product.price / product.originalPrice) * 100)
     : null;
-  const isBasicCatalogPhoto = product.category === "Polos" || product.category === "Buzos";
+  const basicCatalogPhoto = isBasicCatalogPhoto(product.category);
 
   return (
     <div className="group">
       <Link href={`/producto/${product.id}`} className="block">
         <div
           className={`relative rounded-tl-2xl overflow-hidden aspect-square border border-border transition-shadow duration-300 group-hover:shadow-[0_12px_28px_rgba(20,22,28,0.12)] ${
-            isBasicCatalogPhoto ? "bg-white" : "bg-surface-alt"
+            basicCatalogPhoto ? "bg-white" : "bg-surface-alt"
           }`}
         >
           <Image
@@ -35,7 +29,7 @@ export default function ProductCard({ product }: { product: Product }) {
             alt={product.name}
             fill
             className={
-              isBasicCatalogPhoto
+              basicCatalogPhoto
                 ? "object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-105"
                 : "object-cover transition-transform duration-500 ease-out group-hover:scale-110"
             }
@@ -99,6 +93,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
         <button
           onClick={() => addItem(product.id)}
+          aria-label={`Agregar ${product.name} al carrito`}
           className="w-7 h-7 rounded-tl-md bg-cta text-white flex items-center justify-center shrink-0 transition-all duration-200 hover:bg-cta-dark hover:scale-110"
         >
           <Plus size={14} />

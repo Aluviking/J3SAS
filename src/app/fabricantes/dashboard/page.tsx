@@ -16,14 +16,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useFabricanteAuth } from "@/lib/fabricante-auth-context";
-import { products } from "@/lib/mock-data";
+import { currency, products } from "@/lib/mock-data";
 import { getSalesForFabricante, type SaleRecord } from "@/lib/sales-ledger";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
 
 const TRANSIT_DAYS = 4;
 

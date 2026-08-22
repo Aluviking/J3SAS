@@ -1,12 +1,15 @@
 import { notFound } from "next/navigation";
 import ProductGridPage from "@/components/ProductGridPage";
-import { products } from "@/lib/mock-data";
+import { CATEGORY_AUDIENCES, products } from "@/lib/mock-data";
 
 const slugMap: Record<string, string> = {
   camisetas: "Camisetas",
   pantalonetas: "Pantalonetas",
   polos: "Polos",
   buzos: "Buzos",
+  ninos: "Niños",
+  blusas: "Blusas",
+  camisas: "Camisas",
 };
 
 export function generateStaticParams() {
@@ -32,10 +35,12 @@ export default async function CategoriaPage({
 
   return (
     <ProductGridPage
+      key={slug}
       title={category}
       subtitle={`${items.length} productos disponibles`}
       products={items}
       categoryTabs={categoryTabs}
+      audiences={CATEGORY_AUDIENCES[category]}
     />
   );
 }

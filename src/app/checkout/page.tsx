@@ -26,14 +26,9 @@ import {
   formatExpiry,
   generateOrderNumber,
 } from "@/lib/payment-utils";
+import { currency } from "@/lib/mock-data";
 import { recordOrder } from "@/lib/orders";
 import { recordSale } from "@/lib/sales-ledger";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
 
 type Method = "tarjeta" | "pse" | "nequi";
 
@@ -44,6 +39,10 @@ export default function CheckoutPage() {
     originalSubtotal,
     discount,
     wholesaleDiscount,
+    promoCode,
+    promoDiscount,
+    applyPromoCode,
+    removePromoCode,
     freeShippingReason,
     shipping,
     total,
@@ -92,19 +91,31 @@ export default function CheckoutPage() {
 
   const handleApplyPromo = () => {
     const found = findFabricanteByCode(promoInput);
-    if (!found) {
-      setPromoError("Ese código promocional no existe.");
-      setAppliedFabricante(null);
+    if (found) {
+      const applies = lines.some((l) => found.productIds.includes(l.product.id));
+      if (!applies) {
+        setPromoError("Este código no aplica a los productos de tu carrito.");
+        setAppliedFabricante(null);
+        return;
+      }
+      setPromoError("");
+      setAppliedFabricante(found);
       return;
     }
-    const applies = lines.some((l) => found.productIds.includes(l.product.id));
-    if (!applies) {
-      setPromoError("Este código no aplica a los productos de tu carrito.");
+
+    const result = applyPromoCode(promoInput);
+    if (!result.ok) {
+      setPromoError(result.error ?? "Ese código promocional no existe.");
       setAppliedFabricante(null);
       return;
     }
     setPromoError("");
-    setAppliedFabricante(found);
+  };
+
+  const handleRemovePromo = () => {
+    setAppliedFabricante(null);
+    removePromoCode();
+    setPromoInput("");
   };
 
   if (lines.length === 0 && !processing) {
@@ -187,7 +198,7 @@ export default function CheckoutPage() {
       subtotal: originalSubtotal,
       discount,
       wholesaleDiscount,
-      promoCode: appliedFabricante?.code ?? null,
+      promoCode: appliedFabricante?.code ?? promoCode ?? null,
       shipping,
       total: finalTotal,
     };
@@ -214,8 +225,13 @@ export default function CheckoutPage() {
       });
     }
 
-    sessionStorage.setItem("j3sas_last_order", JSON.stringify(order));
+    try {
+      sessionStorage.setItem("j3sas_last_order", JSON.stringify(order));
+    } catch {
+      // storage unavailable (private browsing, quota, blocked) — order was still recorded above
+    }
     clearCart();
+    removePromoCode();
     router.push("/checkout/confirmacion");
   };
 
@@ -506,21 +522,18 @@ export default function CheckoutPage() {
               ¿Tienes un código? Ponlo aquí
             </label>
 
-            {appliedFabricante ? (
+            {appliedFabricante || promoCode ? (
               <div className="mt-1.5 flex items-center justify-between gap-2 bg-brand-soft rounded-tl-md px-3 py-2">
                 <div className="flex items-center gap-1.5 min-w-0">
                   <BadgeCheck size={14} className="text-brand shrink-0" />
                   <p className="text-xs text-ink truncate">
-                    Código <span className="font-semibold">{appliedFabricante.code}</span> aplicado
+                    Código <span className="font-semibold">{appliedFabricante?.code ?? promoCode}</span> aplicado
                   </p>
                 </div>
                 <button
                   type="button"
                   aria-label="Quitar código"
-                  onClick={() => {
-                    setAppliedFabricante(null);
-                    setPromoInput("");
-                  }}
+                  onClick={handleRemovePromo}
                   className="text-muted hover:text-accent shrink-0"
                 >
                   <X size={14} />
@@ -570,6 +583,12 @@ export default function CheckoutPage() {
                 <span>Registrado</span>
               </div>
             )}
+            {promoDiscount > 0 && (
+              <div className="flex justify-between text-brand">
+                <span>Cupón {promoCode}</span>
+                <span>-{currency.format(promoDiscount)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-muted">
               <span>Envío</span>
               <span>{shipping === 0 ? "Gratis" : currency.format(shipping)}</span>
@@ -584,6 +603,12 @@ export default function CheckoutPage() {
             <p className="mt-1.5 flex items-center gap-1 text-[11px] text-brand">
               <Truck size={12} />
               Envío gratis por llevar más de 3 artículos
+            </p>
+          )}
+          {freeShippingReason === "promo" && (
+            <p className="mt-1.5 flex items-center gap-1 text-[11px] text-brand">
+              <Truck size={12} />
+              Envío gratis por tu cupón {promoCode}
             </p>
           )}
 

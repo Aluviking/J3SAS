@@ -47,7 +47,11 @@ export function getOrders(): Order[] {
 export function recordOrder(order: Order) {
   const all = getOrders();
   all.push(order);
-  localStorage.setItem(KEY, JSON.stringify(all));
+  try {
+    localStorage.setItem(KEY, JSON.stringify(all));
+  } catch {
+    // storage unavailable (private browsing, quota, blocked) — order still completes for this session
+  }
 }
 
 export function getOrdersForUser(userId: string): Order[] {

@@ -4,18 +4,13 @@ import Link from "next/link";
 const coupons = [
   {
     code: "BIENVENIDA10",
-    description: "10% de descuento en tu primera compra",
+    description: "10% de descuento en tu compra",
     minPurchase: "Sin mínimo de compra",
   },
   {
     code: "ENVIOGRATIS",
-    description: "Envío gratis en compras superiores a $150.000",
-    minPurchase: "Compras +$150.000",
-  },
-  {
-    code: "FLASH70",
-    description: "Hasta 70% en productos seleccionados de Venta Flash",
-    minPurchase: "Válido mientras dure la promoción",
+    description: "Envío gratis en tu pedido",
+    minPurchase: "Sin mínimo de compra",
   },
 ];
 
@@ -30,7 +25,9 @@ export default function CuponesPage() {
       </div>
 
       <h1 className="text-xl font-semibold text-ink">Cupones</h1>
-      <p className="mt-1 text-sm text-muted">Códigos activos que puedes usar en tu compra.</p>
+      <p className="mt-1 text-sm text-muted">
+        Códigos activos: pégalos en el carrito o en el pago, en el campo &quot;¿Tienes un código?&quot;.
+      </p>
 
       <div className="mt-5 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl">
         {coupons.map((c) => (

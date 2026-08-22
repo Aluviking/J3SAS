@@ -27,14 +27,21 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const persist = (next: string[]) => {
-    setIds(next);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    } catch {
+      // storage unavailable (private browsing, quota, blocked) — favorites still work in-memory
+    }
   };
 
   const isFavorite = (productId: string) => ids.includes(productId);
 
   const toggleFavorite = (productId: string) => {
-    persist(ids.includes(productId) ? ids.filter((id) => id !== productId) : [...ids, productId]);
+    setIds((prev) => {
+      const next = prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId];
+      persist(next);
+      return next;
+    });
   };
 
   return (

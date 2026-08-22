@@ -5,13 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
-import { products } from "@/lib/mock-data";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
+import { currency, products } from "@/lib/mock-data";
 
 export default function CartPanel({
   open,
@@ -34,13 +28,35 @@ export default function CartPanel({
     originalSubtotal,
     discount,
     wholesaleDiscount,
+    promoCode,
+    promoDiscount,
+    applyPromoCode,
+    removePromoCode,
     freeShippingReason,
     shipping,
     total,
   } = useCart();
   const [promo, setPromo] = useState("");
+  const [promoError, setPromoError] = useState("");
 
-  const recommended = products
+  const handleApplyPromo = () => {
+    const result = applyPromoCode(promo);
+    if (!result.ok) {
+      setPromoError(result.error ?? "Ese código promocional no existe.");
+      return;
+    }
+    setPromoError("");
+    setPromo("");
+  };
+
+  const cartCategories = new Set(
+    lines.map((l) => l.product.category).filter(Boolean)
+  );
+  const recommended = (
+    cartCategories.size > 0
+      ? products.filter((p) => cartCategories.has(p.category))
+      : products
+  )
     .filter((p) => !items.some((i) => i.productId === p.id))
     .slice(0, 2);
 
@@ -122,16 +138,42 @@ export default function CartPanel({
           ))}
 
           {lines.length > 0 && (
-            <div className="flex items-center gap-1.5 pt-1">
-              <input
-                value={promo}
-                onChange={(e) => setPromo(e.target.value)}
-                placeholder="Pega tu código, si tienes"
-                className="flex-1 min-w-0 bg-surface-alt border border-border rounded-tl-md px-2.5 py-1.5 text-xs text-ink placeholder:text-muted outline-none"
-              />
-              <button className="text-xs font-semibold bg-ink text-white px-2.5 py-1.5 rounded-tl-md shrink-0">
-                Aplicar
-              </button>
+            <div className="pt-1">
+              {promoCode ? (
+                <div className="flex items-center justify-between gap-2 bg-brand-soft rounded-tl-md px-2.5 py-1.5">
+                  <p className="text-xs text-ink truncate">
+                    Código <span className="font-semibold">{promoCode}</span> aplicado
+                  </p>
+                  <button
+                    type="button"
+                    aria-label="Quitar código promocional"
+                    onClick={removePromoCode}
+                    className="text-muted hover:text-accent shrink-0"
+                  >
+                    <X size={13} />
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-1.5">
+                  <input
+                    value={promo}
+                    onChange={(e) => {
+                      setPromo(e.target.value);
+                      setPromoError("");
+                    }}
+                    placeholder="Pega tu código, si tienes"
+                    className="flex-1 min-w-0 bg-surface-alt border border-border rounded-tl-md px-2.5 py-1.5 text-xs text-ink placeholder:text-muted outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleApplyPromo}
+                    className="text-xs font-semibold bg-ink text-white px-2.5 py-1.5 rounded-tl-md shrink-0"
+                  >
+                    Aplicar
+                  </button>
+                </div>
+              )}
+              {promoError && <p className="mt-1 text-[11px] text-accent">{promoError}</p>}
             </div>
           )}
         </div>
@@ -152,6 +194,12 @@ export default function CartPanel({
                 <span>-{currency.format(wholesaleDiscount)}</span>
               </div>
             )}
+            {promoDiscount > 0 && (
+              <div className="flex justify-between text-brand">
+                <span>Cupón {promoCode}</span>
+                <span>-{currency.format(promoDiscount)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-muted">
               <span>Envío</span>
               <span>{shipping === 0 ? "Gratis" : currency.format(shipping)}</span>
@@ -166,6 +214,12 @@ export default function CartPanel({
             <p className="mt-1.5 flex items-center gap-1 text-[10px] text-brand">
               <Truck size={11} />
               Envío gratis por llevar más de 3 artículos
+            </p>
+          )}
+          {freeShippingReason === "promo" && (
+            <p className="mt-1.5 flex items-center gap-1 text-[10px] text-brand">
+              <Truck size={11} />
+              Envío gratis por tu cupón {promoCode}
             </p>
           )}
 
@@ -204,6 +258,7 @@ export default function CartPanel({
                     </div>
                     <button
                       onClick={() => addItem(p.id)}
+                      aria-label={`Agregar ${p.name} al carrito`}
                       className="w-5 h-5 rounded-tl-sm bg-brand-soft text-brand flex items-center justify-center shrink-0 transition-colors hover:bg-brand hover:text-white"
                     >
                       <Plus size={12} />

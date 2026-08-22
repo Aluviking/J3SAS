@@ -22,7 +22,11 @@ export function getSales(): SaleRecord[] {
 export function recordSale(record: SaleRecord) {
   const all = getSales();
   all.push(record);
-  localStorage.setItem(KEY, JSON.stringify(all));
+  try {
+    localStorage.setItem(KEY, JSON.stringify(all));
+  } catch {
+    // storage unavailable (private browsing, quota, blocked)
+  }
 }
 
 export function getSalesForFabricante(fabricanteId: string): SaleRecord[] {

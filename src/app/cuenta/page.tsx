@@ -3,15 +3,38 @@
 import { LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth-context";
 
 export default function CuentaPage() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout, updateProfile } = useAuth();
   const router = useRouter();
   const [name, setName] = useState(user?.name ?? "");
   const [email, setEmail] = useState(user?.email ?? "");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(user?.phone ?? "");
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (!user) return;
+    const frame = requestAnimationFrame(() => {
+      setName(user.name);
+      setEmail(user.email);
+      setPhone(user.phone ?? "");
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [user]);
+
+  const handleSave = () => {
+    setSaved(false);
+    const result = updateProfile({ name, email, phone });
+    if (result.ok) {
+      setSaveError(null);
+      setSaved(true);
+    } else {
+      setSaveError(result.error ?? "No se pudo guardar.");
+    }
+  };
 
   if (loading) return null;
 
@@ -87,7 +110,12 @@ export default function CuentaPage() {
             className="mt-1.5 w-full bg-surface-alt border border-border rounded-tl-md px-3 py-2 text-sm text-ink placeholder:text-muted outline-none"
           />
         </div>
-        <button className="w-full bg-ink text-white text-sm font-semibold py-2.5 rounded-tl-md hover:bg-cta transition-colors">
+        {saveError && <p className="text-xs text-accent">{saveError}</p>}
+        {saved && <p className="text-xs text-green-600">Cambios guardados.</p>}
+        <button
+          onClick={handleSave}
+          className="w-full bg-ink text-white text-sm font-semibold py-2.5 rounded-tl-md hover:bg-cta transition-colors"
+        >
           Guardar cambios
         </button>
       </div>

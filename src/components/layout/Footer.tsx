@@ -61,9 +61,14 @@ export default function Footer() {
             todo el país.
           </p>
           <div className="mt-3 flex items-center gap-2">
-            {[Globe, Mail, MessageCircle].map((Icon, i) => (
+            {[
+              { Icon: Globe, label: "Sitio web" },
+              { Icon: Mail, label: "Correo electrónico" },
+              { Icon: MessageCircle, label: "Chat de soporte" },
+            ].map(({ Icon, label }) => (
               <button
-                key={i}
+                key={label}
+                aria-label={label}
                 className="w-9 h-9 rounded-tl-md bg-white/10 flex items-center justify-center transition-colors hover:bg-cta"
               >
                 <Icon size={15} className="text-white" />

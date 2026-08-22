@@ -19,10 +19,14 @@ export function FabricanteAuthProvider({ children }: { children: React.ReactNode
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      const id = localStorage.getItem(STORAGE_KEY);
-      if (id) {
-        const found = fabricantes.find((f) => f.id === id);
-        if (found) setFabricante(found);
+      try {
+        const id = localStorage.getItem(STORAGE_KEY);
+        if (id) {
+          const found = fabricantes.find((f) => f.id === id);
+          if (found) setFabricante(found);
+        }
+      } catch {
+        // storage unavailable
       }
       setLoading(false);
     });
@@ -35,13 +39,21 @@ export function FabricanteAuthProvider({ children }: { children: React.ReactNode
       return { ok: false, error: "Correo o contraseña incorrectos." };
     }
     setFabricante(found);
-    localStorage.setItem(STORAGE_KEY, found.id);
+    try {
+      localStorage.setItem(STORAGE_KEY, found.id);
+    } catch {
+      // storage unavailable (private browsing, quota, blocked) — session still works in-memory
+    }
     return { ok: true };
   };
 
   const logout = () => {
     setFabricante(null);
-    localStorage.removeItem(STORAGE_KEY);
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // storage unavailable
+    }
   };
 
   return (

@@ -29,6 +29,28 @@ const buzos = [
   { talla: "XL", pecho: "114-119", largo: "72" },
 ];
 
+const ninos = [
+  { talla: "4-5", pecho: "58-61", largo: "40" },
+  { talla: "6-7", pecho: "62-65", largo: "44" },
+  { talla: "8-9", pecho: "66-70", largo: "48" },
+  { talla: "10-11", pecho: "71-75", largo: "52" },
+  { talla: "12-13", pecho: "76-80", largo: "56" },
+];
+
+const camisetasOversize = [
+  { talla: "S", pecho: "104-109", largo: "72" },
+  { talla: "M", pecho: "110-115", largo: "74" },
+  { talla: "L", pecho: "116-121", largo: "76" },
+  { talla: "XL", pecho: "122-127", largo: "78" },
+];
+
+const blusasCamisas = [
+  { talla: "S", pecho: "84-89", largo: "58" },
+  { talla: "M", pecho: "90-95", largo: "60" },
+  { talla: "L", pecho: "96-101", largo: "62" },
+  { talla: "XL", pecho: "102-107", largo: "64" },
+];
+
 function Table({
   title,
   rows,
@@ -106,6 +128,33 @@ export default function Page() {
           { key: "talla", label: "Talla" },
           { key: "cintura", label: "Cintura (cm)" },
           { key: "cadera", label: "Cadera (cm)" },
+        ]}
+      />
+      <Table
+        title="Niños"
+        rows={ninos}
+        columns={[
+          { key: "talla", label: "Talla (edad)" },
+          { key: "pecho", label: "Contorno de pecho (cm)" },
+          { key: "largo", label: "Largo (cm)" },
+        ]}
+      />
+      <Table
+        title="Camisetas Oversize (Hombre y Dama)"
+        rows={camisetasOversize}
+        columns={[
+          { key: "talla", label: "Talla" },
+          { key: "pecho", label: "Contorno de pecho (cm)" },
+          { key: "largo", label: "Largo (cm)" },
+        ]}
+      />
+      <Table
+        title="Blusas y Camisas"
+        rows={blusasCamisas}
+        columns={[
+          { key: "talla", label: "Talla" },
+          { key: "pecho", label: "Contorno de pecho (cm)" },
+          { key: "largo", label: "Largo (cm)" },
         ]}
       />
       <p className="text-xs text-muted pt-2 border-t border-border">

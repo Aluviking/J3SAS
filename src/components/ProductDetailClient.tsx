@@ -19,13 +19,15 @@ import { CountdownInline } from "@/components/CountdownTimer";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/lib/cart-context";
 import { useFavorites } from "@/lib/favorites-context";
-import { products, ratingBreakdown, sampleReview, type Product } from "@/lib/mock-data";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
+import {
+  categorySlug,
+  currency,
+  getRelatedProducts,
+  isBasicCatalogPhoto,
+  ratingBreakdown,
+  sampleReview,
+  type Product,
+} from "@/lib/mock-data";
 
 function Accordion({
   title,
@@ -37,10 +39,13 @@ function Accordion({
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(!!defaultOpen);
+  const panelId = `accordion-${title.replace(/\s+/g, "-").toLowerCase()}`;
   return (
     <div className="border-t border-border py-3">
       <button
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-controls={panelId}
         className="w-full flex items-center justify-between text-sm font-semibold text-ink"
       >
         {title}
@@ -49,7 +54,11 @@ function Accordion({
           className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
-      {open && <div className="mt-2.5">{children}</div>}
+      {open && (
+        <div id={panelId} className="mt-2.5">
+          {children}
+        </div>
+      )}
     </div>
   );
 }
@@ -59,19 +68,18 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(product.id);
   const [size, setSize] = useState(product.sizes[0]);
-  const qty = 1;
   const [added, setAdded] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
 
   const handleAdd = () => {
-    for (let i = 0; i < qty; i++) addItem(product.id, size);
+    addItem(product.id, size);
     setAdded(true);
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const related = products.filter((p) => p.id !== product.id).slice(0, 4);
+  const related = getRelatedProducts(product, 4);
   const breakdown = ratingBreakdown();
-  const isBasicCatalogPhoto = product.category === "Polos" || product.category === "Buzos";
+  const basicCatalogPhoto = isBasicCatalogPhoto(product.category);
   const gallery = [
     { src: product.image, label: "Frente" },
     ...(product.backImage ? [{ src: product.backImage, label: "Espalda" }] : []),
@@ -80,7 +88,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   return (
     <div className="px-4 lg:px-8 py-5 pb-8">
       <Link
-        href={`/categorias/${product.category.toLowerCase()}`}
+        href={`/categorias/${categorySlug(product.category)}`}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-cta mb-2"
       >
         <ArrowLeft size={14} />
@@ -92,7 +100,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           Inicio
         </Link>{" "}
         /{" "}
-        <Link href={`/categorias/${product.category.toLowerCase()}`} className="hover:text-ink">
+        <Link href={`/categorias/${categorySlug(product.category)}`} className="hover:text-ink">
           {product.category}
         </Link>{" "}
         / <span className="text-ink">{product.name}</span>
@@ -103,14 +111,14 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         <div>
           <div
             className={`relative rounded-tl-3xl overflow-hidden border border-border aspect-[4/5] ${
-              isBasicCatalogPhoto ? "bg-white" : "bg-surface-alt"
+              basicCatalogPhoto ? "bg-white" : "bg-surface-alt"
             }`}
           >
             <Image
               src={gallery[activeThumb]?.src ?? product.image}
               alt={product.name}
               fill
-              className={isBasicCatalogPhoto ? "object-contain p-6" : "object-cover"}
+              className={basicCatalogPhoto ? "object-contain p-6" : "object-cover"}
             />
           </div>
           {gallery.length > 1 && (
@@ -121,13 +129,13 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                   onClick={() => setActiveThumb(i)}
                   className={`relative aspect-square rounded-tl-md overflow-hidden border transition-colors ${
                     activeThumb === i ? "border-ink" : "border-border"
-                  } ${isBasicCatalogPhoto ? "bg-white" : "bg-surface-alt"}`}
+                  } ${basicCatalogPhoto ? "bg-white" : "bg-surface-alt"}`}
                 >
                   <Image
                     src={g.src}
                     alt={`${product.name} ${g.label}`}
                     fill
-                    className={isBasicCatalogPhoto ? "object-contain p-1" : "object-cover"}
+                    className={basicCatalogPhoto ? "object-contain p-1" : "object-cover"}
                   />
                   <span className="absolute bottom-0 inset-x-0 bg-ink/70 text-white text-[10px] text-center py-0.5">
                     {g.label}
@@ -196,7 +204,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               className="flex-1 inline-flex items-center justify-center gap-2 bg-cta text-white text-sm font-semibold py-3.5 rounded-tl-lg transition-colors hover:bg-cta-dark"
             >
               <ShoppingBag size={16} />
-              {added ? "¡Agregado!" : `Agregar al carrito · ${currency.format(product.price * qty)}`}
+              {added ? "¡Agregado!" : `Agregar al carrito · ${currency.format(product.price)}`}
             </button>
             <button
               onClick={() => toggleFavorite(product.id)}

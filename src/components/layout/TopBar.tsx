@@ -21,8 +21,9 @@ export default function TopBar({
   cartPanelOpen: boolean;
 }) {
   const { count } = useCart();
-  const { user, logout } = useAuth();
-  const { fabricante } = useFabricanteAuth();
+  const { user, loading: authLoading, logout } = useAuth();
+  const { fabricante, loading: fabricanteLoading } = useFabricanteAuth();
+  const sessionLoading = authLoading || fabricanteLoading;
   const { ids: favoriteIds } = useFavorites();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -82,11 +83,22 @@ export default function TopBar({
           </span>
         )}
       </Link>
-      <button className="hidden md:flex relative w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink">
+      <button
+        aria-label="Notificaciones"
+        className="hidden md:flex relative w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink"
+      >
         <Bell size={17} className="text-ink" />
         <span className="absolute top-2 right-2.5 w-1.5 h-1.5 rounded-full bg-accent" />
       </button>
-      {user ? (
+      {sessionLoading ? (
+        <Link
+          href="/login"
+          aria-label="Iniciar sesión"
+          className="hidden md:flex w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink"
+        >
+          <User size={17} className="text-ink" />
+        </Link>
+      ) : user ? (
         <div className="relative hidden md:block">
           <button
             onClick={() => setAccountMenuOpen((o) => !o)}

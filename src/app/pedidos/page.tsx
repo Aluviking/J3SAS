@@ -7,14 +7,8 @@ import { useEffect, useState } from "react";
 import EmptyState from "@/components/EmptyState";
 import ProductCard from "@/components/ProductCard";
 import { useAuth } from "@/lib/auth-context";
-import { products } from "@/lib/mock-data";
+import { currency, getOnSaleProducts } from "@/lib/mock-data";
 import { getOrderStatus, getOrdersForUser, type Order } from "@/lib/orders";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
 
 function OrderCard({ order }: { order: Order }) {
   const status = getOrderStatus(order.date);
@@ -83,7 +77,7 @@ export default function PedidosPage() {
 
   if (loading) return null;
 
-  const offers = products.filter((p) => p.originalPrice).slice(0, 4);
+  const offers = getOnSaleProducts(4);
 
   const header = (
     <div className="text-sm text-muted mb-3">

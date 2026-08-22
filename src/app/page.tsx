@@ -4,17 +4,11 @@ import Link from "next/link";
 import { CountdownBlocks } from "@/components/CountdownTimer";
 import HeroSlider from "@/components/HeroSlider";
 import ProductCard from "@/components/ProductCard";
-import { categories, products } from "@/lib/mock-data";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
+import { categories, currency, getBestSellers, products } from "@/lib/mock-data";
 
 export default function Home() {
   const newArrivals = products.slice(0, 4);
-  const bestSellers = [...products].sort((a, b) => b.reviewCount - a.reviewCount).slice(0, 3);
+  const bestSellers = getBestSellers(3);
 
   return (
     <div className="px-4 lg:px-8 py-5 space-y-5">
@@ -49,7 +43,7 @@ export default function Home() {
         {[
           { icon: Truck, title: "Envío gratis", subtitle: "En pedidos +$150.000" },
           { icon: ShieldCheck, title: "Pago seguro", subtitle: "100% protegido" },
-          { icon: RotateCcw, title: "Devoluciones fáciles", subtitle: "30 días" },
+          { icon: RotateCcw, title: "Devoluciones fáciles", subtitle: "5 días hábiles" },
           { icon: Headset, title: "Soporte 24/7", subtitle: "Siempre disponibles" },
         ].map(({ icon: Icon, title, subtitle }) => (
           <div key={title} className="flex items-center gap-2">
@@ -70,18 +64,18 @@ export default function Home() {
               Ver todas
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
             {categories.map(({ id, label, image }) => (
               <Link
                 key={id}
                 href={`/categorias/${id}`}
-                className="group relative overflow-hidden aspect-[4/3] rounded-tl-lg bg-ink transition-transform duration-200 hover:-translate-y-1"
+                className="group relative overflow-hidden aspect-[4/5] rounded-tl-lg bg-ink transition-transform duration-200 hover:-translate-y-1"
               >
                 <Image
                   src={image}
                   alt={label}
                   fill
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                  className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
                 <span className="absolute bottom-3 inset-x-0 text-xs font-medium text-white text-center">
@@ -96,9 +90,9 @@ export default function Home() {
         <section className="bg-surface border border-border rounded-tl-3xl p-4 sm:p-5">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-ink text-lg">Nuevos ingresos</h3>
-            <span className="text-sm text-muted hover:text-ink cursor-pointer transition-colors">
+            <Link href="/nuevos" className="text-sm text-muted hover:text-ink transition-colors">
               Ver todo
-            </span>
+            </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {newArrivals.map((p) => (
@@ -111,9 +105,9 @@ export default function Home() {
         <section className="bg-surface border border-border rounded-tl-3xl p-4 sm:p-5">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold text-ink text-lg">Más vendidos</h3>
-            <span className="text-sm text-muted hover:text-ink cursor-pointer transition-colors">
+            <Link href="/mas-vendidos" className="text-sm text-muted hover:text-ink transition-colors">
               Ver todo
-            </span>
+            </Link>
           </div>
           <div className="grid sm:grid-cols-3 gap-3">
             {bestSellers.map((p) => (
@@ -154,9 +148,12 @@ export default function Home() {
             <div className="relative mt-3">
               <CountdownBlocks hours={63} />
             </div>
-            <button className="relative mt-4 inline-flex items-center gap-2 bg-white text-cta-dark text-sm font-semibold px-5 py-2 rounded-tl-lg">
+            <Link
+              href="/ofertas"
+              className="relative mt-4 inline-flex items-center gap-2 bg-white text-cta-dark text-sm font-semibold px-5 py-2 rounded-tl-lg hover:bg-white/90 transition-colors"
+            >
               Comprar ahora
-            </button>
+            </Link>
           </div>
           <div className="relative overflow-hidden rounded-tl-3xl bg-ink p-5 sm:p-6 flex flex-col justify-center">
             <p className="relative text-xs font-semibold text-white/60 uppercase tracking-wide">
@@ -166,9 +163,12 @@ export default function Home() {
             <p className="relative mt-1.5 text-sm text-white/60 max-w-xs">
               Descubre las últimas tendencias y estilos de la temporada.
             </p>
-            <button className="relative mt-4 inline-flex w-fit items-center gap-2 bg-white text-ink text-sm font-semibold px-5 py-2 rounded-tl-lg hover:bg-white/90 transition-colors">
+            <Link
+              href="/colecciones"
+              className="relative mt-4 inline-flex w-fit items-center gap-2 bg-white text-ink text-sm font-semibold px-5 py-2 rounded-tl-lg hover:bg-white/90 transition-colors"
+            >
               Ver colección
-            </button>
+            </Link>
           </div>
         </div>
     </div>

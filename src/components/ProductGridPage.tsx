@@ -4,7 +4,7 @@ import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import type { Product } from "@/lib/mock-data";
+import { AUDIENCE_LABEL, type Audience, type Product } from "@/lib/mock-data";
 
 type SortOption = "relevancia" | "precio-asc" | "precio-desc" | "rating";
 
@@ -20,21 +20,25 @@ export default function ProductGridPage({
   subtitle,
   products,
   categoryTabs,
+  audiences,
 }: {
   title: string;
   subtitle?: string;
   products: Product[];
   categoryTabs?: { label: string; href: string; active: boolean }[];
+  audiences?: Audience[];
 }) {
   const [sort, setSort] = useState<SortOption>("relevancia");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const [audienceFilter, setAudienceFilter] = useState<Audience | "todos">("todos");
 
   const visibleProducts = useMemo(() => {
     const min = minPrice ? Number(minPrice) : null;
     const max = maxPrice ? Number(maxPrice) : null;
 
     let list = products.filter((p) => {
+      if (audienceFilter !== "todos" && p.audience !== audienceFilter) return false;
       if (min !== null && p.price < min) return false;
       if (max !== null && p.price > max) return false;
       return true;
@@ -45,7 +49,7 @@ export default function ProductGridPage({
     else if (sort === "rating") list = [...list].sort((a, b) => b.rating - a.rating);
 
     return list;
-  }, [products, sort, minPrice, maxPrice]);
+  }, [products, sort, minPrice, maxPrice, audienceFilter]);
 
   return (
     <div className="px-4 lg:px-8 py-5">
@@ -73,6 +77,34 @@ export default function ProductGridPage({
             >
               {tab.label}
             </Link>
+          ))}
+        </div>
+      )}
+
+      {audiences && audiences.length > 0 && (
+        <div className="mt-3 flex items-center gap-2">
+          <button
+            onClick={() => setAudienceFilter("todos")}
+            className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
+              audienceFilter === "todos"
+                ? "bg-ink text-white"
+                : "bg-surface-alt text-ink hover:bg-surface border border-border"
+            }`}
+          >
+            Todos
+          </button>
+          {audiences.map((aud) => (
+            <button
+              key={aud}
+              onClick={() => setAudienceFilter(aud)}
+              className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
+                audienceFilter === aud
+                  ? "bg-ink text-white"
+                  : "bg-surface-alt text-ink hover:bg-surface border border-border"
+              }`}
+            >
+              {AUDIENCE_LABEL[aud]}
+            </button>
           ))}
         </div>
       )}

@@ -4,12 +4,7 @@ import { CheckCircle2, Copy, Package, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-const currency = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
-});
+import { currency } from "@/lib/mock-data";
 
 type OrderLine = {
   name: string;
@@ -43,8 +38,12 @@ export default function ConfirmacionPage() {
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      const raw = sessionStorage.getItem("j3sas_last_order");
-      if (raw) setOrder(JSON.parse(raw));
+      try {
+        const raw = sessionStorage.getItem("j3sas_last_order");
+        if (raw) setOrder(JSON.parse(raw));
+      } catch {
+        sessionStorage.removeItem("j3sas_last_order");
+      }
       setLoaded(true);
     });
     return () => cancelAnimationFrame(frame);

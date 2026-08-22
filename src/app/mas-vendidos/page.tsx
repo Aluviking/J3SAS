@@ -1,8 +1,8 @@
 import ProductGridPage from "@/components/ProductGridPage";
-import { products } from "@/lib/mock-data";
+import { getBestSellers } from "@/lib/mock-data";
 
 export default function MasVendidosPage() {
-  const bestSellers = [...products].sort((a, b) => b.reviewCount - a.reviewCount);
+  const bestSellers = getBestSellers();
 
   return (
     <ProductGridPage

@@ -2,7 +2,7 @@ import { CreditCard, Package, Route, ShoppingBag, Truck } from "lucide-react";
 import InfoPage from "@/components/InfoPage";
 
 const steps = [
-  { icon: ShoppingBag, title: "1. Elige tus productos", text: "Explora el catálogo y agrega camisetas, pantalonetas, polos o buzos a tu carrito." },
+  { icon: ShoppingBag, title: "1. Elige tus productos", text: "Explora el catálogo y agrega camisetas, pantalonetas, polos, buzos, blusas, camisas o ropa para niños a tu carrito." },
   { icon: CreditCard, title: "2. Paga seguro", text: "Finaliza tu compra con Visa, Mastercard, PSE o Nequi." },
   { icon: Package, title: "3. Preparamos tu pedido", text: "Empacamos tu pedido con cuidado en 1-2 días hábiles." },
   { icon: Truck, title: "4. Recíbelo en tu puerta", text: "Envíos a toda Colombia en 3-4 días hábiles." },

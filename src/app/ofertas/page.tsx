@@ -1,14 +1,8 @@
 import ProductGridPage from "@/components/ProductGridPage";
-import { products } from "@/lib/mock-data";
+import { getOnSaleProducts } from "@/lib/mock-data";
 
 export default function OfertasPage() {
-  const onSale = [...products]
-    .filter((p) => p.originalPrice)
-    .sort((a, b) => {
-      const discA = 1 - a.price / (a.originalPrice ?? a.price);
-      const discB = 1 - b.price / (b.originalPrice ?? b.price);
-      return discB - discA;
-    });
+  const onSale = getOnSaleProducts();
 
   return (
     <ProductGridPage
