@@ -124,7 +124,14 @@ export default function Footer() {
             <span className="hidden sm:inline text-white/30">·</span>
             <p className="text-xs text-white/60">
               Powered by{" "}
-              <span className="text-white font-semibold">Rubik Control Digital</span>
+              <a
+                href="https://www.rubikcontroldigital.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white font-semibold hover:text-cta transition-colors"
+              >
+                Rubik Control Digital
+              </a>
             </p>
           </div>
           <div className="flex items-center gap-2 text-[10px] text-white/75">
