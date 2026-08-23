@@ -1,13 +1,14 @@
 import { RotateCcw, ShieldCheck, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import CategoryTile from "@/components/CategoryTile";
 import { CountdownBlocks } from "@/components/CountdownTimer";
 import HeroSlider from "@/components/HeroSlider";
 import ProductCard from "@/components/ProductCard";
-import { categories, currency, getBestSellers, products } from "@/lib/mock-data";
+import { categories, currency, dedupeVariants, getBestSellers, products } from "@/lib/mock-data";
 
 export default function Home() {
-  const newArrivals = products.slice(0, 4);
+  const newArrivals = dedupeVariants(products).slice(0, 4);
   const bestSellers = getBestSellers(3);
 
   return (
@@ -64,23 +65,8 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
-            {categories.map(({ id, label, image, href }) => (
-              <Link
-                key={id}
-                href={href ?? `/categorias/${id}`}
-                className="group relative overflow-hidden aspect-[4/5] rounded-tl-lg bg-ink transition-transform duration-200 hover:-translate-y-1"
-              >
-                <Image
-                  src={image}
-                  alt={label}
-                  fill
-                  className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/10 to-transparent" />
-                <span className="absolute bottom-3 inset-x-0 text-xs font-medium text-white text-center">
-                  {label}
-                </span>
-              </Link>
+            {categories.map(({ id, label, image, images, href }) => (
+              <CategoryTile key={id} id={id} label={label} image={image} images={images} href={href} />
             ))}
           </div>
         </section>

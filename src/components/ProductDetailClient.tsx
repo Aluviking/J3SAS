@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CountdownInline } from "@/components/CountdownTimer";
 import ProductCard from "@/components/ProductCard";
@@ -23,6 +24,7 @@ import {
   audienceGroupSlug,
   currency,
   getRelatedProducts,
+  getVariantSiblings,
   isBasicCatalogPhoto,
   ratingBreakdown,
   sampleReview,
@@ -64,12 +66,14 @@ function Accordion({
 }
 
 export default function ProductDetailClient({ product }: { product: Product }) {
+  const router = useRouter();
   const { addItem } = useCart();
   const { isFavorite, toggleFavorite } = useFavorites();
   const favorite = isFavorite(product.id);
   const [size, setSize] = useState(product.sizes[0]);
   const [added, setAdded] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
+  const colorVariants = getVariantSiblings(product);
 
   const handleAdd = () => {
     addItem(product.id, size);
@@ -81,8 +85,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const breakdown = ratingBreakdown();
   const basicCatalogPhoto = isBasicCatalogPhoto(product.category);
   const gallery = [
-    { src: product.image, label: "Frente" },
+    { src: product.image, label: product.frontImage ? "Modelo" : "Frente" },
+    ...(product.frontImage ? [{ src: product.frontImage, label: "Frente" }] : []),
     ...(product.backImage ? [{ src: product.backImage, label: "Espalda" }] : []),
+    ...(product.modelImage ? [{ src: product.modelImage, label: "Modelo" }] : []),
   ];
 
   return (
@@ -179,6 +185,28 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             <Clock size={14} className="text-brand shrink-0" />
             Pide en <CountdownInline hours={2.5} /> para recibirlo mañana
           </div>
+
+          {/* Color */}
+          {colorVariants.length > 1 && (
+            <div className="mt-4">
+              <p className="text-sm font-medium text-ink">Selecciona el color</p>
+              <div className="mt-2 flex gap-2 flex-wrap">
+                {colorVariants.map((v) => (
+                  <button
+                    key={v.id}
+                    onClick={() => v.id !== product.id && router.push(`/producto/${v.id}`)}
+                    aria-label={v.name}
+                    aria-pressed={v.id === product.id}
+                    title={v.name}
+                    className={`w-9 h-9 rounded-full border-2 transition-transform shrink-0 ${
+                      v.id === product.id ? "border-ink scale-110" : "border-border hover:scale-105"
+                    }`}
+                    style={{ backgroundColor: v.variantColorHex }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Size */}
           <p className="mt-4 text-sm font-medium text-ink">Selecciona la talla</p>

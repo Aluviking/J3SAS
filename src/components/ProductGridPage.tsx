@@ -4,7 +4,7 @@ import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import type { Product } from "@/lib/mock-data";
+import { dedupeVariants, type Product } from "@/lib/mock-data";
 
 type SortOption = "relevancia" | "precio-asc" | "precio-desc" | "rating";
 export type SubFilterField = "audience" | "category" | "subcategory";
@@ -58,7 +58,7 @@ export default function ProductGridPage({
     else if (sort === "precio-desc") list = [...list].sort((a, b) => b.price - a.price);
     else if (sort === "rating") list = [...list].sort((a, b) => b.rating - a.rating);
 
-    return list;
+    return dedupeVariants(list);
   }, [products, sort, minPrice, maxPrice, activeFilter, subFilterField, subFilters]);
 
   return (

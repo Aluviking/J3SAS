@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import ProductGridPage, { type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
-import { AUDIENCE_GROUP_TYPES, products, type Product } from "@/lib/mock-data";
+import { AUDIENCE_GROUP_TYPES, dedupeVariants, products, type Product } from "@/lib/mock-data";
 
 type SlugConfig = {
   label: string;
@@ -108,7 +108,7 @@ export default async function CategoriaPage({
     <ProductGridPage
       key={slug}
       title={config.label}
-      subtitle={`${items.length} productos disponibles`}
+      subtitle={`${dedupeVariants(items).length} productos disponibles`}
       products={items}
       categoryTabs={categoryTabs}
       subFilters={config.subFilters}
