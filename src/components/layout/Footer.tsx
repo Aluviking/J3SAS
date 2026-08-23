@@ -62,18 +62,35 @@ export default function Footer() {
           </p>
           <div className="mt-3 flex items-center gap-2">
             {[
-              { Icon: Globe, label: "Sitio web" },
-              { Icon: Mail, label: "Correo electrónico" },
-              { Icon: MessageCircle, label: "Chat de soporte" },
-            ].map(({ Icon, label }) => (
-              <button
-                key={label}
-                aria-label={label}
-                className="w-9 h-9 rounded-tl-md bg-white/10 flex items-center justify-center transition-colors hover:bg-cta"
-              >
-                <Icon size={15} className="text-white" />
-              </button>
-            ))}
+              { Icon: Globe, label: "Sitio web", href: undefined },
+              { Icon: Mail, label: "Correo electrónico", href: "mailto:soporte@j3sas.co" },
+              {
+                Icon: MessageCircle,
+                label: "Chat de soporte",
+                href: "https://wa.me/573244603474",
+              },
+            ].map(({ Icon, label, href }) =>
+              href ? (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="w-9 h-9 rounded-tl-md bg-white/10 flex items-center justify-center transition-colors hover:bg-cta"
+                >
+                  <Icon size={15} className="text-white" />
+                </a>
+              ) : (
+                <button
+                  key={label}
+                  aria-label={label}
+                  className="w-9 h-9 rounded-tl-md bg-white/10 flex items-center justify-center transition-colors hover:bg-cta"
+                >
+                  <Icon size={15} className="text-white" />
+                </button>
+              )
+            )}
           </div>
         </div>
 

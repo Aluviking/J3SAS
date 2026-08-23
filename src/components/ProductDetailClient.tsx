@@ -20,7 +20,7 @@ import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/lib/cart-context";
 import { useFavorites } from "@/lib/favorites-context";
 import {
-  categorySlug,
+  audienceGroupSlug,
   currency,
   getRelatedProducts,
   isBasicCatalogPhoto,
@@ -88,7 +88,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   return (
     <div className="px-4 lg:px-8 py-5 pb-8">
       <Link
-        href={`/categorias/${categorySlug(product.category)}`}
+        href={`/categorias/${audienceGroupSlug(product)}`}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-cta mb-2"
       >
         <ArrowLeft size={14} />
@@ -100,7 +100,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           Inicio
         </Link>{" "}
         /{" "}
-        <Link href={`/categorias/${categorySlug(product.category)}`} className="hover:text-ink">
+        <Link href={`/categorias/${audienceGroupSlug(product)}`} className="hover:text-ink">
           {product.category}
         </Link>{" "}
         / <span className="text-ink">{product.name}</span>

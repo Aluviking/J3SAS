@@ -15,7 +15,7 @@ export default function Page() {
         <MessageCircle size={18} className="text-brand shrink-0 mt-0.5" />
         <div>
           <p className="font-medium text-ink">Chat / WhatsApp</p>
-          <p className="text-muted">Disponible desde el ícono de mensajes en la parte superior del sitio</p>
+          <p className="text-muted">Disponible desde el botón de WhatsApp en la esquina inferior del sitio</p>
         </div>
       </div>
       <div className="flex items-start gap-3">

@@ -23,7 +23,7 @@ import { useAuth } from "@/lib/auth-context";
 
 const navItems = [
   { href: "/", label: "Inicio", icon: Home },
-  { href: "/categorias", label: "Categorías", icon: LayoutGrid },
+  { href: "/categorias", label: "Subcategorías", icon: LayoutGrid },
   { href: "/ofertas", label: "Ofertas", icon: Tag, badge: "Hot" },
   { href: "/nuevos", label: "Nuevos ingresos", icon: Sparkles },
   { href: "/mas-vendidos", label: "Más vendidos", icon: Award },

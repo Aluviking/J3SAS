@@ -28,13 +28,12 @@ type CartContextValue = {
   promoDiscount: number;
   applyPromoCode: (code: string) => { ok: boolean; error?: string };
   removePromoCode: () => void;
-  freeShippingReason: "amount" | "quantity" | "promo" | null;
+  freeShippingReason: "quantity" | "promo" | null;
   shipping: number;
   total: number;
   count: number;
 };
 
-const FREE_SHIPPING_THRESHOLD = 150000;
 const FREE_SHIPPING_MIN_ITEMS = 3;
 const SHIPPING_COST = 12000;
 const STORAGE_KEY = "j3sas_cart";
@@ -169,19 +168,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       coupon?.type === "percent" ? Math.round(effectiveSubtotal * (coupon.value / 100)) : 0;
     const subtotalAfterPromo = effectiveSubtotal - promoDiscount;
 
-    const qualifiesByAmount = effectiveSubtotal >= FREE_SHIPPING_THRESHOLD;
     const qualifiesByQuantity = count > FREE_SHIPPING_MIN_ITEMS;
     const qualifiesByPromo = coupon?.type === "free-shipping";
-    const freeShippingReason: "amount" | "quantity" | "promo" | null =
+    const freeShippingReason: "quantity" | "promo" | null =
       effectiveSubtotal === 0
         ? null
-        : qualifiesByAmount
-          ? "amount"
-          : qualifiesByQuantity
-            ? "quantity"
-            : qualifiesByPromo
-              ? "promo"
-              : null;
+        : qualifiesByQuantity
+          ? "quantity"
+          : qualifiesByPromo
+            ? "promo"
+            : null;
     const shipping = freeShippingReason ? 0 : effectiveSubtotal === 0 ? 0 : SHIPPING_COST;
     const total = subtotalAfterPromo + shipping;
 

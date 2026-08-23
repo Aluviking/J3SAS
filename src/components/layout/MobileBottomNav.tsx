@@ -28,7 +28,7 @@ export default function MobileBottomNav({ onCartClick }: { onCartClick: () => vo
       </Link>
       <Link href="/categorias" className={itemClass(pathname?.startsWith("/categorias") ?? false)}>
         <LayoutGrid size={19} />
-        Categorías
+        Subcategorías
       </Link>
       <button onClick={onCartClick} className={`relative ${itemClass(false)}`}>
         <ShoppingBag size={19} />

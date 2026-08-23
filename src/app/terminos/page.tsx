@@ -19,7 +19,7 @@ export default function Page() {
       </div>
       <div>
         <p className="font-medium text-ink">Derecho de retracto</p>
-        <p className="text-muted">Tienes hasta 5 días hábiles después de recibir tu pedido para solicitar la devolución, siempre que el producto esté sin uso y con sus etiquetas originales.</p>
+        <p className="text-muted">Tienes hasta 8 días hábiles después de recibir tu pedido para solicitar la devolución, siempre que el producto esté sin uso y con sus etiquetas originales.</p>
       </div>
       <div>
         <p className="font-medium text-ink">Propiedad intelectual</p>

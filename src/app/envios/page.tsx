@@ -18,7 +18,7 @@ export default function Page() {
       </div>
       <div>
         <p className="font-medium text-ink">Costo de envío</p>
-        <p className="text-muted">Gratis en compras superiores a $150.000. Por debajo de ese monto, el costo se calcula según tu ciudad al finalizar la compra.</p>
+        <p className="text-muted">Gratis al llevar más de 3 artículos. Por debajo de esa cantidad, el costo se calcula según tu ciudad al finalizar la compra.</p>
       </div>
       <div>
         <p className="font-medium text-ink">Seguimiento</p>

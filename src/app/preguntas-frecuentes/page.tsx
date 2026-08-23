@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "¿El envío tiene costo?",
-    a: "Es gratis en compras superiores a $150.000. Por debajo de ese monto se calcula según tu ciudad.",
+    a: "Es gratis al llevar más de 3 artículos. Por debajo de esa cantidad se calcula según tu ciudad.",
   },
   {
     q: "¿Cómo hago seguimiento a mi pedido?",

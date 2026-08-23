@@ -1,4 +1,4 @@
-import { Headset, RotateCcw, ShieldCheck, Star, Truck } from "lucide-react";
+import { RotateCcw, ShieldCheck, Star, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { CountdownBlocks } from "@/components/CountdownTimer";
@@ -39,12 +39,11 @@ export default function Home() {
       </div>
 
       {/* Trust badges */}
-      <div className="bg-surface border border-border rounded-tl-lg px-4 py-3 grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="bg-surface border border-border rounded-tl-lg px-4 py-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
         {[
-          { icon: Truck, title: "Envío gratis", subtitle: "En pedidos +$150.000" },
+          { icon: Truck, title: "Envío gratis", subtitle: "Por llevar más de 3 artículos" },
           { icon: ShieldCheck, title: "Pago seguro", subtitle: "100% protegido" },
-          { icon: RotateCcw, title: "Devoluciones fáciles", subtitle: "5 días hábiles" },
-          { icon: Headset, title: "Soporte 24/7", subtitle: "Siempre disponibles" },
+          { icon: RotateCcw, title: "Devoluciones fáciles", subtitle: "8 días hábiles" },
         ].map(({ icon: Icon, title, subtitle }) => (
           <div key={title} className="flex items-center gap-2">
             <Icon size={16} className="text-brand shrink-0" />
@@ -65,10 +64,10 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
-            {categories.map(({ id, label, image }) => (
+            {categories.map(({ id, label, image, href }) => (
               <Link
                 key={id}
-                href={`/categorias/${id}`}
+                href={href ?? `/categorias/${id}`}
                 className="group relative overflow-hidden aspect-[4/5] rounded-tl-lg bg-ink transition-transform duration-200 hover:-translate-y-1"
               >
                 <Image

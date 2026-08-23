@@ -13,6 +13,7 @@ import MobileBottomNav from "./MobileBottomNav";
 import PromoBar from "./PromoBar";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
+import WhatsAppButton from "./WhatsAppButton";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -74,6 +75,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <Footer />
         <MobileBottomNav onCartClick={() => setCartOpen(true)} />
         <ClubPromoToast />
+        <WhatsAppButton />
       </div>
     </CartProvider>
     </FavoritesProvider>

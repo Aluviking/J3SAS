@@ -4,9 +4,11 @@ import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import { AUDIENCE_LABEL, type Audience, type Product } from "@/lib/mock-data";
+import type { Product } from "@/lib/mock-data";
 
 type SortOption = "relevancia" | "precio-asc" | "precio-desc" | "rating";
+export type SubFilterField = "audience" | "category" | "subcategory";
+export type SubFilter = { key: string; label: string; field?: SubFilterField };
 
 const sortOptions: { value: SortOption; label: string }[] = [
   { value: "relevancia", label: "Relevancia" },
@@ -20,25 +22,33 @@ export default function ProductGridPage({
   subtitle,
   products,
   categoryTabs,
-  audiences,
+  subFilters,
+  subFilterField,
 }: {
   title: string;
   subtitle?: string;
   products: Product[];
   categoryTabs?: { label: string; href: string; active: boolean }[];
-  audiences?: Audience[];
+  subFilters?: SubFilter[];
+  subFilterField?: SubFilterField;
 }) {
   const [sort, setSort] = useState<SortOption>("relevancia");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [audienceFilter, setAudienceFilter] = useState<Audience | "todos">("todos");
+  const [activeFilter, setActiveFilter] = useState<string>("todos");
 
   const visibleProducts = useMemo(() => {
     const min = minPrice ? Number(minPrice) : null;
     const max = maxPrice ? Number(maxPrice) : null;
 
+    const activeField = subFilters?.find((f) => f.key === activeFilter)?.field ?? subFilterField;
+
     let list = products.filter((p) => {
-      if (audienceFilter !== "todos" && p.audience !== audienceFilter) return false;
+      if (activeFilter !== "todos" && activeField) {
+        if (activeField === "audience" && p.audience !== activeFilter) return false;
+        if (activeField === "category" && p.category !== activeFilter) return false;
+        if (activeField === "subcategory" && !p.subcategories?.includes(activeFilter)) return false;
+      }
       if (min !== null && p.price < min) return false;
       if (max !== null && p.price > max) return false;
       return true;
@@ -49,7 +59,7 @@ export default function ProductGridPage({
     else if (sort === "rating") list = [...list].sort((a, b) => b.rating - a.rating);
 
     return list;
-  }, [products, sort, minPrice, maxPrice, audienceFilter]);
+  }, [products, sort, minPrice, maxPrice, activeFilter, subFilterField, subFilters]);
 
   return (
     <div className="px-4 lg:px-8 py-5">
@@ -81,29 +91,29 @@ export default function ProductGridPage({
         </div>
       )}
 
-      {audiences && audiences.length > 0 && (
-        <div className="mt-3 flex items-center gap-2">
+      {subFilters && subFilters.length > 0 && (
+        <div className="mt-3 flex items-center gap-2 flex-wrap">
           <button
-            onClick={() => setAudienceFilter("todos")}
+            onClick={() => setActiveFilter("todos")}
             className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
-              audienceFilter === "todos"
+              activeFilter === "todos"
                 ? "bg-ink text-white"
                 : "bg-surface-alt text-ink hover:bg-surface border border-border"
             }`}
           >
             Todos
           </button>
-          {audiences.map((aud) => (
+          {subFilters.map((f) => (
             <button
-              key={aud}
-              onClick={() => setAudienceFilter(aud)}
+              key={f.key}
+              onClick={() => setActiveFilter(f.key)}
               className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
-                audienceFilter === aud
+                activeFilter === f.key
                   ? "bg-ink text-white"
                   : "bg-surface-alt text-ink hover:bg-surface border border-border"
               }`}
             >
-              {AUDIENCE_LABEL[aud]}
+              {f.label}
             </button>
           ))}
         </div>

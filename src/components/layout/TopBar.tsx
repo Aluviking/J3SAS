@@ -83,13 +83,15 @@ export default function TopBar({
           </span>
         )}
       </Link>
-      <button
-        aria-label="Notificaciones"
-        className="hidden md:flex relative w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink"
-      >
-        <Bell size={17} className="text-ink" />
-        <span className="absolute top-2 right-2.5 w-1.5 h-1.5 rounded-full bg-accent" />
-      </button>
+      {!sessionLoading && user && (
+        <button
+          aria-label="Notificaciones"
+          className="hidden md:flex relative w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink"
+        >
+          <Bell size={17} className="text-ink" />
+          <span className="absolute top-2 right-2.5 w-1.5 h-1.5 rounded-full bg-accent" />
+        </button>
+      )}
       {sessionLoading ? (
         <Link
           href="/login"
