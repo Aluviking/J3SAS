@@ -24,6 +24,7 @@ export default function ProductGridPage({
   categoryTabs,
   subFilters,
   subFilterField,
+  parentLink,
 }: {
   title: string;
   subtitle?: string;
@@ -31,6 +32,8 @@ export default function ProductGridPage({
   categoryTabs?: { label: string; href: string; active: boolean }[];
   subFilters?: SubFilter[];
   subFilterField?: SubFilterField;
+  /** Migaja intermedia opcional (ej. "Subcategorías") entre Inicio y el título. */
+  parentLink?: { label: string; href: string };
 }) {
   const [sort, setSort] = useState<SortOption>("relevancia");
   const [minPrice, setMinPrice] = useState("");
@@ -57,6 +60,11 @@ export default function ProductGridPage({
     if (sort === "precio-asc") list = [...list].sort((a, b) => a.price - b.price);
     else if (sort === "precio-desc") list = [...list].sort((a, b) => b.price - a.price);
     else if (sort === "rating") list = [...list].sort((a, b) => b.rating - a.rating);
+    else {
+      // Relevancia (por defecto): los diseños con foto de modelo de portada
+      // se muestran primero dentro de su categoría.
+      list = [...list].sort((a, b) => Number(Boolean(b.frontImage)) - Number(Boolean(a.frontImage)));
+    }
 
     return dedupeVariants(list);
   }, [products, sort, minPrice, maxPrice, activeFilter, subFilterField, subFilters]);
@@ -67,7 +75,16 @@ export default function ProductGridPage({
         <Link href="/" className="hover:text-ink">
           Inicio
         </Link>{" "}
-        / <span className="text-ink">{title}</span>
+        /{" "}
+        {parentLink && (
+          <>
+            <Link href={parentLink.href} className="hover:text-ink">
+              {parentLink.label}
+            </Link>{" "}
+            /{" "}
+          </>
+        )}
+        <span className="text-ink">{title}</span>
       </div>
 
       <h1 className="text-xl font-semibold text-ink">{title}</h1>

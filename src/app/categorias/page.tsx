@@ -6,7 +6,7 @@ import { CAMISETAS_SUBCATEGORIES, getProductsBySubcategory, products, type Produ
 const SUBCATEGORY_SLUG: Record<string, string> = {
   "Oversize Hombre Moda Línea": "oversize-hombre",
   "Camiseta Pedrería Hombre": "pedreria-hombre",
-  "Dama Pedrería Mujer": "pedreria-dama",
+  "Camiseta Pedrería Dama": "pedreria-dama",
   "Camiseta Oversize Dama Línea": "oversize-dama",
 };
 
@@ -25,6 +25,7 @@ export default function CategoriasPage() {
     { slug: "ninos", label: "Camiseta Línea Niño", items: products.filter((p) => p.category === "Niños") },
     { slug: "blusas", label: "Blusas", items: products.filter((p) => p.category === "Blusas") },
     { slug: "camisas-dama", label: "Camisas Largas Dama", items: products.filter((p) => p.category === "Camisas") },
+    { slug: "vestidos-dama", label: "Vestidos Dama", items: products.filter((p) => p.category === "Vestidos") },
   ].filter((s) => s.items.length > 0);
 
   const totalProducts = products.length;

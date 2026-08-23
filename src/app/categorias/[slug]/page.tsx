@@ -9,6 +9,8 @@ type SlugConfig = {
   subFilterField?: SubFilterField;
   /** Otras rutas a las que esta sección puede cruzar (fila de pestañas). */
   tabs?: string[];
+  /** Prioridad de orden por defecto (menor = primero); empate conserva el orden del catálogo. */
+  sortPriority?: (p: Product) => number;
 };
 
 const HOMBRE_DAMA_TABS = ["hombre", "dama", "ninos", "unisex"];
@@ -31,6 +33,8 @@ const SLUGS: Record<string, SlugConfig> = {
       { key: "Unisex", label: "Unisex", field: "subcategory" as const },
     ],
     subFilterField: "category",
+    sortPriority: (p) =>
+      p.category === "Blusas" || p.category === "Camisas" || p.category === "Vestidos" ? 0 : 1,
   },
   ninos: {
     label: "Niños",
@@ -55,8 +59,8 @@ const SLUGS: Record<string, SlugConfig> = {
     filter: (p) => Boolean(p.subcategories?.includes("Camiseta Pedrería Hombre")),
   },
   "pedreria-dama": {
-    label: "Dama Pedrería Mujer",
-    filter: (p) => Boolean(p.subcategories?.includes("Dama Pedrería Mujer")),
+    label: "Camiseta Pedrería Dama",
+    filter: (p) => Boolean(p.subcategories?.includes("Camiseta Pedrería Dama")),
   },
   "oversize-dama": {
     label: "Camiseta Oversize Dama Línea",
@@ -78,6 +82,10 @@ const SLUGS: Record<string, SlugConfig> = {
     label: "Camisas Largas Dama",
     filter: (p) => p.category === "Camisas",
   },
+  "vestidos-dama": {
+    label: "Vestidos Dama",
+    filter: (p) => p.category === "Vestidos",
+  },
 };
 
 export function generateStaticParams() {
@@ -94,6 +102,9 @@ export default async function CategoriaPage({
   if (!config) notFound();
 
   const items = products.filter(config.filter);
+  if (config.sortPriority) {
+    items.sort((a, b) => config.sortPriority!(a) - config.sortPriority!(b));
+  }
 
   // Por defecto cada sección solo enlaza a sí misma (nunca a las otras
   // audiencias); "hombre"/"dama"/"ninos" tampoco se cruzan entre ellas.
@@ -113,6 +124,7 @@ export default async function CategoriaPage({
       categoryTabs={categoryTabs}
       subFilters={config.subFilters}
       subFilterField={config.subFilterField}
+      parentLink={{ label: "Subcategorías", href: "/categorias" }}
     />
   );
 }

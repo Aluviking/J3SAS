@@ -168,7 +168,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       coupon?.type === "percent" ? Math.round(effectiveSubtotal * (coupon.value / 100)) : 0;
     const subtotalAfterPromo = effectiveSubtotal - promoDiscount;
 
-    const qualifiesByQuantity = count > FREE_SHIPPING_MIN_ITEMS;
+    const qualifiesByQuantity = count >= FREE_SHIPPING_MIN_ITEMS;
     const qualifiesByPromo = coupon?.type === "free-shipping";
     const freeShippingReason: "quantity" | "promo" | null =
       effectiveSubtotal === 0

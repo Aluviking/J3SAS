@@ -106,6 +106,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           Inicio
         </Link>{" "}
         /{" "}
+        <Link href="/categorias" className="hover:text-ink">
+          Subcategorías
+        </Link>{" "}
+        /{" "}
         <Link href={`/categorias/${audienceGroupSlug(product)}`} className="hover:text-ink">
           {product.category}
         </Link>{" "}
