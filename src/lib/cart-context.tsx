@@ -128,11 +128,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     total,
     count,
   } = useMemo(() => {
-    // Same "reference" (product) can be split across sizes; the wholesale
-    // tier looks at the total quantity per product, not per size line.
-    const qtyByProduct = new Map<string, number>();
+    // El mayorista se activa por categoría (ej. todas las Camisetas juntas),
+    // no por referencia exacta: mezclar diseños de la misma categoría cuenta.
+    const qtyByCategory = new Map<string, number>();
     items.forEach((item) => {
-      qtyByProduct.set(item.productId, (qtyByProduct.get(item.productId) ?? 0) + item.qty);
+      const product = products.find((p) => p.id === item.productId);
+      if (!product) return;
+      qtyByCategory.set(product.category, (qtyByCategory.get(product.category) ?? 0) + item.qty);
     });
 
     const lines: CartLine[] = [];
@@ -145,11 +147,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const product = products.find((p) => p.id === item.productId);
       if (!product) return;
 
-      const totalQtyForProduct = qtyByProduct.get(item.productId) ?? item.qty;
+      const totalQtyForCategory = qtyByCategory.get(product.category) ?? item.qty;
       const wholesaleApplied = Boolean(
         product.wholesalePrice &&
           product.wholesaleMinQty &&
-          totalQtyForProduct >= product.wholesaleMinQty
+          totalQtyForCategory >= product.wholesaleMinQty
       );
       const unitPrice = wholesaleApplied ? product.wholesalePrice! : product.price;
 

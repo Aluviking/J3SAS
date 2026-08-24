@@ -93,13 +93,13 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="px-4 lg:px-8 py-5 pb-8">
-      <Link
-        href={`/categorias/${audienceGroupSlug(product)}`}
+      <button
+        onClick={() => router.back()}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-cta mb-2"
       >
         <ArrowLeft size={14} />
         Volver a {product.category}
-      </Link>
+      </button>
 
       <div className="text-sm text-muted mb-3">
         <Link href="/" className="hover:text-ink">
