@@ -130,6 +130,23 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               fill
               className={basicCatalogPhoto ? "object-contain p-6" : "object-cover"}
             />
+            {colorVariants.length > 1 && (
+              <div className="lg:hidden absolute right-2.5 top-1/2 -translate-y-1/2 flex flex-col gap-2 bg-white/85 backdrop-blur-sm rounded-tl-lg p-1.5 shadow-md">
+                {colorVariants.map((v) => (
+                  <button
+                    key={v.id}
+                    onClick={() => v.id !== product.id && router.push(`/producto/${v.id}`)}
+                    aria-label={v.name}
+                    aria-pressed={v.id === product.id}
+                    title={v.name}
+                    className={`w-7 h-7 rounded-full border-2 transition-transform shrink-0 ${
+                      v.id === product.id ? "border-ink scale-110" : "border-white hover:scale-105"
+                    }`}
+                    style={{ backgroundColor: v.variantColorHex }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
           {gallery.length > 1 && (
             <div className="grid grid-cols-3 gap-2 mt-2">
@@ -190,9 +207,27 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             Pide en <CountdownInline hours={2.5} /> para recibirlo mañana
           </div>
 
-          {/* Color */}
+          {/* Size */}
+          <p className="mt-4 text-sm font-medium text-ink">Selecciona la talla</p>
+          <div className="mt-2 flex gap-2 flex-wrap">
+            {product.sizes.map((s) => (
+              <button
+                key={s}
+                onClick={() => setSize(s)}
+                className={`w-11 h-11 rounded-full text-sm font-medium flex items-center justify-center border transition-colors ${
+                  size === s
+                    ? "bg-ink text-white border-ink"
+                    : "bg-surface text-ink border-border hover:border-ink"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {/* Color (en móvil ya se elige en la franja sobre la foto) */}
           {colorVariants.length > 1 && (
-            <div className="mt-4">
+            <div className="hidden lg:block mt-4">
               <p className="text-sm font-medium text-ink">Selecciona el color</p>
               <div className="mt-2 flex gap-2 flex-wrap">
                 {colorVariants.map((v) => (
@@ -211,24 +246,6 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </div>
             </div>
           )}
-
-          {/* Size */}
-          <p className="mt-4 text-sm font-medium text-ink">Selecciona la talla</p>
-          <div className="mt-2 flex gap-2 flex-wrap">
-            {product.sizes.map((s) => (
-              <button
-                key={s}
-                onClick={() => setSize(s)}
-                className={`w-11 h-11 rounded-full text-sm font-medium flex items-center justify-center border transition-colors ${
-                  size === s
-                    ? "bg-ink text-white border-ink"
-                    : "bg-surface text-ink border-border hover:border-ink"
-                }`}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
 
           <div className="mt-4 flex items-center gap-3">
             <button

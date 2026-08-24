@@ -10,7 +10,7 @@ const SUBCATEGORY_SLUG: Record<string, string> = {
   "Camiseta Oversize Dama Línea": "oversize-dama",
 };
 
-type Section = { slug: string; label: string; items: Product[] };
+type Section = { slug: string; label: string; items: Product[]; coverOverride?: string };
 
 export default function CategoriasPage() {
   const sections: Section[] = [
@@ -22,7 +22,13 @@ export default function CategoriasPage() {
     { slug: "pantaloneta-hombre", label: "Pantaloneta Hombre", items: products.filter((p) => p.category === "Pantalonetas") },
     { slug: "polo-hombre", label: "Polo Hombre", items: products.filter((p) => p.category === "Polos") },
     { slug: "unisex", label: "Buzos Unisex", items: products.filter((p) => p.category === "Buzos") },
-    { slug: "ninos", label: "Camiseta Línea Niño", items: products.filter((p) => p.category === "Niños") },
+    {
+      slug: "ninos",
+      label: "Camiseta Línea Niño",
+      items: products.filter((p) => p.category === "Niños"),
+      coverOverride: "/products/niños/portadas niños.webp",
+    },
+    { slug: "tshirt-dama", label: "T-shirts", items: products.filter((p) => p.category === "T-shirts") },
     { slug: "blusas", label: "Blusas", items: products.filter((p) => p.category === "Blusas") },
     { slug: "camisas-dama", label: "Camisas Largas Dama", items: products.filter((p) => p.category === "Camisas") },
     { slug: "vestidos-dama", label: "Vestidos Dama", items: products.filter((p) => p.category === "Vestidos") },
@@ -51,14 +57,17 @@ export default function CategoriasPage() {
       </div>
 
       <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4">
-        {sections.map(({ slug, label, items }) => (
+        {sections.map(({ slug, label, items, coverOverride }) => {
+          const cover = items.find((p) => p.frontImage) ?? items[0];
+          const coverSrc = coverOverride ?? cover?.image ?? "/logo-j3.webp";
+          return (
           <Link
             key={slug}
             href={`/categorias/${slug}`}
             className="group relative overflow-hidden aspect-[16/11] rounded-tl-2xl bg-ink text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-xl"
           >
             <Image
-              src={items[0]?.image ?? "/logo-j3.webp"}
+              src={coverSrc}
               alt={label}
               fill
               className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-110"
@@ -71,7 +80,8 @@ export default function CategoriasPage() {
               </p>
             </div>
           </Link>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/lib/cart-context";
 import { useFavorites } from "@/lib/favorites-context";
-import { currency, isBasicCatalogPhoto, type Product } from "@/lib/mock-data";
+import { currency, getVariantSiblings, isBasicCatalogPhoto, type Product } from "@/lib/mock-data";
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
@@ -15,6 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
     ? Math.round(100 - (product.price / product.originalPrice) * 100)
     : null;
   const basicCatalogPhoto = isBasicCatalogPhoto(product.category);
+  const colorVariants = getVariantSiblings(product);
 
   return (
     <div className="group">
@@ -63,6 +64,21 @@ export default function ProductCard({ product }: { product: Product }) {
           <Link href={`/producto/${product.id}`}>
             <p className="text-sm text-ink line-clamp-1">{product.name}</p>
           </Link>
+          {colorVariants.length > 1 && (
+            <div className="flex items-center gap-0.5 mt-0.5">
+              {colorVariants.slice(0, 6).map((v) => (
+                <span
+                  key={v.id}
+                  title={v.name}
+                  className="w-2.5 h-2.5 rounded-full border border-border"
+                  style={{ backgroundColor: v.variantColorHex }}
+                />
+              ))}
+              {colorVariants.length > 6 && (
+                <span className="text-[10px] text-muted">+{colorVariants.length - 6}</span>
+              )}
+            </div>
+          )}
           <div className="flex items-center gap-1 mt-0.5">
             <Star size={12} className="text-amber-500 fill-amber-500" />
             <span className="text-xs text-muted">
@@ -79,17 +95,6 @@ export default function ProductCard({ product }: { product: Product }) {
               </span>
             )}
           </div>
-          {product.colors && (
-            <div className="flex items-center gap-1 mt-1.5">
-              {product.colors.map((c) => (
-                <span
-                  key={c}
-                  className="w-3 h-3 rounded-full border border-border"
-                  style={{ backgroundColor: c }}
-                />
-              ))}
-            </div>
-          )}
         </div>
         <button
           onClick={() => addItem(product.id)}

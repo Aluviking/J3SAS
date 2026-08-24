@@ -66,6 +66,10 @@ const SLUGS: Record<string, SlugConfig> = {
     label: "Camiseta Oversize Dama Línea",
     filter: (p) => Boolean(p.subcategories?.includes("Camiseta Oversize Dama Línea")),
   },
+  "tshirt-dama": {
+    label: "T-shirts",
+    filter: (p) => p.category === "T-shirts",
+  },
   "pantaloneta-hombre": {
     label: "Pantaloneta Hombre",
     filter: (p) => p.category === "Pantalonetas",
