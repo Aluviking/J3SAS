@@ -116,9 +116,73 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         / <span className="text-ink">{product.name}</span>
       </div>
 
+      {/* Referencia + foto + colores + miniaturas, en ese orden, solo en móvil */}
+      <div className="lg:hidden">
+        <p className="text-sm text-muted">{product.category}</p>
+        <h1 className="mt-1 text-2xl font-semibold text-ink">{product.name}</h1>
+
+        <div
+          className={`relative mt-3 rounded-tl-3xl overflow-hidden border border-border aspect-[4/5] ${
+            basicCatalogPhoto ? "bg-white" : "bg-surface-alt"
+          }`}
+        >
+          <Image
+            src={gallery[activeThumb]?.src ?? product.image}
+            alt={product.name}
+            fill
+            className={basicCatalogPhoto ? "object-contain p-6" : "object-cover"}
+          />
+        </div>
+
+        {colorVariants.length > 1 && (
+          <div className="mt-3">
+            <p className="text-sm font-medium text-ink">Selecciona el color</p>
+            <div className="mt-2 flex gap-2 flex-wrap">
+              {colorVariants.map((v) => (
+                <button
+                  key={v.id}
+                  onClick={() => v.id !== product.id && router.push(`/producto/${v.id}`)}
+                  aria-label={v.name}
+                  aria-pressed={v.id === product.id}
+                  title={v.name}
+                  className={`w-9 h-9 rounded-full border-2 transition-transform shrink-0 ${
+                    v.id === product.id ? "border-ink scale-110" : "border-border hover:scale-105"
+                  }`}
+                  style={{ backgroundColor: v.variantColorHex }}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {gallery.length > 1 && (
+          <div className="grid grid-cols-3 gap-2 mt-3">
+            {gallery.map((g, i) => (
+              <button
+                key={g.src}
+                onClick={() => setActiveThumb(i)}
+                className={`relative aspect-square rounded-tl-md overflow-hidden border transition-colors ${
+                  activeThumb === i ? "border-ink" : "border-border"
+                } ${basicCatalogPhoto ? "bg-white" : "bg-surface-alt"}`}
+              >
+                <Image
+                  src={g.src}
+                  alt={`${product.name} ${g.label}`}
+                  fill
+                  className={basicCatalogPhoto ? "object-contain p-1" : "object-cover"}
+                />
+                <span className="absolute bottom-0 inset-x-0 bg-ink/70 text-white text-[10px] text-center py-0.5">
+                  {g.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="grid lg:grid-cols-2 gap-8">
-        {/* Gallery */}
-        <div>
+        {/* Gallery (desktop) */}
+        <div className="hidden lg:block">
           <div
             className={`relative rounded-tl-3xl overflow-hidden border border-border aspect-[4/5] ${
               basicCatalogPhoto ? "bg-white" : "bg-surface-alt"
@@ -130,23 +194,6 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               fill
               className={basicCatalogPhoto ? "object-contain p-6" : "object-cover"}
             />
-            {colorVariants.length > 1 && (
-              <div className="lg:hidden absolute right-2.5 top-1/2 -translate-y-1/2 flex flex-col gap-2 bg-white/85 backdrop-blur-sm rounded-tl-lg p-1.5 shadow-md">
-                {colorVariants.map((v) => (
-                  <button
-                    key={v.id}
-                    onClick={() => v.id !== product.id && router.push(`/producto/${v.id}`)}
-                    aria-label={v.name}
-                    aria-pressed={v.id === product.id}
-                    title={v.name}
-                    className={`w-7 h-7 rounded-full border-2 transition-transform shrink-0 ${
-                      v.id === product.id ? "border-ink scale-110" : "border-white hover:scale-105"
-                    }`}
-                    style={{ backgroundColor: v.variantColorHex }}
-                  />
-                ))}
-              </div>
-            )}
           </div>
           {gallery.length > 1 && (
             <div className="grid grid-cols-3 gap-2 mt-2">
@@ -175,8 +222,8 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
         {/* Info */}
         <div>
-          <p className="text-sm text-muted">{product.category}</p>
-          <h1 className="mt-1 text-2xl font-semibold text-ink">{product.name}</h1>
+          <p className="hidden lg:block text-sm text-muted">{product.category}</p>
+          <h1 className="hidden lg:block mt-1 text-2xl font-semibold text-ink">{product.name}</h1>
           <div className="mt-2 flex items-center gap-3">
             <span className="text-2xl font-semibold text-ink">
               {currency.format(product.price)}
@@ -225,7 +272,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             ))}
           </div>
 
-          {/* Color (en móvil ya se elige en la franja sobre la foto) */}
+          {/* Color (en móvil ya se elige arriba, sobre la foto) */}
           {colorVariants.length > 1 && (
             <div className="hidden lg:block mt-4">
               <p className="text-sm font-medium text-ink">Selecciona el color</p>
