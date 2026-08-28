@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import ProductGridPage, { type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
+import ProductGridPage, { type PageDisclaimer, type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
 import { AUDIENCE_GROUP_TYPES, dedupeVariants, products, type Product } from "@/lib/mock-data";
 
 type SlugConfig = {
@@ -11,6 +11,8 @@ type SlugConfig = {
   tabs?: string[];
   /** Prioridad de orden por defecto (menor = primero); empate conserva el orden del catálogo. */
   sortPriority?: (p: Product) => number;
+  /** Aviso emergente que se muestra una sola vez (por navegador) al entrar a la sección. */
+  disclaimer?: PageDisclaimer;
 };
 
 const HOMBRE_DAMA_TABS = ["hombre", "dama", "ninos", "unisex"];
@@ -18,7 +20,7 @@ const HOMBRE_DAMA_TABS = ["hombre", "dama", "ninos", "unisex"];
 const SLUGS: Record<string, SlugConfig> = {
   hombre: {
     label: "Hombres",
-    filter: (p) => p.audience === "hombre" || p.category === "Buzos",
+    filter: (p) => (p.audience === "hombre" || p.category === "Buzos") && p.category !== "Rescate",
     subFilters: [
       ...AUDIENCE_GROUP_TYPES.hombre.map((c) => ({ key: c, label: c })),
       { key: "Unisex", label: "Unisex", field: "subcategory" as const },
@@ -27,7 +29,7 @@ const SLUGS: Record<string, SlugConfig> = {
   },
   dama: {
     label: "Dama",
-    filter: (p) => p.audience === "mujer" || p.category === "Buzos",
+    filter: (p) => (p.audience === "mujer" || p.category === "Buzos") && p.category !== "Rescate",
     subFilters: [
       ...AUDIENCE_GROUP_TYPES.dama.map((c) => ({ key: c, label: c })),
       { key: "Unisex", label: "Unisex", field: "subcategory" as const },
@@ -35,6 +37,23 @@ const SLUGS: Record<string, SlugConfig> = {
     subFilterField: "category",
     sortPriority: (p) =>
       p.category === "Blusas" || p.category === "Camisas" || p.category === "Vestidos" ? 0 : 1,
+  },
+  rescate: {
+    label: "Rescate",
+    filter: (p) => p.category === "Rescate",
+    subFilters: [
+      { key: "hombre", label: "Hombre" },
+      { key: "mujer", label: "Dama" },
+      { key: "nina", label: "Niña" },
+      { key: "nino", label: "Niño" },
+    ],
+    subFilterField: "audience",
+    disclaimer: {
+      storageKey: "j3sas_rescate_disclaimer_v2",
+      title: "Bienvenido a Rescate",
+      body: "Piezas únicas a precios que no vuelven: últimas unidades de temporadas anteriores y prendas con mínimos detalles de fábrica en talla o acabado que no afectan su calidad. Mismo estilo J3, oportunidad limitada mientras dure el stock.",
+      buttonLabel: "Continuar",
+    },
   },
   ninos: {
     label: "Niños",
@@ -129,6 +148,7 @@ export default async function CategoriaPage({
       subFilters={config.subFilters}
       subFilterField={config.subFilterField}
       parentLink={{ label: "Subcategorías", href: "/categorias" }}
+      disclaimer={config.disclaimer}
     />
   );
 }
