@@ -46,6 +46,7 @@ const SLUGS: Record<string, SlugConfig> = {
       { key: "mujer", label: "Dama" },
       { key: "nina", label: "Niña" },
       { key: "nino", label: "Niño" },
+      { key: "Croptop", label: "Croptop", field: "subcategory" as const },
     ],
     subFilterField: "audience",
     disclaimer: {
@@ -108,6 +109,14 @@ const SLUGS: Record<string, SlugConfig> = {
   "vestidos-dama": {
     label: "Vestidos Dama",
     filter: (p) => p.category === "Vestidos",
+  },
+  "chaquetas-dama": {
+    label: "Chaquetas Dama",
+    filter: (p) => p.category === "Chaquetas" && p.audience === "mujer",
+  },
+  "chaquetas-hombre": {
+    label: "Chaquetas Hombre",
+    filter: (p) => p.category === "Chaquetas" && p.audience === "hombre",
   },
 };
 

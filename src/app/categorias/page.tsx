@@ -32,6 +32,8 @@ export default function CategoriasPage() {
     { slug: "blusas", label: "Blusas", items: products.filter((p) => p.category === "Blusas") },
     { slug: "camisas-dama", label: "Camisas Largas Dama", items: products.filter((p) => p.category === "Camisas") },
     { slug: "vestidos-dama", label: "Vestidos Dama", items: products.filter((p) => p.category === "Vestidos") },
+    { slug: "chaquetas-dama", label: "Chaquetas Dama", items: products.filter((p) => p.category === "Chaquetas" && p.audience === "mujer") },
+    { slug: "chaquetas-hombre", label: "Chaquetas Hombre", items: products.filter((p) => p.category === "Chaquetas" && p.audience === "hombre") },
   ].filter((s) => s.items.length > 0);
 
   const totalProducts = products.length;
