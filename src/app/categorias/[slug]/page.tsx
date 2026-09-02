@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import ProductGridPage, { type PageDisclaimer, type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
-import { AUDIENCE_GROUP_TYPES, dedupeVariants, products, type Product } from "@/lib/mock-data";
+import type { Disclaimer } from "@/components/DisclaimerModal";
+import ProductGridPage, { type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
+import { AUDIENCE_GROUP_TYPES, dedupeVariants, products, RESCATE_DISCLAIMER, type Product } from "@/lib/mock-data";
 
 type SlugConfig = {
   label: string;
@@ -11,8 +12,8 @@ type SlugConfig = {
   tabs?: string[];
   /** Prioridad de orden por defecto (menor = primero); empate conserva el orden del catálogo. */
   sortPriority?: (p: Product) => number;
-  /** Aviso emergente que se muestra una sola vez (por navegador) al entrar a la sección. */
-  disclaimer?: PageDisclaimer;
+  /** Aviso emergente que se muestra siempre (sin persistencia) al entrar a la sección. */
+  disclaimer?: Disclaimer;
 };
 
 const HOMBRE_DAMA_TABS = ["hombre", "dama", "ninos", "unisex"];
@@ -49,12 +50,7 @@ const SLUGS: Record<string, SlugConfig> = {
       { key: "Croptop", label: "Croptop", field: "subcategory" as const },
     ],
     subFilterField: "audience",
-    disclaimer: {
-      storageKey: "j3sas_rescate_disclaimer_v2",
-      title: "Bienvenido a Rescate",
-      body: "Piezas únicas a precios que no vuelven: últimas unidades de temporadas anteriores y prendas con mínimos detalles de fábrica en talla o acabado que no afectan su calidad. Mismo estilo J3, oportunidad limitada mientras dure el stock.",
-      buttonLabel: "Continuar",
-    },
+    disclaimer: RESCATE_DISCLAIMER,
   },
   ninos: {
     label: "Niños",

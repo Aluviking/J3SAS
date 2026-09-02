@@ -4142,17 +4142,17 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-minnie-nina-rosa",
-    name: "Chaqueta Rescate Niña Minnie Rosa",
-    category: "Rescate",
+    name: "Chaqueta Niña Minnie Rosa",
+    category: "Niños",
     audience: "nina",
     price: 89900,
     originalPrice: 104900,
     wholesalePrice: 74000,
     wholesaleMinQty: 12,
-    variantGroup: "rescate-chaqueta-minnie-nina",
+    variantGroup: "chaqueta-minnie-nina",
     variantColorHex: "#D9A7C7",
     variantPrimary: true,
-    image: "/products/Rescate/rescate niña chaqueta talla 4-8-10-12-16 Minnie/rescate niña chaqueta talla 4-8-10-12-16 rosa minnieMinnie.webp",
+    image: "/products/niños/niña chaqueta talla 4-8-10-12-16 Minnie/rescate niña chaqueta talla 4-8-10-12-16 rosa minnieMinnie.webp",
     sizes: ["4", "8", "10", "12", "16"],
     rating: 4.8,
     reviewCount: 9,
@@ -4162,16 +4162,16 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-minnie-nina-roja",
-    name: "Chaqueta Rescate Niña Minnie Roja",
-    category: "Rescate",
+    name: "Chaqueta Niña Minnie Roja",
+    category: "Niños",
     audience: "nina",
     price: 89900,
     originalPrice: 104900,
     wholesalePrice: 74000,
     wholesaleMinQty: 12,
-    variantGroup: "rescate-chaqueta-minnie-nina",
+    variantGroup: "chaqueta-minnie-nina",
     variantColorHex: "#C21E2A",
-    image: "/products/Rescate/rescate niña chaqueta talla 4-8-10-12-16 Minnie/rescate niña chaqueta roja talla 4-8-10-12 Minnie.webp",
+    image: "/products/niños/niña chaqueta talla 4-8-10-12-16 Minnie/rescate niña chaqueta roja talla 4-8-10-12 Minnie.webp",
     sizes: ["4", "8", "10", "12", "16"],
     rating: 4.8,
     reviewCount: 9,
@@ -4181,42 +4181,20 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-mickey-azul",
-    name: "Chaqueta Rescate Niño Mickey Azul",
-    category: "Rescate",
+    name: "Chaqueta Niño Mickey Azul",
+    category: "Niños",
     audience: "nino",
     price: 89900,
     originalPrice: 104900,
     wholesalePrice: 74000,
     wholesaleMinQty: 12,
-    variantGroup: "rescate-chaqueta-mickey-nino",
-    variantColorHex: "#1F3A5F",
-    variantPrimary: true,
-    image: "/products/Rescate/rescate niño chaqueta talla 4-8-10-12-16 Mickey/rescate niño chaqueta talla 4-8-10-12-16 Mickey azul.webp",
+    image: "/products/niños/niño chaqueta talla 4-8-10-12-16 Mickey/rescate niño chaqueta talla 4-8-10-12-16 Mickey azul.webp",
     sizes: ["4", "8", "10", "12", "16"],
     rating: 4.8,
     reviewCount: 8,
     stock: 13,
     store: STORE,
     description: "Chaqueta acolchada infantil azul con estampado de Mickey Mouse.",
-  },
-  {
-    id: "rescate-chaqueta-mickey-cafe",
-    name: "Chaqueta Rescate Niño Mickey Verde Militar",
-    category: "Rescate",
-    audience: "nino",
-    price: 89900,
-    originalPrice: 104900,
-    wholesalePrice: 74000,
-    wholesaleMinQty: 12,
-    variantGroup: "rescate-chaqueta-mickey-nino",
-    variantColorHex: "#6B6B47",
-    image: "/products/Rescate/rescate niño chaqueta talla 4-8-10-12-16 Mickey/rescate niño chaqueta talla 4-8-10-12-16 cafe Mickey.webp",
-    sizes: ["4", "8", "10", "12", "16"],
-    rating: 4.8,
-    reviewCount: 8,
-    stock: 13,
-    store: STORE,
-    description: "Chaqueta acolchada infantil verde militar con estampado de Mickey Mouse.",
   },
   {
     id: "rescate-corazon-rojo",
@@ -4875,6 +4853,14 @@ export function ratingBreakdown() {
   const weights = [0.62, 0.24, 0.09, 0.03, 0.02];
   return [5, 4, 3, 2, 1].map((star, i) => ({ star, pct: Math.round(weights[i] * 100) }));
 }
+
+// Aviso de la sección Rescate: se muestra siempre (sin persistencia) al entrar
+// al módulo y en cada producto de categoría "Rescate".
+export const RESCATE_DISCLAIMER = {
+  title: "Rescate",
+  body: "Mínimos detalles de fábrica en talla o acabado: por eso el precio especial. Misma calidad J3.",
+  buttonLabel: "Continuar",
+};
 
 // Formateador de moneda compartido (evita reimplementarlo en cada componente).
 export const currency = new Intl.NumberFormat("es-CO", {

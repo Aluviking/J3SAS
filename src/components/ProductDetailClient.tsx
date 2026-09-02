@@ -17,6 +17,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { CountdownInline } from "@/components/CountdownTimer";
+import DisclaimerModal from "@/components/DisclaimerModal";
 import ProductCard from "@/components/ProductCard";
 import { useCart } from "@/lib/cart-context";
 import { useFavorites } from "@/lib/favorites-context";
@@ -27,6 +28,7 @@ import {
   getVariantSiblings,
   isBasicCatalogPhoto,
   ratingBreakdown,
+  RESCATE_DISCLAIMER,
   sampleReview,
   type Product,
 } from "@/lib/mock-data";
@@ -93,6 +95,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="px-4 lg:px-8 py-5 pb-8">
+      {product.category === "Rescate" && <DisclaimerModal disclaimer={RESCATE_DISCLAIMER} />}
       <button
         onClick={() => router.back()}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-cta mb-2"

@@ -2,20 +2,14 @@
 
 import { ArrowUpDown } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
+import DisclaimerModal, { type Disclaimer } from "@/components/DisclaimerModal";
 import ProductCard from "@/components/ProductCard";
 import { dedupeVariants, type Product } from "@/lib/mock-data";
 
 type SortOption = "relevancia" | "precio-asc" | "precio-desc" | "rating";
 export type SubFilterField = "audience" | "category" | "subcategory";
 export type SubFilter = { key: string; label: string; field?: SubFilterField };
-export type PageDisclaimer = {
-  /** Clave de localStorage para no repetir el aviso una vez confirmado. */
-  storageKey: string;
-  title: string;
-  body: string;
-  buttonLabel?: string;
-};
 
 const sortOptions: { value: SortOption; label: string }[] = [
   { value: "relevancia", label: "Relevancia" },
@@ -42,37 +36,13 @@ export default function ProductGridPage({
   subFilterField?: SubFilterField;
   /** Migaja intermedia opcional (ej. "Subcategorías") entre Inicio y el título. */
   parentLink?: { label: string; href: string };
-  /** Aviso emergente que se muestra una sola vez (por navegador) al entrar. */
-  disclaimer?: PageDisclaimer;
+  /** Aviso emergente que se muestra siempre (sin persistencia) al entrar. */
+  disclaimer?: Disclaimer;
 }) {
   const [sort, setSort] = useState<SortOption>("relevancia");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("todos");
-  const [showDisclaimer, setShowDisclaimer] = useState(false);
-
-  useEffect(() => {
-    if (!disclaimer) return;
-    const frame = requestAnimationFrame(() => {
-      try {
-        if (!localStorage.getItem(disclaimer.storageKey)) setShowDisclaimer(true);
-      } catch {
-        setShowDisclaimer(true);
-      }
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [disclaimer]);
-
-  const dismissDisclaimer = () => {
-    if (disclaimer) {
-      try {
-        localStorage.setItem(disclaimer.storageKey, "1");
-      } catch {
-        // localStorage no disponible (privado/bloqueado): igual se cierra para esta sesión
-      }
-    }
-    setShowDisclaimer(false);
-  };
 
   const visibleProducts = useMemo(() => {
     const min = minPrice ? Number(minPrice) : null;
@@ -105,20 +75,7 @@ export default function ProductGridPage({
 
   return (
     <div className="px-4 lg:px-8 py-5">
-      {disclaimer && showDisclaimer && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 px-4">
-          <div className="max-w-md w-full bg-surface rounded-tl-2xl border border-border p-5 shadow-xl">
-            <h2 className="text-lg font-semibold text-ink">{disclaimer.title}</h2>
-            <p className="mt-2 text-sm text-muted leading-relaxed">{disclaimer.body}</p>
-            <button
-              onClick={dismissDisclaimer}
-              className="mt-4 w-full inline-flex items-center justify-center gap-2 bg-cta text-white text-sm font-semibold py-3 rounded-tl-lg transition-colors hover:bg-cta-dark"
-            >
-              {disclaimer.buttonLabel ?? "Continuar"}
-            </button>
-          </div>
-        </div>
-      )}
+      {disclaimer && <DisclaimerModal disclaimer={disclaimer} />}
 
       <div className="text-sm text-muted mb-3">
         <Link href="/" className="hover:text-ink">
