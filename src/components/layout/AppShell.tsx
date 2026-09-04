@@ -7,6 +7,7 @@ import { CartProvider } from "@/lib/cart-context";
 import { FabricanteAuthProvider } from "@/lib/fabricante-auth-context";
 import { FavoritesProvider } from "@/lib/favorites-context";
 import CartPanel from "./CartPanel";
+import CelesteChat from "./CelesteChat";
 import ClubPromoToast from "./ClubPromoToast";
 import Footer from "./Footer";
 import MobileBottomNav from "./MobileBottomNav";
@@ -76,6 +77,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <MobileBottomNav onCartClick={() => setCartOpen(true)} />
         <ClubPromoToast />
         <WhatsAppButton />
+        <CelesteChat />
       </div>
     </CartProvider>
     </FavoritesProvider>

@@ -4862,6 +4862,56 @@ export const RESCATE_DISCLAIMER = {
   buttonLabel: "Continuar",
 };
 
+// Búsqueda liviana de productos para el chat de Celeste (RAG local, sin backend):
+// dado el mensaje del cliente, encuentra los productos del catálogo más
+// relevantes para dárselos como contexto real a la IA (así no inventa nombres,
+// precios ni links).
+function normalizeText(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+}
+
+const AUDIENCE_KEYWORDS: Record<Audience, string[]> = {
+  hombre: ["hombre", "hombres", "masculino", "caballero", "el"],
+  mujer: ["mujer", "mujeres", "dama", "damas", "femenino", "chica", "ella"],
+  nino: ["nino", "ninos", "varoncito"],
+  nina: ["nina", "ninas"],
+};
+
+export function searchProductsForChat(query: string, limit = 6): Product[] {
+  const words = normalizeText(query)
+    .split(/[^a-z0-9]+/)
+    .filter((w) => w.length >= 3);
+  if (words.length === 0) return [];
+
+  const scored = products.map((p) => {
+    const name = normalizeText(p.name);
+    const description = normalizeText(p.description);
+    const category = normalizeText(p.category);
+    const subcategories = normalizeText((p.subcategories ?? []).join(" "));
+    const audienceWords = p.audience ? AUDIENCE_KEYWORDS[p.audience] : [];
+
+    let score = 0;
+    for (const w of words) {
+      if (category.includes(w)) score += 3;
+      if (name.includes(w)) score += 2;
+      if (subcategories.includes(w)) score += 1;
+      if (description.includes(w)) score += 1;
+      if (audienceWords.some((a) => a.includes(w) || w.includes(a))) score += 2;
+    }
+    return { product: p, score };
+  });
+
+  const ranked = scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((s) => s.product);
+
+  return dedupeVariants(ranked).slice(0, limit);
+}
+
 // Formateador de moneda compartido (evita reimplementarlo en cada componente).
 export const currency = new Intl.NumberFormat("es-CO", {
   style: "currency",
