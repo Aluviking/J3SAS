@@ -4873,11 +4873,15 @@ function normalizeText(s: string): string {
     .replace(/[̀-ͯ]/g, "");
 }
 
+// Además de la palabra clínica ("hombre"), se incluyen formas naturales con
+// las que alguien describe al destinatario del regalo/compra ("mi esposo",
+// "mi hijo") — así el chat entiende de quién se habla sin que digan
+// literalmente "para hombre" o "para niño".
 const AUDIENCE_KEYWORDS: Record<Audience, string[]> = {
-  hombre: ["hombre", "hombres", "masculino", "caballero", "el"],
-  mujer: ["mujer", "mujeres", "dama", "damas", "femenino", "chica", "ella"],
-  nino: ["nino", "ninos", "varoncito"],
-  nina: ["nina", "ninas"],
+  hombre: ["hombre", "hombres", "masculino", "caballero", "esposo", "novio", "papa"],
+  mujer: ["mujer", "mujeres", "dama", "damas", "femenino", "chica", "ella", "esposa", "novia", "mama"],
+  nino: ["nino", "ninos", "varoncito", "hijo", "sobrino", "nieto"],
+  nina: ["nina", "ninas", "hija", "sobrina", "nieta"],
 };
 
 export function searchProductsForChat(query: string, limit = 6): Product[] {
@@ -4886,29 +4890,73 @@ export function searchProductsForChat(query: string, limit = 6): Product[] {
     .filter((w) => w.length >= 3);
   if (words.length === 0) return [];
 
-  const scored = products.map((p) => {
-    const name = normalizeText(p.name);
-    const description = normalizeText(p.description);
-    const category = normalizeText(p.category);
-    const subcategories = normalizeText((p.subcategories ?? []).join(" "));
-    const audienceWords = p.audience ? AUDIENCE_KEYWORDS[p.audience] : [];
+  // Si el mensaje nombra un público de forma explícita y exacta (palabra
+  // completa, no substring), se filtra duro por ese público — sin esto, una
+  // búsqueda "para hombre" con pocos resultados de hombre se rellenaba con
+  // productos de mujer/niños solo por empatar en otras palabras.
+  const requestedAudiences = (Object.keys(AUDIENCE_KEYWORDS) as Audience[]).filter((aud) =>
+    AUDIENCE_KEYWORDS[aud].some((kw) => words.includes(kw))
+  );
+  const targetAudience = requestedAudiences.length === 1 ? requestedAudiences[0] : null;
 
-    let score = 0;
-    for (const w of words) {
-      if (category.includes(w)) score += 3;
-      if (name.includes(w)) score += 2;
-      if (subcategories.includes(w)) score += 1;
-      if (description.includes(w)) score += 1;
-      if (audienceWords.some((a) => a.includes(w) || w.includes(a))) score += 2;
-    }
-    return { product: p, score };
-  });
+  const scored = products
+    .filter((p) => !targetAudience || p.audience === targetAudience)
+    .map((p) => {
+      const name = normalizeText(p.name);
+      const description = normalizeText(p.description);
+      const category = normalizeText(p.category);
+      const subcategories = normalizeText((p.subcategories ?? []).join(" "));
+
+      let score = 0;
+      for (const w of words) {
+        if (category.includes(w)) score += 3;
+        if (name.includes(w)) score += 2;
+        if (subcategories.includes(w)) score += 1;
+        if (description.includes(w)) score += 1;
+      }
+      if (targetAudience && p.audience === targetAudience) score += 2;
+      // Empate a favor de Rescate: son últimas unidades a precio especial que
+      // conviene mover primero, así que ante coincidencias iguales se muestran
+      // antes que el resto del catálogo regular.
+      if (score > 0 && p.category === "Rescate") score += 1;
+      return { product: p, score };
+    });
 
   const ranked = scored
     .filter((s) => s.score > 0)
     .sort((a, b) => b.score - a.score)
     .map((s) => s.product);
 
+  // Si el filtro estricto por público no dejó nada, se repite sin filtrar
+  // para no devolver una lista vacía por un público que resultó no tener
+  // coincidencias puntuales.
+  if (ranked.length === 0 && targetAudience) {
+    return searchProductsForChatUnfiltered(words, limit);
+  }
+
+  return dedupeVariants(ranked).slice(0, limit);
+}
+
+function searchProductsForChatUnfiltered(words: string[], limit: number): Product[] {
+  const scored = products.map((p) => {
+    const name = normalizeText(p.name);
+    const description = normalizeText(p.description);
+    const category = normalizeText(p.category);
+    const subcategories = normalizeText((p.subcategories ?? []).join(" "));
+    let score = 0;
+    for (const w of words) {
+      if (category.includes(w)) score += 3;
+      if (name.includes(w)) score += 2;
+      if (subcategories.includes(w)) score += 1;
+      if (description.includes(w)) score += 1;
+    }
+    if (score > 0 && p.category === "Rescate") score += 1;
+    return { product: p, score };
+  });
+  const ranked = scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map((s) => s.product);
   return dedupeVariants(ranked).slice(0, limit);
 }
 

@@ -4,7 +4,7 @@ import { MessageCircleHeart, Send, Sparkles, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { currency, searchProductsForChat, type Product } from "@/lib/mock-data";
+import { currency, getVariantSiblings, searchProductsForChat, type Product } from "@/lib/mock-data";
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -26,11 +26,29 @@ const WELCOME: ChatMessage = {
   content: "¡Hola! Soy Celeste, asesora de Comercializadora J3. Cuéntame qué estás buscando y te ayudo a encontrarlo.",
 };
 
+// El nombre del producto ya incluye el color al final (ej. "Buzo Morado
+// Oscuro"), así que las variantes de color se listan tal cual junto a su id
+// — es la única fuente real de colores que tiene Celeste, para que nunca
+// tenga que inventar si algo viene o no en cierto color.
+function describeColorOptions(p: Product): string {
+  const siblings = getVariantSiblings(p);
+  if (siblings.length <= 1) return "";
+  const list = siblings
+    .slice(0, 8)
+    .map((s) => `${s.name} (id:${s.id})`)
+    .join(", ");
+  const extra = siblings.length > 8 ? ` y ${siblings.length - 8} más` : "";
+  return ` | colores disponibles: ${list}${extra}`;
+}
+
 function buildSystemPrompt(candidates: Product[]): string {
   const catalogo =
     candidates.length > 0
       ? candidates
-          .map((p) => `- id:${p.id} | ${p.name} | ${p.category} | ${currency.format(p.price)}`)
+          .map(
+            (p) =>
+              `- id:${p.id} | ${p.name} | ${p.category} | ${currency.format(p.price)}${describeColorOptions(p)}`
+          )
           .join("\n")
       : "(ninguna sugerencia puntual para este mensaje)";
 
@@ -53,9 +71,11 @@ Técnica de venta (esto sí es obligatorio, sin excepción, sin importar el tono
 
 Reglas estrictas:
 - Solo hablas de lo que vende J3: productos, tallas, categorías, envíos, formas de pago, cómo comprar. Si preguntan algo fuera de eso, dilo amablemente y sugiere escribir por WhatsApp.
-- La lista CATÁLOGO SUGERIDO de abajo son solo ideas puntuales para este mensaje, no es el inventario completo — J3 tiene muchísimos más productos. Nunca inventes nombres, precios, tallas ni colores que no estén ni en esa lista ni ya mencionados antes en esta misma conversación.
+- JAMÁS inventes el nombre de un producto que no aparezca literalmente en el CATÁLOGO SUGERIDO de abajo o que ya hayas mencionado antes en esta conversación. Si no tienes uno para lo que piden, no te inventes un nombre "parecido" — di que no tienes ese puntual ahora mismo.
+- Colores: cada producto del catálogo sugerido trae, si aplica, su lista real de "colores disponibles" con el id de cada uno — esa es la ÚNICA fuente de verdad sobre colores que tienes. Si preguntan por un color que SÍ está en esa lista, confírmalo y usa ese id en el marcador. Si preguntan por un color que NO aparece ahí, no digas que no lo tienen ni inventes que sí — di que no tienes ese dato a la mano en este momento. Si el producto no trae lista de colores, no inventes que tiene o no tiene otros colores.
 - Si el cliente pregunta por un producto que TÚ ya mencionaste antes en la conversación (precio, color, talla, etc.), respóndele usando lo que ya dijiste — no digas que no existe ni que no está en el catálogo, ya lo habías confirmado.
 - Solo si el catálogo sugerido está realmente vacío puedes decir que no tienes algo puntual ahora mismo — nunca digas "no lo tenemos" ni "no manejamos eso", y nunca lo digas si el catálogo sugerido sí trae productos.
+- No hace falta que digas tú si algo es "de Rescate" o no — eso ya se ve en la tarjeta de la prenda. Solo cuida no prometer que algo es de Rescate si no lo es.
 - Envíos a toda Colombia, pago contraentrega o en línea (PSE, tarjeta, Nequi).
 - Cuando recomiendes productos del catálogo sugerido, menciónalos por nombre en tu respuesta y agrega al final, en su propia línea, exactamente: [[PRODUCTOS: id1, id2]] con los id de los productos que mencionaste (máximo 4, separados por coma). Si no recomiendas ninguno nuevo (por ejemplo, si solo hablas de uno ya mencionado antes), no agregues esa línea. Nunca le expliques esa línea al cliente ni la menciones, es un código interno que el cliente no debe ver.
 
@@ -94,10 +114,27 @@ function parseAssistantReply(raw: string, candidateIds: string[]): { text: strin
     .replace(/^[ \t]*[-*]\s+/gm, "")
     .trim();
   if (!match) return { text, productIds: [] };
-  const inner = match[1].toLowerCase();
+  // Comparación EXACTA por segmento (no substring libre): algunos ids son
+  // prefijo literal de otro id real (ej. "buzo-azul" dentro de
+  // "buzo-azul-turquesa"), así que un `includes` habría marcado ambos aunque
+  // el modelo solo haya mencionado uno.
+  const segments = match[1]
+    .toLowerCase()
+    .split(/[,\s]+/)
+    .map((s) => s.replace(/^id[:=]?/, "").trim())
+    .filter(Boolean);
+  const knownIds = new Set(candidateIds.map((id) => id.toLowerCase()));
+  const seen = new Set<string>();
+  const ids: string[] = [];
+  for (const seg of segments) {
+    const original = candidateIds.find((id) => id.toLowerCase() === seg);
+    if (original && knownIds.has(seg) && !seen.has(original)) {
+      seen.add(original);
+      ids.push(original);
+    }
+  }
   // Tope defensivo a 4: el prompt se lo pide al modelo, pero no siempre lo respeta.
-  const ids = candidateIds.filter((id) => inner.includes(id.toLowerCase())).slice(0, 4);
-  return { text, productIds: ids };
+  return { text, productIds: ids.slice(0, 4) };
 }
 
 export default function CelesteChat() {
@@ -150,6 +187,17 @@ export default function CelesteChat() {
       const candidates = [...freshMatches, ...alreadyShown].slice(0, 10);
       const systemPrompt = buildSystemPrompt(candidates);
 
+      // El texto del prompt le da a Celeste los ids de cada color/variante de
+      // cada candidato (ver describeColorOptions), así que el marcador puede
+      // traer un id de una variante que no está en `candidates` (porque
+      // dedupeVariants solo deja una tarjeta por diseño en la búsqueda). Se
+      // arma un mapa con esos ids también para poder resolver la tarjeta real.
+      const knownProducts = new Map<string, Product>();
+      for (const p of candidates) {
+        knownProducts.set(p.id, p);
+        for (const sibling of getVariantSiblings(p)) knownProducts.set(sibling.id, sibling);
+      }
+
       const res = await callGroqWithRetry(apiKey, {
         model: GROQ_MODEL,
         temperature: 0.5,
@@ -165,12 +213,9 @@ export default function CelesteChat() {
 
       const data = await res.json();
       const raw: string = data.choices?.[0]?.message?.content ?? "";
-      const { text: replyText, productIds } = parseAssistantReply(
-        raw,
-        candidates.map((p) => p.id)
-      );
+      const { text: replyText, productIds } = parseAssistantReply(raw, Array.from(knownProducts.keys()));
       const matchedProducts = productIds
-        .map((id) => candidates.find((p) => p.id === id))
+        .map((id) => knownProducts.get(id))
         .filter((p): p is Product => Boolean(p));
       for (const p of matchedProducts) recentProductsRef.current.set(p.id, p);
 
@@ -238,6 +283,11 @@ export default function CelesteChat() {
                         >
                           <div className="relative aspect-square bg-surface-alt">
                             <Image src={p.image} alt={p.name} fill className="object-cover" />
+                            {p.category === "Rescate" && (
+                              <span className="absolute top-1 left-1 bg-accent text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-tl-sm">
+                                Rescate
+                              </span>
+                            )}
                           </div>
                           <div className="p-1.5">
                             <p className="text-[11px] text-ink line-clamp-1">{p.name}</p>
