@@ -86,19 +86,28 @@ function sleep(ms: number) {
 
 // El nivel gratuito de Groq comparte el límite de solicitudes por minuto entre
 // TODOS los visitantes del sitio a la vez, así que un 429 (demasiadas
-// solicitudes) puede pasar en tráfico real, no solo en pruebas. Se reintenta
-// un par de veces con espera antes de rendirse.
-async function callGroqWithRetry(apiKey: string, body: unknown, attempt = 0): Promise<Response> {
-  const res = await fetch(GROQ_ENDPOINT, {
+// solicitudes) puede pasar en tráfico real, no solo en pruebas. Si hay una
+// segunda clave configurada, se prueba de inmediato (es una cuota
+// independiente, no hace falta esperar) antes de recurrir a la espera.
+async function callGroq(apiKey: string, body: unknown): Promise<Response> {
+  return fetch(GROQ_ENDPOINT, {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify(body),
   });
-  if (res.status === 429 && attempt < 3) {
-    await sleep(2000 * (attempt + 1));
-    return callGroqWithRetry(apiKey, body, attempt + 1);
+}
+
+async function callGroqWithFallback(apiKeys: string[], body: unknown): Promise<Response> {
+  let lastRes: Response | null = null;
+  for (const key of apiKeys) {
+    const res = await callGroq(key, body);
+    if (res.status !== 429) return res;
+    lastRes = res;
   }
-  return res;
+  // Todas las claves están sin cupo del minuto por ahora: se espera un poco
+  // y se reintenta una vez más con la primera, por si ya se liberó.
+  await sleep(2000);
+  return callGroq(apiKeys[0], body).catch(() => lastRes as Response);
 }
 
 function parseAssistantReply(raw: string, candidateIds: string[]): { text: string; productIds: string[] } {
@@ -167,8 +176,10 @@ export default function CelesteChat() {
     const text = input.trim();
     if (!text || loading) return;
 
-    const apiKey = process.env.NEXT_PUBLIC_GROQ_API_KEY;
-    if (!apiKey) {
+    const apiKeys = [process.env.NEXT_PUBLIC_GROQ_API_KEY, process.env.NEXT_PUBLIC_GROQ_API_KEY_2].filter(
+      (k): k is string => Boolean(k)
+    );
+    if (apiKeys.length === 0) {
       setError("El chat no está configurado todavía (falta la clave de Groq).");
       return;
     }
@@ -207,7 +218,7 @@ export default function CelesteChat() {
         for (const sibling of getVariantSiblings(p)) knownProducts.set(sibling.id, sibling);
       }
 
-      const res = await callGroqWithRetry(apiKey, {
+      const res = await callGroqWithFallback(apiKeys, {
         model: GROQ_MODEL,
         temperature: 0.5,
         max_tokens: 400,
