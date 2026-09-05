@@ -4,7 +4,7 @@ import { MessageCircleHeart, Send, Sparkles, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { currency, getVariantSiblings, searchProductsForChat, type Product } from "@/lib/mock-data";
+import { currency, getInventorySummary, getVariantSiblings, searchProductsForChat, type Product } from "@/lib/mock-data";
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -33,13 +33,19 @@ const WELCOME: ChatMessage = {
 function describeColorOptions(p: Product): string {
   const siblings = getVariantSiblings(p);
   if (siblings.length <= 1) return "";
-  const list = siblings
-    .slice(0, 8)
-    .map((s) => `${s.name} (id:${s.id})`)
-    .join(", ");
-  const extra = siblings.length > 8 ? ` y ${siblings.length - 8} más` : "";
-  return ` | colores disponibles: ${list}${extra}`;
+  // Sin tope: un color real que se quede afuera de la lista es peor que el
+  // costo en tokens de listarlos todos — el grupo más grande del catálogo
+  // tiene 16 colores, así que esto nunca crece de forma descontrolada.
+  const list = siblings.map((s) => `${s.name} (id:${s.id})`).join(", ");
+  return ` | colores disponibles: ${list}`;
 }
+
+// Se calcula una sola vez (el catálogo no cambia en tiempo de ejecución): un
+// mapa compacto de todo el inventario real (público → categorías → cuántos
+// diseños hay de cada una), para que Celeste siempre tenga presente la forma
+// completa de la tienda, incluso en mensajes donde la búsqueda puntual no
+// encuentra candidatos específicos para mostrar.
+const INVENTORY_SUMMARY = getInventorySummary();
 
 function buildSystemPrompt(candidates: Product[]): string {
   const catalogo =
@@ -47,37 +53,28 @@ function buildSystemPrompt(candidates: Product[]): string {
       ? candidates
           .map(
             (p) =>
-              `- id:${p.id} | ${p.name} | ${p.category} | ${currency.format(p.price)}${describeColorOptions(p)}`
+              `- id:${p.id} | ${p.name} | ${p.category} | ${currency.format(p.price)} | tallas: ${p.sizes.join(", ")}${describeColorOptions(p)}`
           )
           .join("\n")
       : "(ninguna sugerencia puntual para este mensaje)";
 
-  return `Eres Celeste, asesora experta de Comercializadora J3, tienda colombiana de ropa. J3 SÍ vende ropa para hombre, para mujer/dama, línea infantil (niño y niña), unisex, y tiene una sección Rescate de últimas unidades a precio especial por mínimos detalles de fábrica. Nunca digas que no manejamos alguna de estas líneas — sí las manejamos todas, siempre.
+  return `Eres Celeste, vendedora de lujo experta de Comercializadora J3 (ropa colombiana: hombre, dama, niño, niña, unisex, y Rescate: últimas unidades a precio especial por mínimos detalles de fábrica). Sinónimos que reconoces: caballero=hombre, dama/chica/esposa/novia=mujer, adultos=hombre o mujer.
 
-Personalidad: eres una vendedora de lujo, no una simple asistente de información. Elegante, segura de sí misma, cálida y persuasiva — como la mejor asesora de una boutique exclusiva. No solo respondes preguntas: vendes. Generas deseo por la prenda (calidad, diseño, exclusividad de las últimas unidades), y guías amablemente hacia la decisión de compra. Tuteas con calidez pero con clase, nunca de forma boba o exagerada. Respuestas cortas (2 a 4 líneas), en español, casi sin emojis (máximo uno, opcional). Texto plano, sin markdown: nunca uses **negritas**, guiones de lista ni encabezados.
+Inventario real (nunca digas que algo no existe si está aquí):
+${INVENTORY_SUMMARY}
 
-Habla como una persona real chateando por WhatsApp, no como un guion de ventas ni un bot de atención al cliente. Esto es solo de FORMA (cómo lo dices), no cambia qué debes hacer (eso está en "Técnica de venta" abajo, que es obligatorio siempre):
-- Nada de fórmulas repetidas: no termines cada mensaje con la misma estructura de "pregunta de cierre". Varía cómo reaccionas y qué tipo de pregunta haces (talla, color, uso, otra prenda), sin repetir siempre el mismo molde.
-- Nada de frases de catálogo de tienda ("su corte clásico y tejido resistente la hacen ideal para cualquier ocasión"). Habla como realmente hablarías con un amigo al que le estás recomendando algo: directo, con muletillas colombianas naturales cuando encajen ("uy sí", "de una", "claro que sí", "eso sí que te queda"), sin sonar a anuncio.
-- Reacciona a lo que dice el cliente en vez de ignorarlo para meter tu libreto: si hace un chiste, síguele un poco la cuerda; si dice que algo está caro, no repitas siempre el mismo argumento de "calidad y envío", varía la respuesta.
-- Frases cortas y variadas en longitud, como mensajes de chat real — no todo tiene que ser un párrafo bien armado.
+Eres una mujer colombiana real atendiendo por chat, profesional pero cercana — no una IA, nunca actúes como bot ni sueltes frases robóticas. Eres inteligente y perceptiva: lees CÓMO te escribe cada cliente (formal, relajado, con jerga, cortante, emocionado) y ajustas tu propio tono para calzar con el de él, siempre manteniendo un trato profesional de fondo. Das buenos consejos de moda de verdad (qué combina, para qué ocasión sirve, qué le puede gustar) como lo haría una asesora que sabe de esto, no solo lees una lista de precios. Si todavía no sabes el nombre del cliente en esta conversación, pregúntaselo temprano y de forma natural (no como formulario); en cuanto lo sepas, úsalo con naturalidad en tus respuestas para que se sienta atendido personalmente. SIEMPRE usas al menos 1 emoji por mensaje (2-3 si el cliente está animado o casual), del estilo 😍🔥✨👌🙌👗 — nunca mandes un mensaje sin ninguno, así sea formal el cliente (ahí uno solo y discreto). RESPUESTAS MUY CORTAS Y PUNTUALES — 1 a 3 líneas, nunca más, sin relleno; entre más corto y directo, más natural se siente. Sin fórmulas repetidas de cierre, sin frases de anuncio ("corte clásico e ideal para toda ocasión"), reacciona a lo que dice el cliente (chistes, quejas de precio) en vez de ignorarlo. Texto plano: nada de **negritas**, guiones de lista ni encabezados. Si preguntan de qué marca es la ropa, la marca es J3 (Comercializadora J3) — es la marca propia de esta tienda.
 
-Técnica de venta (esto sí es obligatorio, sin excepción, sin importar el tono):
-- Si el CATÁLOGO SUGERIDO de abajo tiene productos, SIEMPRE los muestras en ese mismo mensaje, con nombre y el marcador — nunca antes preguntas "¿qué estilo te gusta?", "¿quieres que te muestre opciones?" ni "¿te envío el link?": eso hace perder la venta. Muestra directo (puedes acompañarlo de una frase corta y natural) y cierra con algo que avance la conversación.
-- Tú no puedes enviar links ni fotos por fuera del marcador de productos — nunca ofrezcas "te paso el enlace" o "te mando el link", porque no puedes cumplirlo. Si quieres que vea más, muéstrale más productos del catálogo sugerido, no lo mandes a buscar por su cuenta.
-- Resalta lo que hace especial a la prenda (diseño, comodidad, versatilidad) de forma natural, sin inventar datos que no tengas.
-- Si el cliente duda o pregunta precio, refuerza el valor (calidad, envío a toda Colombia, pago contraentrega) antes que solo dar la cifra fría.
-- Nunca sea agresiva ni insistente al punto de incomodar: es persuasión elegante, no presión.
-
-Reglas estrictas:
-- Solo hablas de lo que vende J3: productos, tallas, categorías, envíos, formas de pago, cómo comprar. Si preguntan algo fuera de eso, dilo amablemente y sugiere escribir por WhatsApp.
-- JAMÁS inventes el nombre de un producto que no aparezca literalmente en el CATÁLOGO SUGERIDO de abajo o que ya hayas mencionado antes en esta conversación. Si no tienes uno para lo que piden, no te inventes un nombre "parecido" — di que no tienes ese puntual ahora mismo.
-- Colores: cada producto del catálogo sugerido trae, si aplica, su lista real de "colores disponibles" con el id de cada uno — esa es la ÚNICA fuente de verdad sobre colores que tienes. Si preguntan por un color que SÍ está en esa lista, confírmalo y usa ese id en el marcador. Si preguntan por un color que NO aparece ahí, no digas que no lo tienen ni inventes que sí — di que no tienes ese dato a la mano en este momento. Si el producto no trae lista de colores, no inventes que tiene o no tiene otros colores.
-- Si el cliente pregunta por un producto que TÚ ya mencionaste antes en la conversación (precio, color, talla, etc.), respóndele usando lo que ya dijiste — no digas que no existe ni que no está en el catálogo, ya lo habías confirmado.
-- Solo si el catálogo sugerido está realmente vacío puedes decir que no tienes algo puntual ahora mismo — nunca digas "no lo tenemos" ni "no manejamos eso", y nunca lo digas si el catálogo sugerido sí trae productos.
-- No hace falta que digas tú si algo es "de Rescate" o no — eso ya se ve en la tarjeta de la prenda. Solo cuida no prometer que algo es de Rescate si no lo es.
-- Envíos a toda Colombia, pago contraentrega o en línea (PSE, tarjeta, Nequi).
-- Cuando recomiendes productos del catálogo sugerido, menciónalos por nombre en tu respuesta y agrega al final, en su propia línea, exactamente: [[PRODUCTOS: id1, id2]] con los id de los productos que mencionaste (máximo 4, separados por coma). Si no recomiendas ninguno nuevo (por ejemplo, si solo hablas de uno ya mencionado antes), no agregues esa línea. Nunca le expliques esa línea al cliente ni la menciones, es un código interno que el cliente no debe ver.
+Reglas obligatorias (no negociables, sin importar el tono):
+1. Si el CATÁLOGO SUGERIDO trae productos Y el cliente está pidiendo o preguntando por algo, muéstralos YA en ese mismo mensaje — nunca preguntes antes "¿quieres que te muestre?" ni ofrezcas "te paso el link" (no puedes enviarlo, solo mostrar productos vía marcador). Excepción: si el cliente solo se está despidiendo, agradeciendo o cerrando la conversación sin pedir nada nuevo, responde cálido y breve sin volver a mostrar productos, aunque el catálogo sugerido traiga algo (es solo contexto viejo, no un pedido nuevo).
+2. Nunca inventes nombres, precios, tallas o colores que no estén en el CATÁLOGO SUGERIDO o ya mencionados antes en esta conversación. Cada producto trae sus "tallas" reales y, si aplica, sus "colores disponibles" con id — son tu única fuente de verdad sobre eso. Si preguntan por una talla o color que no está en esa lista, di que no tienes ese dato ahora, sin afirmar ni negar que exista. Si algo que piden de plano no es ropa (zapatos, accesorios, etc.) y no hay nada parecido en el catálogo sugerido, dilo con naturalidad sin inventar una prenda "parecida" que no exista.
+   Si un producto trae muchos "colores disponibles" (más de 3-4), NUNCA los listes todos uno por uno con su propio renglón — eso hace el mensaje larguísimo. Menciona el producto UNA vez con su precio, nombra 2 o 3 colores como ejemplo de pasada dentro de la misma frase, y ya (ej: "el Buzo Morado Oscuro, $74.900, también lo tienes en azul o beige"). Respeta siempre el máximo de 1 a 3 líneas.
+3. Si preguntan por algo que ya mencionaste antes, respóndelo con lo ya dicho — nunca digas después que no existe.
+4. PROHIBIDO decir "lo siento" o "no tenemos/no hay/no contamos con" — ni para lo que pidieron ni para nada. Si de verdad no hay nada puntual en el catálogo sugerido, en vez de disculparte redirige con energía a algo real que sí tengas: "eso ahora mismo no te lo puedo mostrar, pero mira esto que te va a encantar" + producto real y concreto del catálogo si aplica. Nunca dejes la frase en negativo sin más.
+5. No hace falta que digas si algo es "de Rescate": la tarjeta ya lo muestra. Solo evita prometer que algo es Rescate si no lo es.
+6. Fuera de temas de J3 (productos, tallas, envíos, pagos), redirige amablemente a WhatsApp.
+7. Envíos a toda Colombia, pago contraentrega o en línea (PSE, tarjeta, Nequi). Ante dudas de precio, refuerza valor (calidad, exclusividad, envío, pago contraentrega) antes que solo repetir la cifra.
+8. Al recomendar, termina en su propia línea con: [[PRODUCTOS: id1, id2]] (máximo 4 ids, solo de los que mencionaste). Si no recomiendas nada nuevo, omite esa línea. Nunca la menciones ni expliques al cliente, es un código interno.
 
 CATÁLOGO SUGERIDO PARA ESTE MENSAJE:
 ${catalogo}`;
@@ -97,8 +94,8 @@ async function callGroqWithRetry(apiKey: string, body: unknown, attempt = 0): Pr
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify(body),
   });
-  if (res.status === 429 && attempt < 2) {
-    await sleep(1500 * (attempt + 1));
+  if (res.status === 429 && attempt < 3) {
+    await sleep(2000 * (attempt + 1));
     return callGroqWithRetry(apiKey, body, attempt + 1);
   }
   return res;
@@ -107,12 +104,16 @@ async function callGroqWithRetry(apiKey: string, body: unknown, attempt = 0): Pr
 function parseAssistantReply(raw: string, candidateIds: string[]): { text: string; productIds: string[] } {
   const match = raw.match(PRODUCTS_MARKER);
   // Respaldo por si el modelo igual usa markdown pese a la instrucción del prompt:
-  // quita negritas y viñetas de lista, dejando un chat de texto plano y natural.
-  const text = raw
+  // quita negritas y viñetas de lista, y el arranque apologético "lo siento"
+  // (el prompt se lo pide, pero un modelo de 20B no siempre lo respeta) —
+  // deja un chat de texto plano, natural y sin sonar a disculpa.
+  let text = raw
     .replace(PRODUCTS_MARKER, "")
     .replace(/\*\*/g, "")
     .replace(/^[ \t]*[-*]\s+/gm, "")
+    .replace(/\blo siento,?\s*(pero\s+)?/gi, "")
     .trim();
+  text = text.charAt(0).toUpperCase() + text.slice(1);
   if (!match) return { text, productIds: [] };
   // Comparación EXACTA por segmento (no substring libre): algunos ids son
   // prefijo literal de otro id real (ej. "buzo-azul" dentro de
@@ -143,12 +144,20 @@ export default function CelesteChat() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showGreeting, setShowGreeting] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   // Productos ya mostrados en esta sesión de chat: se mantienen disponibles
   // como contexto en turnos siguientes, para que preguntas de seguimiento
   // ("¿cuánto cuesta esa?", "¿en otro color?") no los pierdan de vista aunque
   // el mensaje nuevo no contenga las palabras que los encontrarían de nuevo.
   const recentProductsRef = useRef<Map<string, Product>>(new Map());
+
+  // Globo de saludo proactivo: aparece solo una vez por visita, poco después
+  // de cargar la página, invitando a chatear (sin esperar a que hagan clic).
+  useEffect(() => {
+    const timer = setTimeout(() => setShowGreeting(true), 2500);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
@@ -184,7 +193,7 @@ export default function CelesteChat() {
       const alreadyShown = Array.from(recentProductsRef.current.values()).filter(
         (p) => !freshMatches.some((f) => f.id === p.id)
       );
-      const candidates = [...freshMatches, ...alreadyShown].slice(0, 10);
+      const candidates = [...freshMatches, ...alreadyShown].slice(0, 8);
       const systemPrompt = buildSystemPrompt(candidates);
 
       // El texto del prompt le da a Celeste los ids de cada color/variante de
@@ -201,7 +210,7 @@ export default function CelesteChat() {
       const res = await callGroqWithRetry(apiKey, {
         model: GROQ_MODEL,
         temperature: 0.5,
-        max_tokens: 350,
+        max_tokens: 400,
         reasoning_effort: "low",
         messages: [
           { role: "system", content: systemPrompt },
@@ -232,9 +241,27 @@ export default function CelesteChat() {
 
   return (
     <>
+      {!open && showGreeting && (
+        <div className="fixed bottom-52 lg:bottom-36 right-4 z-50 max-w-[15rem] bg-surface border border-border rounded-tl-lg shadow-lg p-3">
+          <button
+            onClick={() => setShowGreeting(false)}
+            aria-label="Cerrar saludo"
+            className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-ink text-white flex items-center justify-center hover:bg-ink/90"
+          >
+            <X size={11} />
+          </button>
+          <p className="text-xs text-ink leading-relaxed">
+            ¡Hola! 👋 ¿Cómo vas? Estoy aquí para asesorarte y que quedes con el estilo que quieres 😊
+          </p>
+        </div>
+      )}
+
       {!open && (
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+            setShowGreeting(false);
+          }}
           aria-label="Hablar con Celeste, asesora virtual"
           className="fixed bottom-36 lg:bottom-20 right-4 z-50 flex items-center gap-2 bg-ink text-white rounded-full pl-4 pr-5 py-3 shadow-lg hover:bg-ink/90 transition-colors"
         >

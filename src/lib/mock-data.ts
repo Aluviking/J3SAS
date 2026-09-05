@@ -1735,7 +1735,7 @@ export const products: Product[] = [
     description: "Buzo con capota color verde militar, tela de algodón perchado, bolsillo canguro.",
   },
   {
-    id: "nino-dragon-ball-z",
+    id: "dragon-ball-z",
     name: "Camiseta Dragon Ball Z",
     category: "Camisetas",
     audience: "hombre",
@@ -1754,7 +1754,7 @@ export const products: Product[] = [
     description: "Camiseta blanca con estampado de Dragon Ball Z, Goku y las esferas del dragón.",
   },
   {
-    id: "nino-lilo-stitch",
+    id: "lilo-stitch",
     name: "Camiseta Lilo & Stitch",
     category: "Camisetas",
     audience: "hombre",
@@ -1773,7 +1773,7 @@ export const products: Product[] = [
     description: "Camiseta crema con estampado de Stitch estilo urbano y logo 'Lilo & Stitch'.",
   },
   {
-    id: "nino-batman",
+    id: "batman",
     name: "Camiseta Batman",
     category: "Camisetas",
     audience: "hombre",
@@ -1792,7 +1792,7 @@ export const products: Product[] = [
     description: "Camiseta color crudo con estampado gráfico de Batman y el logo del murciélago.",
   },
   {
-    id: "nino-muttik-skater",
+    id: "muttik-skater",
     name: "Camiseta Muttik Skater",
     category: "Camisetas",
     audience: "hombre",
@@ -1811,7 +1811,7 @@ export const products: Product[] = [
     description: "Camiseta negra con estampado de conejo skater 'Muttik Silver Attack', estilo urbano.",
   },
   {
-    id: "nino-spongebob-crazy-beige",
+    id: "spongebob-crazy-beige",
     name: "Camiseta SpongeBob Crazy (Beige)",
     category: "Camisetas",
     audience: "hombre",
@@ -1830,7 +1830,7 @@ export const products: Product[] = [
     description: "Camiseta beige con estampado grafiti de Bob Esponja saltando, 'Crazy Sponge Bob'.",
   },
   {
-    id: "nino-stitch-lima",
+    id: "stitch-lima",
     name: "Camiseta Stitch Lima",
     category: "Camisetas",
     audience: "mujer",
@@ -1849,7 +1849,7 @@ export const products: Product[] = [
     description: "Camiseta verde lima con estampado de Stitch sentado y letras rosadas.",
   },
   {
-    id: "nino-spongebob-crazy-morado",
+    id: "spongebob-crazy-morado",
     name: "Camiseta SpongeBob Crazy (Morado)",
     category: "Camisetas",
     audience: "mujer",
@@ -1868,7 +1868,7 @@ export const products: Product[] = [
     description: "Camiseta morada con estampado grafiti de Bob Esponja saltando, 'Crazy Sponge Bob'.",
   },
   {
-    id: "nino-mickey-fisherman",
+    id: "mickey-fisherman",
     name: "Camiseta Mickey Mouse Pescador",
     category: "Camisetas",
     audience: "mujer",
@@ -1887,7 +1887,7 @@ export const products: Product[] = [
     description: "Camiseta verde menta con estampado de Mickey Mouse pescador y logo 'Mickey Mouse'.",
   },
   {
-    id: "nino-mickey-friends",
+    id: "mickey-friends",
     name: "Camiseta Mickey Friends",
     category: "Camisetas",
     audience: "hombre",
@@ -4878,8 +4878,8 @@ function normalizeText(s: string): string {
 // "mi hijo") — así el chat entiende de quién se habla sin que digan
 // literalmente "para hombre" o "para niño".
 const AUDIENCE_KEYWORDS: Record<Audience, string[]> = {
-  hombre: ["hombre", "hombres", "masculino", "caballero", "esposo", "novio", "papa"],
-  mujer: ["mujer", "mujeres", "dama", "damas", "femenino", "chica", "ella", "esposa", "novia", "mama"],
+  hombre: ["hombre", "hombres", "masculino", "caballero", "esposo", "novio", "papa", "adultos", "adulto"],
+  mujer: ["mujer", "mujeres", "dama", "damas", "femenino", "chica", "ella", "esposa", "novia", "mama", "adultos", "adulto"],
   nino: ["nino", "ninos", "varoncito", "hijo", "sobrino", "nieto"],
   nina: ["nina", "ninas", "hija", "sobrina", "nieta"],
 };
@@ -4958,6 +4958,45 @@ function searchProductsForChatUnfiltered(words: string[], limit: number): Produc
     .sort((a, b) => b.score - a.score)
     .map((s) => s.product);
   return dedupeVariants(ranked).slice(0, limit);
+}
+
+// Mapa de todo el catálogo (público → categoría → cuántos diseños hay), para
+// que Celeste siempre tenga en su prompt la forma completa del inventario,
+// incluso en mensajes donde la búsqueda puntual no encuentra candidatos
+// específicos. Cuenta diseños reales (agrupando colores del mismo diseño),
+// no cada referencia de color por separado.
+export function getInventorySummary(): string {
+  const audienceLabel: Record<string, string> = {
+    hombre: "Hombre",
+    mujer: "Dama",
+    nino: "Niño",
+    nina: "Niña",
+  };
+
+  const byAudience = new Map<string, Product[]>();
+  for (const p of products) {
+    const key = p.audience ?? "unisex";
+    if (!byAudience.has(key)) byAudience.set(key, []);
+    byAudience.get(key)!.push(p);
+  }
+
+  const lines: string[] = [];
+  for (const [audience, list] of byAudience) {
+    const designs = dedupeVariants(list);
+    const byCategory = new Map<string, number>();
+    for (const p of designs) {
+      byCategory.set(p.category, (byCategory.get(p.category) ?? 0) + 1);
+    }
+    const categoriesStr = Array.from(byCategory.entries())
+      .map(([cat, count]) => `${cat} (${count})`)
+      .join(", ");
+    const rescateCount = designs.filter((p) => p.category === "Rescate").length;
+    const label = audienceLabel[audience] ?? "Unisex";
+    lines.push(
+      `${label} (${designs.length}): ${categoriesStr}${rescateCount > 0 ? ` [${rescateCount} de Rescate]` : ""}`
+    );
+  }
+  return lines.join("\n");
 }
 
 // Formateador de moneda compartido (evita reimplementarlo en cada componente).
