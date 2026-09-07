@@ -8,7 +8,13 @@ export type Disclaimer = {
   buttonLabel?: string;
 };
 
-export default function DisclaimerModal({ disclaimer }: { disclaimer: Disclaimer }) {
+export default function DisclaimerModal({
+  disclaimer,
+  onDismiss,
+}: {
+  disclaimer: Disclaimer;
+  onDismiss?: () => void;
+}) {
   const [visible, setVisible] = useState(true);
   if (!visible) return null;
 
@@ -18,7 +24,10 @@ export default function DisclaimerModal({ disclaimer }: { disclaimer: Disclaimer
         <h2 className="text-lg font-semibold text-ink">{disclaimer.title}</h2>
         <p className="mt-2 text-sm text-muted leading-relaxed">{disclaimer.body}</p>
         <button
-          onClick={() => setVisible(false)}
+          onClick={() => {
+            setVisible(false);
+            onDismiss?.();
+          }}
           className="mt-4 w-full inline-flex items-center justify-center gap-2 bg-cta text-white text-sm font-semibold py-3 rounded-tl-lg transition-colors hover:bg-cta-dark"
         >
           {disclaimer.buttonLabel ?? "Continuar"}

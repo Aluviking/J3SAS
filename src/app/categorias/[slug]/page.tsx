@@ -47,7 +47,6 @@ const SLUGS: Record<string, SlugConfig> = {
       { key: "mujer", label: "Dama" },
       { key: "nina", label: "Niña" },
       { key: "nino", label: "Niño" },
-      { key: "Croptop", label: "Croptop", field: "subcategory" as const },
     ],
     subFilterField: "audience",
     disclaimer: RESCATE_DISCLAIMER,

@@ -32,6 +32,7 @@ import {
   sampleReview,
   type Product,
 } from "@/lib/mock-data";
+import { hasSeenRescateDisclaimer, markRescateDisclaimerSeen } from "@/lib/rescate-disclaimer-seen";
 
 function Accordion({
   title,
@@ -76,6 +77,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const [added, setAdded] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
   const colorVariants = getVariantSiblings(product);
+  const rescateDesignKey = product.variantGroup ?? product.id;
 
   const handleAdd = () => {
     addItem(product.id, size);
@@ -95,7 +97,12 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="px-4 lg:px-8 py-5 pb-8">
-      {product.category === "Rescate" && <DisclaimerModal disclaimer={RESCATE_DISCLAIMER} />}
+      {product.category === "Rescate" && !hasSeenRescateDisclaimer(rescateDesignKey) && (
+        <DisclaimerModal
+          disclaimer={RESCATE_DISCLAIMER}
+          onDismiss={() => markRescateDisclaimerSeen(rescateDesignKey)}
+        />
+      )}
       <button
         onClick={() => router.back()}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-cta mb-2"

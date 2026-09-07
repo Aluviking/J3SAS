@@ -43,19 +43,46 @@ export default function ProductGridPage({
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [activeFilter, setActiveFilter] = useState<string>("todos");
+  const [activeSubcategory, setActiveSubcategory] = useState<string>("todos");
+
+  const selectPrimary = (key: string) => {
+    setActiveFilter(key);
+    setActiveSubcategory("todos");
+  };
+
+  // Productos que ya pasaron el filtro principal (audiencia/categoría), sin
+  // aplicar todavía el tipo de prenda. Sirve tanto para calcular qué tipos
+  // de prenda existen dentro de esa selección como para el filtro final.
+  const primaryFiltered = useMemo(() => {
+    const activeField = subFilters?.find((f) => f.key === activeFilter)?.field ?? subFilterField;
+    if (activeFilter === "todos" || !activeField) return products;
+    return products.filter((p) => {
+      if (activeField === "audience") return p.audience === activeFilter;
+      if (activeField === "category") return p.category === activeFilter;
+      if (activeField === "subcategory") return !!p.subcategories?.includes(activeFilter);
+      return true;
+    });
+  }, [products, activeFilter, subFilterField, subFilters]);
+
+  // Tipos de prenda (subcategoría) disponibles dentro de la audiencia
+  // seleccionada. Solo tiene sentido cuando el filtro principal es por
+  // audiencia (ej. Rescate: Hombre/Dama/Niña/Niño) — así, si únicamente
+  // Dama tiene Croptop/Pedrería, esas opciones solo aparecen al elegir Dama.
+  const subcategoryOptions = useMemo(() => {
+    if (subFilterField !== "audience") return [];
+    const set = new Set<string>();
+    for (const p of primaryFiltered) {
+      p.subcategories?.forEach((sc) => set.add(sc));
+    }
+    return Array.from(set);
+  }, [primaryFiltered, subFilterField]);
 
   const visibleProducts = useMemo(() => {
     const min = minPrice ? Number(minPrice) : null;
     const max = maxPrice ? Number(maxPrice) : null;
 
-    const activeField = subFilters?.find((f) => f.key === activeFilter)?.field ?? subFilterField;
-
-    let list = products.filter((p) => {
-      if (activeFilter !== "todos" && activeField) {
-        if (activeField === "audience" && p.audience !== activeFilter) return false;
-        if (activeField === "category" && p.category !== activeFilter) return false;
-        if (activeField === "subcategory" && !p.subcategories?.includes(activeFilter)) return false;
-      }
+    let list = primaryFiltered.filter((p) => {
+      if (activeSubcategory !== "todos" && !p.subcategories?.includes(activeSubcategory)) return false;
       if (min !== null && p.price < min) return false;
       if (max !== null && p.price > max) return false;
       return true;
@@ -71,7 +98,7 @@ export default function ProductGridPage({
     }
 
     return dedupeVariants(list);
-  }, [products, sort, minPrice, maxPrice, activeFilter, subFilterField, subFilters]);
+  }, [primaryFiltered, sort, minPrice, maxPrice, activeSubcategory]);
 
   return (
     <div className="px-4 lg:px-8 py-5">
@@ -117,7 +144,7 @@ export default function ProductGridPage({
       {subFilters && subFilters.length > 0 && (
         <div className="mt-3 flex items-center gap-2 flex-wrap">
           <button
-            onClick={() => setActiveFilter("todos")}
+            onClick={() => selectPrimary("todos")}
             className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
               activeFilter === "todos"
                 ? "bg-ink text-white"
@@ -129,7 +156,7 @@ export default function ProductGridPage({
           {subFilters.map((f) => (
             <button
               key={f.key}
-              onClick={() => setActiveFilter(f.key)}
+              onClick={() => selectPrimary(f.key)}
               className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
                 activeFilter === f.key
                   ? "bg-ink text-white"
@@ -137,6 +164,34 @@ export default function ProductGridPage({
               }`}
             >
               {f.label}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {subcategoryOptions.length > 0 && (
+        <div className="mt-2 flex items-center gap-2 flex-wrap">
+          <button
+            onClick={() => setActiveSubcategory("todos")}
+            className={`text-xs font-medium px-2.5 py-1 rounded-tl-md transition-colors ${
+              activeSubcategory === "todos"
+                ? "bg-ink/80 text-white"
+                : "bg-transparent text-muted hover:text-ink border border-border"
+            }`}
+          >
+            Todos los tipos
+          </button>
+          {subcategoryOptions.map((sc) => (
+            <button
+              key={sc}
+              onClick={() => setActiveSubcategory(sc)}
+              className={`text-xs font-medium px-2.5 py-1 rounded-tl-md transition-colors ${
+                activeSubcategory === sc
+                  ? "bg-ink/80 text-white"
+                  : "bg-transparent text-muted hover:text-ink border border-border"
+              }`}
+            >
+              {sc}
             </button>
           ))}
         </div>

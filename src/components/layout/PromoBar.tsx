@@ -7,18 +7,18 @@ import { useState } from "react";
 function Message() {
   return (
     <span className="inline-flex items-center gap-1.5 px-8 shrink-0">
-      <span className="font-semibold uppercase tracking-wide">Nuevos productos</span>
+      <span className="font-semibold uppercase tracking-wide">Rescate</span>
       <Link
-        href="/categorias/hombre"
+        href="/categorias/rescate"
         className="rounded-tl-sm bg-cta px-2 py-0.5 font-semibold hover:bg-cta-dark transition-colors"
       >
-        Buzos
+        Hasta 18% OFF
       </Link>
       <Link
-        href="/categorias/hombre"
+        href="/categorias/rescate"
         className="rounded-tl-sm bg-cta px-2 py-0.5 font-semibold hover:bg-cta-dark transition-colors"
       >
-        Polos
+        Ver ofertas
       </Link>
     </span>
   );
