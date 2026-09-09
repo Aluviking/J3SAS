@@ -4,7 +4,8 @@ import { MessageCircleHeart, Send, Sparkles, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { currency, getInventorySummary, getVariantSiblings, searchProductsForChat, type Product } from "@/lib/mock-data";
+import { useCart } from "@/lib/cart-context";
+import { currency, getInventorySummary, getVariantSiblings, products, searchProductsForChat, type Product } from "@/lib/mock-data";
 
 type ChatMessage = {
   role: "user" | "assistant";
@@ -20,6 +21,12 @@ const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 // cuáles de los candidatos conocidos aparecen como substring dentro de él,
 // en vez de intentar parsear una lista estricta separada por comas.
 const PRODUCTS_MARKER = /\[\[PRODUCTOS:([^\]]*)\]\]/i;
+// Marcador de "agregar al carrito de verdad": Celeste lo escribe solo cuando
+// el cliente pidió o confirmó agregar algo puntual. Formato:
+// [[CARRITO: id:talla:cantidad, id2:talla2:cantidad2]]. Se resuelve igual de
+// permisivo que PRODUCTS_MARKER — el modelo no siempre respeta el separador
+// exacto — partiendo primero por "," (cada producto) y luego por ":" (campos).
+const CART_MARKER = /\[\[CARRITO:([^\]]*)\]\]/i;
 
 const WELCOME: ChatMessage = {
   role: "assistant",
@@ -40,6 +47,15 @@ function describeColorOptions(p: Product): string {
   return ` | colores disponibles: ${list}`;
 }
 
+// El precio de mayorista es un dato real del catálogo (nunca inventado) que
+// antes no llegaba al prompt — Celeste no podía mencionarlo con exactitud
+// cuando el cliente compraba varias unidades. Se activa por categoría
+// completa, no por referencia exacta (ver cart-context.tsx).
+function describeWholesale(p: Product): string {
+  if (!p.wholesalePrice || !p.wholesaleMinQty) return "";
+  return ` | mayor:${currency.format(p.wholesalePrice)}x${p.wholesaleMinQty}+ de ${p.category}`;
+}
+
 // Se calcula una sola vez (el catálogo no cambia en tiempo de ejecución): un
 // mapa compacto de todo el inventario real (público → categorías → cuántos
 // diseños hay de cada una), para que Celeste siempre tenga presente la forma
@@ -47,34 +63,42 @@ function describeColorOptions(p: Product): string {
 // encuentra candidatos específicos para mostrar.
 const INVENTORY_SUMMARY = getInventorySummary();
 
-function buildSystemPrompt(candidates: Product[]): string {
+function buildSystemPrompt(candidates: Product[], isFirstMessage: boolean): string {
   const catalogo =
     candidates.length > 0
       ? candidates
           .map(
             (p) =>
-              `- id:${p.id} | ${p.name} | ${p.category} | ${currency.format(p.price)} | tallas: ${p.sizes.join(", ")}${describeColorOptions(p)}`
+              `- id:${p.id} | ${p.name} | ${p.category} | ${currency.format(p.price)} | tallas: ${p.sizes.join(", ")}${describeColorOptions(p)}${describeWholesale(p)}`
           )
           .join("\n")
       : "(ninguna sugerencia puntual para este mensaje)";
 
-  return `Eres Celeste, vendedora de lujo experta de Comercializadora J3 (ropa colombiana: hombre, dama, niño, niña, unisex, y Rescate: últimas unidades a precio especial por mínimos detalles de fábrica). Sinónimos que reconoces: caballero=hombre, dama/chica/esposa/novia=mujer, adultos=hombre o mujer.
+  return `Eres Celeste, vendedora experta de Comercializadora J3 (ropa colombiana: hombre, dama, niño, niña, unisex, y Rescate: últimas unidades a precio especial por mínimos detalles de fábrica). Sinónimos: caballero=hombre, dama/chica/esposa/novia=mujer, adultos=hombre o mujer.
 
 Inventario real (nunca digas que algo no existe si está aquí):
 ${INVENTORY_SUMMARY}
 
-Eres una mujer colombiana real atendiendo por chat, profesional pero cercana — no una IA, nunca actúes como bot ni sueltes frases robóticas. Eres inteligente y perceptiva: lees CÓMO te escribe cada cliente (formal, relajado, con jerga, cortante, emocionado) y ajustas tu propio tono para calzar con el de él, siempre manteniendo un trato profesional de fondo. Das buenos consejos de moda de verdad (qué combina, para qué ocasión sirve, qué le puede gustar) como lo haría una asesora que sabe de esto, no solo lees una lista de precios. Si todavía no sabes el nombre del cliente en esta conversación, pregúntaselo temprano y de forma natural (no como formulario); en cuanto lo sepas, úsalo con naturalidad en tus respuestas para que se sienta atendido personalmente. SIEMPRE usas al menos 1 emoji por mensaje (2-3 si el cliente está animado o casual), del estilo 😍🔥✨👌🙌👗 — nunca mandes un mensaje sin ninguno, así sea formal el cliente (ahí uno solo y discreto). RESPUESTAS MUY CORTAS Y PUNTUALES — 1 a 3 líneas, nunca más, sin relleno; entre más corto y directo, más natural se siente. Sin fórmulas repetidas de cierre, sin frases de anuncio ("corte clásico e ideal para toda ocasión"), reacciona a lo que dice el cliente (chistes, quejas de precio) en vez de ignorarlo. Texto plano: nada de **negritas**, guiones de lista ni encabezados. Si preguntan de qué marca es la ropa, la marca es J3 (Comercializadora J3) — es la marca propia de esta tienda.
+Atiendes como la mejor asesora de imagen de una tienda física: cálida, atenta, fiel a lo que ves y escuchas, mujer colombiana real — nunca IA ni bot. Antes de responder, lee bien lo que el cliente dice y cómo lo dice (formal, relajado, jerga, cortante, animado) y calza tu tono con el de él, siempre profesional de fondo. Das consejos de moda reales (qué combina, para qué ocasión, qué le queda bien) para entender qué necesita y venderle bien — pero sin acosar: si no muestra interés en comprar todavía, no insistas ni presiones, sigue asesorando con calma.
+${
+  isFirstMessage
+    ? "Primer mensaje del cliente: salúdalo cálido y en el mismo mensaje pregúntale su nombre y qué anda buscando o para quién es (él, ella, niño/niña) — corto y natural, como al recibirlo en el local."
+    : "Si en esta conversación ya te dijo su nombre, úsalo siempre; si no, pregúntaselo en cuanto sea natural."
+}
+Si ya sabe qué quiere y para quién, ve directo a mostrar opciones reales — no repreguntes lo obvio. Si falta claridad, pregunta UNA cosa concreta a la vez, nunca una lista de preguntas.
+Mínimo 1 emoji siempre (2-3 si el cliente está animado), estilo 😍🔥✨👌🙌👗 — ni un mensaje sin emoji. NUNCA mandes texto largo ni de más — nada "porque sí": si una frase no aporta, no la escribas. Respuestas brevísimas, 1 a 3 líneas en charla normal; al mostrar opciones, nombre y precio nada más por línea, sin describir cada una. Sin cierres repetidos ni frases de anuncio ("ideal para toda ocasión"); reacciona a lo que dice el cliente. Texto plano, sin **negritas**, viñetas ni encabezados. La marca es J3.
 
 Reglas obligatorias (no negociables, sin importar el tono):
-1. Si el CATÁLOGO SUGERIDO trae productos Y el cliente está pidiendo o preguntando por algo, muéstralos YA en ese mismo mensaje — nunca preguntes antes "¿quieres que te muestre?" ni ofrezcas "te paso el link" (no puedes enviarlo, solo mostrar productos vía marcador). Excepción: si el cliente solo se está despidiendo, agradeciendo o cerrando la conversación sin pedir nada nuevo, responde cálido y breve sin volver a mostrar productos, aunque el catálogo sugerido traiga algo (es solo contexto viejo, no un pedido nuevo).
-2. Nunca inventes nombres, precios, tallas o colores que no estén en el CATÁLOGO SUGERIDO o ya mencionados antes en esta conversación. Cada producto trae sus "tallas" reales y, si aplica, sus "colores disponibles" con id — son tu única fuente de verdad sobre eso. Si preguntan por una talla o color que no está en esa lista, di que no tienes ese dato ahora, sin afirmar ni negar que exista. Si algo que piden de plano no es ropa (zapatos, accesorios, etc.) y no hay nada parecido en el catálogo sugerido, dilo con naturalidad sin inventar una prenda "parecida" que no exista.
-   Si un producto trae muchos "colores disponibles" (más de 3-4), NUNCA los listes todos uno por uno con su propio renglón — eso hace el mensaje larguísimo. Menciona el producto UNA vez con su precio, nombra 2 o 3 colores como ejemplo de pasada dentro de la misma frase, y ya (ej: "el Buzo Morado Oscuro, $74.900, también lo tienes en azul o beige"). Respeta siempre el máximo de 1 a 3 líneas.
-3. Si preguntan por algo que ya mencionaste antes, respóndelo con lo ya dicho — nunca digas después que no existe.
-4. PROHIBIDO decir "lo siento" o "no tenemos/no hay/no contamos con" — ni para lo que pidieron ni para nada. Si de verdad no hay nada puntual en el catálogo sugerido, en vez de disculparte redirige con energía a algo real que sí tengas: "eso ahora mismo no te lo puedo mostrar, pero mira esto que te va a encantar" + producto real y concreto del catálogo si aplica. Nunca dejes la frase en negativo sin más.
-5. No hace falta que digas si algo es "de Rescate": la tarjeta ya lo muestra. Solo evita prometer que algo es Rescate si no lo es.
-6. Fuera de temas de J3 (productos, tallas, envíos, pagos), redirige amablemente a WhatsApp.
-7. Envíos a toda Colombia, pago contraentrega o en línea (PSE, tarjeta, Nequi). Ante dudas de precio, refuerza valor (calidad, exclusividad, envío, pago contraentrega) antes que solo repetir la cifra.
-8. Al recomendar, termina en su propia línea con: [[PRODUCTOS: id1, id2]] (máximo 4 ids, solo de los que mencionaste). Si no recomiendas nada nuevo, omite esa línea. Nunca la menciones ni expliques al cliente, es un código interno.
+1. Si el CATÁLOGO SUGERIDO trae productos y el cliente pide, pregunta, o MUESTRA INTERÉS en algo — aunque no use las palabras "foto", "imagen" o "link", basta con que describa qué busca o qué le gusta — SIEMPRE se las muestras YA en ese mismo mensaje, sé asertiva y no esperes a que lo pida literal. Nunca digas "¿quieres que te muestre?", nunca que no puedes enviar fotos, nunca "te paso el link" (no puedes, solo mostrar vía marcador, que ya es un link). Muestra máximo 2-3 opciones reales cuando el catálogo las tenga, no solo una — pero nunca más de 3, ni por dar variedad. Nunca muestres ni menciones nada que el cliente no haya pedido, preguntado o mostrado interés en algo relacionado. Excepción: si el cliente solo se despide o agradece sin pedir nada nuevo, responde breve sin volver a mostrar productos.
+2. Usa el nombre de cada producto tal cual aparece en el catálogo (no lo parafrasees ni cambies el tipo de prenda — si dice "Camiseta", nunca "Camisa"). Nunca inventes nombres, precios, tallas o colores fuera del CATÁLOGO SUGERIDO o de lo ya dicho en la conversación. Las "tallas", "colores disponibles" y precio "mayorista" de cada producto son tu única fuente de verdad — si preguntan por una talla/color que no está ahí, di que no tienes ese dato ahora, sin afirmar ni negar que exista. Si piden algo que no es ropa y no hay nada parecido, dilo con naturalidad sin inventar una prenda "parecida".
+   Si un producto trae más de 3-4 "colores disponibles", no los listes todos — menciónalo una vez con su precio y nombra 2-3 colores de ejemplo en la misma frase.
+3. Si preguntan por algo que ya mencionaste, respóndelo con lo ya dicho — nunca digas después que no existe.
+4. PROHIBIDO decir "lo siento" o "no tenemos/no hay/no contamos con". Si de verdad no hay nada en el catálogo sugerido, redirige con energía a algo real que sí tengas, nunca dejes la frase en negativo sin más.
+5. No hace falta decir si algo es "de Rescate" (la tarjeta ya lo muestra) — solo evita prometer que algo es Rescate si no lo es.
+6. Carrito real, no simulación. Ofrece agregar tras mostrar/confirmar un producto ("¿te lo dejo en el carrito?"). Si responde sí/dale/ok/hazlo/agrégalo, o pide agregar algo directo ("agrégame X", "métele esto y esto", "ponme 2"), agrégalo con [[CARRITO: id:talla:cantidad]] (varios: id1:talla1:cant1, id2:talla2:cant2 — cantidad 1 si no dijo). Nunca agregues algo no pedido/confirmado en su mensaje actual o el anterior. Talla única: úsala directo; varias tallas sin especificar: pregunta ANTES de agregar. Confirma en tu texto que quedó ("¡Listo! Ya te lo dejé en el carrito 🛒"). Si va a llevar 12+ unidades de la misma categoría, avísale el precio "mayor" real del catálogo.
+7. Fuera de temas de J3, redirige amablemente a WhatsApp.
+8. Envíos a toda Colombia, pago contraentrega o en línea (PSE, tarjeta, Nequi). Ante dudas de precio, refuerza valor antes que repetir la cifra.
+9. Cualquier prenda que nombres debe llevar su link: inclúyela en [[PRODUCTOS: id1, id2]] (máximo 3, solo las nombradas), aunque ya la hayas mostrado antes. UN SOLO marcador al final del mensaje, nunca uno por producto. Si agregaste algo al carrito, pon también [[CARRITO: ...]] aparte. Omite el que no aplique. Nunca menciones estos marcadores al cliente.
 
 CATÁLOGO SUGERIDO PARA ESTE MENSAJE:
 ${catalogo}`;
@@ -110,25 +134,24 @@ async function callGroqWithFallback(apiKeys: string[], body: unknown): Promise<R
   return callGroq(apiKeys[0], body).catch(() => lastRes as Response);
 }
 
-function parseAssistantReply(raw: string, candidateIds: string[]): { text: string; productIds: string[] } {
-  const match = raw.match(PRODUCTS_MARKER);
-  // Respaldo por si el modelo igual usa markdown pese a la instrucción del prompt:
-  // quita negritas y viñetas de lista, y el arranque apologético "lo siento"
-  // (el prompt se lo pide, pero un modelo de 20B no siempre lo respeta) —
-  // deja un chat de texto plano, natural y sin sonar a disculpa.
-  let text = raw
-    .replace(PRODUCTS_MARKER, "")
-    .replace(/\*\*/g, "")
-    .replace(/^[ \t]*[-*]\s+/gm, "")
-    .replace(/\blo siento,?\s*(pero\s+)?/gi, "")
-    .trim();
-  text = text.charAt(0).toUpperCase() + text.slice(1);
-  if (!match) return { text, productIds: [] };
-  // Comparación EXACTA por segmento (no substring libre): algunos ids son
-  // prefijo literal de otro id real (ej. "buzo-azul" dentro de
-  // "buzo-azul-turquesa"), así que un `includes` habría marcado ambos aunque
-  // el modelo solo haya mencionado uno.
-  const segments = match[1]
+type CartEntry = { id: string; size?: string; qty: number };
+
+// El modelo a veces pone un marcador por producto en vez de uno solo con
+// todos los ids (pese a que el prompt pide uno solo) — se extraen TODAS las
+// apariciones de un marcador, no solo la primera, para no perder nada por
+// ese hábito.
+function extractAllMatches(text: string, marker: RegExp): string[] {
+  const global = new RegExp(marker.source, marker.flags.includes("g") ? marker.flags : marker.flags + "g");
+  return [...text.matchAll(global)].map((m) => m[1]);
+}
+
+// Extrae los ids que el modelo puso en un marcador (PRODUCTOS o CARRITO),
+// comparando por segmento EXACTO (no substring libre): algunos ids son
+// prefijo literal de otro id real (ej. "buzo-azul" dentro de
+// "buzo-azul-turquesa"), así que un `includes` habría marcado ambos aunque
+// el modelo solo haya mencionado uno.
+function extractKnownIds(raw: string, candidateIds: string[]): string[] {
+  const segments = raw
     .toLowerCase()
     .split(/[,\s]+/)
     .map((s) => s.replace(/^id[:=]?/, "").trim())
@@ -143,11 +166,62 @@ function parseAssistantReply(raw: string, candidateIds: string[]): { text: strin
       ids.push(original);
     }
   }
+  return ids;
+}
+
+// El formato pedido en el prompt es "id:talla:cantidad", pero se busca el id
+// en cualquier posición (por si el modelo lo antepone con "id:" o reordena) y
+// luego se toman los campos restantes EN ORDEN (talla primero, cantidad
+// después) — no por si "parecen" número, porque las tallas de niño ("8",
+// "10", "16") también son numéricas y se confundirían con la cantidad.
+function parseCartEntries(raw: string, candidateIds: string[]): CartEntry[] {
+  const matches = extractAllMatches(raw, CART_MARKER);
+  if (matches.length === 0) return [];
+  const knownIds = candidateIds.map((id) => id.toLowerCase());
+  const entries: CartEntry[] = [];
+  for (const rawEntry of matches.join(",").split(",")) {
+    const parts = rawEntry
+      .split(":")
+      .map((p) => p.replace(/^id[:=]?/i, "").trim())
+      .filter(Boolean);
+    if (parts.length === 0) continue;
+    const idIdx = parts.findIndex((p) => knownIds.includes(p.toLowerCase()));
+    if (idIdx === -1) continue;
+    const id = candidateIds[knownIds.indexOf(parts[idIdx].toLowerCase())];
+    const rest = parts.filter((_, i) => i !== idIdx);
+    const size = rest[0];
+    const qty = rest[1] && /^\d+$/.test(rest[1]) ? parseInt(rest[1], 10) : 1;
+    entries.push({ id, size, qty: qty > 0 ? qty : 1 });
+  }
+  return entries;
+}
+
+function parseAssistantReply(
+  raw: string,
+  candidateIds: string[]
+): { text: string; productIds: string[]; cartEntries: CartEntry[] } {
+  const productsMatches = extractAllMatches(raw, PRODUCTS_MARKER);
+  const cartEntries = parseCartEntries(raw, candidateIds);
+  // Respaldo por si el modelo igual usa markdown pese a la instrucción del prompt:
+  // quita negritas y viñetas de lista, y el arranque apologético "lo siento"
+  // (el prompt se lo pide, pero un modelo de 20B no siempre lo respeta) —
+  // deja un chat de texto plano, natural y sin sonar a disculpa.
+  let text = raw
+    .replace(new RegExp(PRODUCTS_MARKER.source, "gi"), "")
+    .replace(new RegExp(CART_MARKER.source, "gi"), "")
+    .replace(/\*\*/g, "")
+    .replace(/^[ \t]*[-*]\s+/gm, "")
+    .replace(/\blo siento,?\s*(pero\s+)?/gi, "")
+    .trim();
+  text = text.charAt(0).toUpperCase() + text.slice(1);
   // Tope defensivo a 4: el prompt se lo pide al modelo, pero no siempre lo respeta.
-  return { text, productIds: ids.slice(0, 4) };
+  const productIds =
+    productsMatches.length > 0 ? extractKnownIds(productsMatches.join(","), candidateIds).slice(0, 3) : [];
+  return { text, productIds, cartEntries };
 }
 
 export default function CelesteChat() {
+  const { addItem } = useCart();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
   const [input, setInput] = useState("");
@@ -204,8 +278,13 @@ export default function CelesteChat() {
       const alreadyShown = Array.from(recentProductsRef.current.values()).filter(
         (p) => !freshMatches.some((f) => f.id === p.id)
       );
-      const candidates = [...freshMatches, ...alreadyShown].slice(0, 8);
-      const systemPrompt = buildSystemPrompt(candidates);
+      // Tope de candidatos deliberadamente bajo: cada uno cuesta tokens reales
+      // en cada mensaje (catálogo, colores, mayorista), y como máximo se
+      // muestran 3 a la vez — llevar más de 5 de respaldo no aporta nada,
+      // solo gasta cupo del minuto compartido entre todos los visitantes.
+      const candidates = [...freshMatches, ...alreadyShown].slice(0, 5);
+      const isFirstMessage = messages.length <= 1;
+      const systemPrompt = buildSystemPrompt(candidates, isFirstMessage);
 
       // El texto del prompt le da a Celeste los ids de cada color/variante de
       // cada candidato (ver describeColorOptions), así que el marcador puede
@@ -221,11 +300,17 @@ export default function CelesteChat() {
       const res = await callGroqWithFallback(apiKeys, {
         model: GROQ_MODEL,
         temperature: 0.5,
+        // Tope de respuesta ajustado a lo que de verdad necesita una
+        // respuesta corta + marcadores — no hay razón para pagar un techo
+        // más alto que eso.
         max_tokens: 400,
         reasoning_effort: "low",
         messages: [
           { role: "system", content: systemPrompt },
-          ...nextMessages.slice(-8).map((m) => ({ role: m.role, content: m.content })),
+          // Solo las últimas 6 vueltas: suficiente para no perder el hilo de
+          // una pregunta de seguimiento, sin arrastrar mensajes viejos que ya
+          // no aportan y solo suman al costo de cada llamada.
+          ...nextMessages.slice(-6).map((m) => ({ role: m.role, content: m.content })),
         ],
       });
 
@@ -233,10 +318,46 @@ export default function CelesteChat() {
 
       const data = await res.json();
       const raw: string = data.choices?.[0]?.message?.content ?? "";
-      const { text: replyText, productIds } = parseAssistantReply(raw, Array.from(knownProducts.keys()));
-      const matchedProducts = productIds
+      const { text: replyText, productIds, cartEntries } = parseAssistantReply(raw, Array.from(knownProducts.keys()));
+
+      // El carrito es real (useCart), no una simulación del chat: se agrega
+      // de una vez cada entrada válida. La talla se valida contra las tallas
+      // reales del producto (nunca se confía ciegamente en lo que puso el
+      // modelo) — si no calza ninguna, se usa la primera talla real como
+      // respaldo en vez de fallar en silencio.
+      const addedProducts: Product[] = [];
+      for (const entry of cartEntries) {
+        const product = knownProducts.get(entry.id);
+        if (!product) continue;
+        const validSize = product.sizes.find((s) => s.toLowerCase() === entry.size?.toLowerCase()) ?? product.sizes[0];
+        addItem(product.id, validSize, entry.qty);
+        addedProducts.push(product);
+      }
+
+      const addedIds = new Set(addedProducts.map((p) => p.id));
+      const recommendedProducts = productIds
         .map((id) => knownProducts.get(id))
-        .filter((p): p is Product => Boolean(p));
+        .filter((p): p is Product => Boolean(p))
+        .filter((p) => !addedIds.has(p.id));
+
+      // Respaldo: el prompt le pide a Celeste enlazar toda prenda que nombre,
+      // pero un modelo de 20B a veces la nombra en el texto y se olvida de
+      // incluirla en el marcador — sin esto, quedaría un nombre de producto
+      // sin su link/tarjeta. Se busca por nombre exacto en TODO el catálogo
+      // (no solo los candidatos de este turno), porque a veces nombra un
+      // producto real que quedó fuera de la búsqueda puntual; es comparación
+      // local, sin costo de tokens.
+      const alreadyShownIds = new Set([...addedIds, ...recommendedProducts.map((p) => p.id)]);
+      const lowerReply = replyText.toLowerCase();
+      const mentionedByName = products.filter(
+        (p) => !alreadyShownIds.has(p.id) && lowerReply.includes(p.name.toLowerCase())
+      );
+
+      // Los agregados al carrito siempre se muestran (son la confirmación de
+      // una acción real); las demás tarjetas se topan en 3 en total, como le
+      // pide el prompt al marcador.
+      const otherProducts = [...recommendedProducts, ...mentionedByName].slice(0, 3);
+      const matchedProducts = [...addedProducts, ...otherProducts];
       for (const p of matchedProducts) recentProductsRef.current.set(p.id, p);
 
       setMessages((prev) => [

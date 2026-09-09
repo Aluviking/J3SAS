@@ -16,7 +16,7 @@ type ConsumerCoupon = { type: "percent"; value: number } | { type: "free-shippin
 type CartContextValue = {
   items: CartItem[];
   lines: CartLine[];
-  addItem: (productId: string, size?: string) => void;
+  addItem: (productId: string, size?: string, qty?: number) => void;
   updateQty: (index: number, qty: number) => void;
   removeItem: (index: number) => void;
   clearCart: () => void;
@@ -75,17 +75,17 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [items]);
 
-  const addItem = (productId: string, size?: string) => {
+  const addItem = (productId: string, size?: string, qty = 1) => {
     setItems((prev) => {
       const existing = prev.findIndex(
         (i) => i.productId === productId && i.size === size
       );
       if (existing >= 0) {
         const next = [...prev];
-        next[existing] = { ...next[existing], qty: next[existing].qty + 1 };
+        next[existing] = { ...next[existing], qty: next[existing].qty + qty };
         return next;
       }
-      return [...prev, { productId, size, qty: 1 }];
+      return [...prev, { productId, size, qty }];
     });
   };
 
