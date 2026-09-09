@@ -79,6 +79,11 @@ function buildSystemPrompt(candidates: Product[], isFirstMessage: boolean): stri
 Inventario real (nunca digas que algo no existe si está aquí):
 ${INVENTORY_SUMMARY}
 
+Lógica de estilo del catálogo (úsala para juzgar formal/informal, corte y color — el catálogo es sobre todo urbano/casual, sé honesta con eso):
+- De más informal a más formal: Buzos, Pantalonetas, Camisetas (fit deportivo/gráfico) < Blusas, Croptop (casual con estilo) < Polos, Camisas, Chaquetas (semi-formal, lo más "serio" de hombre son Polos/Camisas) < Vestidos (lo más elegante que manejamos, sobre todo para dama).
+- "Oversize" en nombre/categoría = corte ancho/holgado; si no lo dice, es corte regular.
+- Colores neutros/serios: negro, blanco, gris, azul oscuro, beige, café, vino tinto, oliva. Vivos/llamativos: fucsia, neón, fluorescente, turquesa, naranja, amarillo, rosa fuerte — clasifica siempre con el color real que trae cada producto, nunca inventado.
+
 Atiendes como la mejor asesora de imagen de una tienda física: cálida, atenta, fiel a lo que ves y escuchas, mujer colombiana real — nunca IA ni bot. Antes de responder, lee bien lo que el cliente dice y cómo lo dice (formal, relajado, jerga, cortante, animado) y calza tu tono con el de él, siempre profesional de fondo. Das consejos de moda reales (qué combina, para qué ocasión, qué le queda bien) para entender qué necesita y venderle bien — pero sin acosar: si no muestra interés en comprar todavía, no insistas ni presiones, sigue asesorando con calma.
 ${
   isFirstMessage
@@ -86,13 +91,13 @@ ${
     : "Si en esta conversación ya te dijo su nombre, úsalo siempre; si no, pregúntaselo en cuanto sea natural."
 }
 Si ya sabe qué quiere y para quién, ve directo a mostrar opciones reales — no repreguntes lo obvio. Si falta claridad, pregunta UNA cosa concreta a la vez, nunca una lista de preguntas.
-Mínimo 1 emoji siempre (2-3 si el cliente está animado), estilo 😍🔥✨👌🙌👗 — ni un mensaje sin emoji. NUNCA mandes texto largo ni de más — nada "porque sí": si una frase no aporta, no la escribas. Respuestas brevísimas, 1 a 3 líneas en charla normal; al mostrar opciones, nombre y precio nada más por línea, sin describir cada una. Sin cierres repetidos ni frases de anuncio ("ideal para toda ocasión"); reacciona a lo que dice el cliente. Texto plano, sin **negritas**, viñetas ni encabezados. La marca es J3.
+Mínimo 1 emoji siempre (2-3 si el cliente está animado), estilo 😍🔥✨👌🙌👗 — ni un mensaje sin emoji. NUNCA mandes texto largo ni de más — nada "porque sí": si una frase no aporta, no la escribas. Respuestas brevísimas, 1 a 3 líneas en charla normal; al mostrar opciones, escribe cada una en tu propia frase natural — "Nombre – precio", nada más por línea, sin describir cada una. El CATÁLOGO SUGERIDO de abajo (con barras "|", "tallas:" y "(id:...)") es SOLO para que tú leas los datos — nunca copies ese formato, esas barras ni los "(id:...)" en tu respuesta visible (el id es código interno, va solo en el marcador), ni repitas el mismo producto dos veces. Sin cierres repetidos ni frases de anuncio ("ideal para toda ocasión"); reacciona a lo que dice el cliente. Texto plano, sin **negritas**, viñetas ni encabezados. La marca es J3.
 
 Reglas obligatorias (no negociables, sin importar el tono):
 1. Si el CATÁLOGO SUGERIDO trae productos y el cliente pide, pregunta, o MUESTRA INTERÉS en algo — aunque no use las palabras "foto", "imagen" o "link", basta con que describa qué busca o qué le gusta — SIEMPRE se las muestras YA en ese mismo mensaje, sé asertiva y no esperes a que lo pida literal. Nunca digas "¿quieres que te muestre?", nunca que no puedes enviar fotos, nunca "te paso el link" (no puedes, solo mostrar vía marcador, que ya es un link). Muestra máximo 2-3 opciones reales cuando el catálogo las tenga, no solo una — pero nunca más de 3, ni por dar variedad. Nunca muestres ni menciones nada que el cliente no haya pedido, preguntado o mostrado interés en algo relacionado. Excepción: si el cliente solo se despide o agradece sin pedir nada nuevo, responde breve sin volver a mostrar productos.
-2. Usa el nombre de cada producto tal cual aparece en el catálogo (no lo parafrasees ni cambies el tipo de prenda — si dice "Camiseta", nunca "Camisa"). Nunca inventes nombres, precios, tallas o colores fuera del CATÁLOGO SUGERIDO o de lo ya dicho en la conversación. Las "tallas", "colores disponibles" y precio "mayorista" de cada producto son tu única fuente de verdad — si preguntan por una talla/color que no está ahí, di que no tienes ese dato ahora, sin afirmar ni negar que exista. Si piden algo que no es ropa y no hay nada parecido, dilo con naturalidad sin inventar una prenda "parecida".
+2. Usa el nombre de cada producto tal cual aparece en el catálogo (no lo parafrasees ni cambies el tipo de prenda — si dice "Camiseta", nunca "Camisa"). Cada producto tiene SU PROPIO precio: nunca copies el precio de uno para otro aunque sean del mismo tipo o grupo (ej. varios colores de un mismo polo casi siempre cuestan distinto) — lee el precio exacto de cada línea del catálogo antes de escribirlo. Nunca inventes nombres, precios, tallas o colores fuera del CATÁLOGO SUGERIDO o de lo ya dicho en la conversación — ni "por si acaso" ni como sugerencia dudosa: si un color o variante no está en la lista real, actúa como si no existiera, no lo menciones ni lo insinúes. Las "tallas", "colores disponibles" y precio "mayorista" de cada producto son tu única fuente de verdad — si preguntan por una talla/color que no está ahí, di que no tienes ese dato ahora, sin afirmar ni negar que exista. Si piden algo que no es ropa y no hay nada parecido, dilo con naturalidad sin inventar una prenda "parecida".
    Si un producto trae más de 3-4 "colores disponibles", no los listes todos — menciónalo una vez con su precio y nombra 2-3 colores de ejemplo en la misma frase.
-3. Si preguntan por algo que ya mencionaste, respóndelo con lo ya dicho — nunca digas después que no existe.
+3. Si preguntan un dato de algo que ya mencionaste (precio, talla, color), respóndelo con lo ya dicho — nunca digas después que no existe. Pero si preguntan tu OPINIÓN sobre lo ya mostrado ("¿eso es formal?", "¿y eso es serio?", "¿me queda bien?"), respóndelo de verdad con un sí/no y una razón corta usando la lógica de estilo — nunca vuelvas a pegar la misma lista como respuesta.
 4. PROHIBIDO decir "lo siento" o "no tenemos/no hay/no contamos con". Si de verdad no hay nada en el catálogo sugerido, redirige con energía a algo real que sí tengas, nunca dejes la frase en negativo sin más.
 5. No hace falta decir si algo es "de Rescate" (la tarjeta ya lo muestra) — solo evita prometer que algo es Rescate si no lo es.
 6. Carrito real, no simulación. Ofrece agregar tras mostrar/confirmar un producto ("¿te lo dejo en el carrito?"). Si responde sí/dale/ok/hazlo/agrégalo, o pide agregar algo directo ("agrégame X", "métele esto y esto", "ponme 2"), agrégalo con [[CARRITO: id:talla:cantidad]] (varios: id1:talla1:cant1, id2:talla2:cant2 — cantidad 1 si no dijo). Nunca agregues algo no pedido/confirmado en su mensaje actual o el anterior. Talla única: úsala directo; varias tallas sin especificar: pregunta ANTES de agregar. Confirma en tu texto que quedó ("¡Listo! Ya te lo dejé en el carrito 🛒"). Si va a llevar 12+ unidades de la misma categoría, avísale el precio "mayor" real del catálogo.
@@ -196,6 +201,54 @@ function parseCartEntries(raw: string, candidateIds: string[]): CartEntry[] {
   return entries;
 }
 
+// Respaldo defensivo: el modelo a veces "ancla" en el primer precio que
+// escribe y repite ese mismo número para las demás variantes de color de un
+// mismo producto, aunque cada una tenga su propio precio real en el
+// catálogo (ej. varios colores de un polo con precio graduado). En vez de
+// confiar en que lo lea bien cada vez, se corrige el precio en el texto
+// visible buscando "Nombre del producto ... $monto" y reemplazando ese monto
+// por el precio real — nunca inventa nada, solo corrige con el dato local.
+// Se hace en UNA sola pasada con una alternancia que prueba primero los
+// nombres más largos: varios nombres del catálogo son prefijo literal de
+// otro (ej. "Buzo Azul" dentro de "Buzo Azul Turquesa"), y corrigiendo por
+// separado uno por uno se podía pisar el precio correcto de uno más largo
+// con el precio del más corto.
+function fixQuotedPrices(text: string, knownProducts: Map<string, Product>): string {
+  const productsByNameLower = new Map<string, Product>();
+  for (const p of knownProducts.values()) productsByNameLower.set(p.name.toLowerCase(), p);
+  const names = Array.from(productsByNameLower.keys()).sort((a, b) => b.length - a.length);
+  if (names.length === 0) return text;
+  const alternation = names.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+  const regex = new RegExp(`(${alternation})([^\\n$]{0,25})\\$\\s?[\\d.,]+`, "gi");
+  return text.replace(regex, (_match, name: string, between: string) => {
+    const p = productsByNameLower.get(name.toLowerCase())!;
+    return `${name}${between}${currency.format(p.price)}`;
+  });
+}
+
+// Mismo problema de prefijos que en fixQuotedPrices, aplicado a detectar qué
+// productos nombró Celeste en su texto (para el respaldo de "siempre pon
+// link"): un `.includes()` simple por producto marcaría también "Buzo Azul"
+// como mencionado con solo que el texto diga "Buzo Azul Turquesa". Se prueba
+// primero el nombre más largo en cada posición para que solo gane el que de
+// verdad está escrito.
+function findMentionedProducts(text: string, pool: Product[]): Product[] {
+  const byName = new Map<string, Product>();
+  for (const p of pool) if (!byName.has(p.name)) byName.set(p.name, p);
+  const names = Array.from(byName.keys()).sort((a, b) => b.length - a.length);
+  if (names.length === 0) return [];
+  const alternation = names.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|");
+  const regex = new RegExp(alternation, "gi");
+  const byNameLower = new Map<string, Product>();
+  for (const [name, p] of byName) byNameLower.set(name.toLowerCase(), p);
+  const found = new Map<string, Product>();
+  for (const match of text.matchAll(regex)) {
+    const p = byNameLower.get(match[0].toLowerCase());
+    if (p) found.set(p.id, p);
+  }
+  return Array.from(found.values());
+}
+
 function parseAssistantReply(
   raw: string,
   candidateIds: string[]
@@ -212,9 +265,13 @@ function parseAssistantReply(
     .replace(/\*\*/g, "")
     .replace(/^[ \t]*[-*]\s+/gm, "")
     .replace(/\blo siento,?\s*(pero\s+)?/gi, "")
+    // Respaldo: el "(id:xxx)" del catálogo interno a veces se cuela en la
+    // respuesta visible pese a la instrucción del prompt de no copiarlo.
+    .replace(/\(\s*id[:=][^)]*\)/gi, "")
+    .replace(/[ \t]{2,}/g, " ")
     .trim();
   text = text.charAt(0).toUpperCase() + text.slice(1);
-  // Tope defensivo a 4: el prompt se lo pide al modelo, pero no siempre lo respeta.
+  // Tope defensivo a 3: el prompt se lo pide al modelo, pero no siempre lo respeta.
   const productIds =
     productsMatches.length > 0 ? extractKnownIds(productsMatches.join(","), candidateIds).slice(0, 3) : [];
   return { text, productIds, cartEntries };
@@ -318,7 +375,8 @@ export default function CelesteChat() {
 
       const data = await res.json();
       const raw: string = data.choices?.[0]?.message?.content ?? "";
-      const { text: replyText, productIds, cartEntries } = parseAssistantReply(raw, Array.from(knownProducts.keys()));
+      const { text: parsedText, productIds, cartEntries } = parseAssistantReply(raw, Array.from(knownProducts.keys()));
+      const replyText = fixQuotedPrices(parsedText, knownProducts);
 
       // El carrito es real (useCart), no una simulación del chat: se agrega
       // de una vez cada entrada válida. La talla se valida contra las tallas
@@ -348,10 +406,7 @@ export default function CelesteChat() {
       // producto real que quedó fuera de la búsqueda puntual; es comparación
       // local, sin costo de tokens.
       const alreadyShownIds = new Set([...addedIds, ...recommendedProducts.map((p) => p.id)]);
-      const lowerReply = replyText.toLowerCase();
-      const mentionedByName = products.filter(
-        (p) => !alreadyShownIds.has(p.id) && lowerReply.includes(p.name.toLowerCase())
-      );
+      const mentionedByName = findMentionedProducts(replyText, products).filter((p) => !alreadyShownIds.has(p.id));
 
       // Los agregados al carrito siempre se muestran (son la confirmación de
       // una acción real); las demás tarjetas se topan en 3 en total, como le
