@@ -6141,10 +6141,29 @@ const AUDIENCE_KEYWORDS: Record<Audience, string[]> = {
   nina: ["nina", "ninas", "hija", "sobrina", "nieta"],
 };
 
+// Palabras vacías del español conversacional: sin filtrarlas, el largo
+// mínimo de 3 letras las dejaba pasar y podían "matchear" por pura
+// coincidencia de substring dentro de un término real del catálogo — el caso
+// que se detectó fue "que" (dentro de un mensaje tan común como "¿y qué más
+// tienes?") apareciendo literalmente dentro de "chaquetas", así que CUALQUIER
+// mensaje con esa palabra le daba puntaje a todas las chaquetas sin que
+// tuvieran nada que ver, desplazando el producto real del que se hablaba.
+const CHAT_STOPWORDS = new Set([
+  "que", "hay", "mas", "para", "con", "los", "las", "una", "uno", "unos", "unas",
+  "por", "esta", "este", "esa", "ese", "eso", "esto", "del", "muy", "ahi", "alli",
+  "aqui", "tiene", "tienes", "tengo", "algo", "alguna", "algun", "otra", "otro",
+  "otros", "otras", "cual", "cuales", "como", "donde", "cuando", "quien",
+  "porque", "gusta", "gustan", "quiero", "quieres", "busco", "buscas",
+  "necesito", "necesitas", "tambien", "todavia", "aun", "pero", "entonces",
+  "bueno", "listo", "dime", "dame", "ver", "veo", "mira", "oye", "sobre",
+  "entre", "desde", "hasta", "cada", "solo", "sola", "solos", "solas",
+  "mismo", "misma", "mismos", "mismas", "hola",
+]);
+
 export function searchProductsForChat(query: string, limit = 6): Product[] {
   const words = normalizeText(query)
     .split(/[^a-z0-9]+/)
-    .filter((w) => w.length >= 3);
+    .filter((w) => w.length >= 3 && !CHAT_STOPWORDS.has(w));
   if (words.length === 0) return [];
 
   // Si el mensaje nombra un público de forma explícita y exacta (palabra

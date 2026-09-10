@@ -307,9 +307,11 @@ export default function CelesteChat() {
     const text = input.trim();
     if (!text || loading) return;
 
-    const apiKeys = [process.env.NEXT_PUBLIC_GROQ_API_KEY, process.env.NEXT_PUBLIC_GROQ_API_KEY_2].filter(
-      (k): k is string => Boolean(k)
-    );
+    const apiKeys = [
+      process.env.NEXT_PUBLIC_GROQ_API_KEY,
+      process.env.NEXT_PUBLIC_GROQ_API_KEY_2,
+      process.env.NEXT_PUBLIC_GROQ_API_KEY_3,
+    ].filter((k): k is string => Boolean(k));
     if (apiKeys.length === 0) {
       setError("El chat no está configurado todavía (falta la clave de Groq).");
       return;
