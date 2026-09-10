@@ -332,9 +332,16 @@ export default function CelesteChat() {
         .map((m) => m.content)
         .join(" ");
       const freshMatches = searchProductsForChat(recentUserText);
-      const alreadyShown = Array.from(recentProductsRef.current.values()).filter(
-        (p) => !freshMatches.some((f) => f.id === p.id)
-      );
+      // El Map guarda en orden de inserción, así que sin invertirlo el
+      // `.slice` de abajo se quedaba con lo mostrado hace más turnos y
+      // dejaba AFUERA lo más reciente — justo lo que el cliente está viendo
+      // ahora mismo (ej. "quiero ver el rojo" seguido de "me encanta,
+      // quiero llevármelo" perdía de vista esa referencia si ya se habían
+      // mostrado suficientes productos antes). Se invierte para priorizar
+      // siempre lo más reciente primero.
+      const alreadyShown = Array.from(recentProductsRef.current.values())
+        .reverse()
+        .filter((p) => !freshMatches.some((f) => f.id === p.id));
       // Tope de candidatos deliberadamente bajo: cada uno cuesta tokens reales
       // en cada mensaje (catálogo, colores, mayorista), y como máximo se
       // muestran 3 a la vez — llevar más de 5 de respaldo no aporta nada,
@@ -413,7 +420,14 @@ export default function CelesteChat() {
       // pide el prompt al marcador.
       const otherProducts = [...recommendedProducts, ...mentionedByName].slice(0, 3);
       const matchedProducts = [...addedProducts, ...otherProducts];
-      for (const p of matchedProducts) recentProductsRef.current.set(p.id, p);
+      // `delete` + `set` (no solo `set`) para que un producto ya visto vuelva
+      // a quedar de último en el Map cada vez que se vuelve a mostrar — así
+      // el orden siempre refleja qué es lo más reciente, no solo la primera
+      // vez que apareció.
+      for (const p of matchedProducts) {
+        recentProductsRef.current.delete(p.id);
+        recentProductsRef.current.set(p.id, p);
+      }
 
       setMessages((prev) => [
         ...prev,
