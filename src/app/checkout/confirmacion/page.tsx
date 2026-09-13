@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Copy, Package, Truck } from "lucide-react";
+import { CheckCircle2, Copy, Package, Truck, UserRound } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -23,6 +23,7 @@ type Order = {
   discount: number;
   shipping: number;
   total: number;
+  hasTracking?: boolean;
 };
 
 const methodLabels: Record<string, string> = {
@@ -91,6 +92,16 @@ export default function ConfirmacionPage() {
           <Copy size={13} className="text-muted" />
           {copied && <span className="text-xs text-brand">¡Copiado!</span>}
         </button>
+
+        {!order.hasTracking && (
+          <div className="mt-4 flex items-start gap-2.5 bg-accent-soft border border-accent/30 rounded-tl-md px-4 py-3 text-left">
+            <UserRound size={16} className="text-accent shrink-0 mt-0.5" />
+            <p className="text-sm text-accent">
+              Compraste como invitado — este pedido no va a aparecer en &quot;Mis pedidos&quot; ni tiene seguimiento
+              de entrega en vivo. Inicia sesión antes de pagar en tu próxima compra para poder verlo.
+            </p>
+          </div>
+        )}
       </div>
 
       <div className="mt-8 grid sm:grid-cols-2 gap-4">

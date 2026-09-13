@@ -88,6 +88,17 @@ html::-webkit-scrollbar-thumb:hover {
   background: var(--surface-alt);
 }
 
+@keyframes j3-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -101,4 +112,69 @@ html::-webkit-scrollbar-thumb:hover {
   .animate-marquee {
     animation: marquee 26s linear infinite;
   }
+}
+
+/* Mapa de seguimiento de entregas (Leaflet) */
+@keyframes j3-pulse-ring {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.j3-map-pin {
+  filter: drop-shadow(0 3px 6px rgba(30, 41, 59, 0.28));
+}
+
+.j3-driver-pulse {
+  position: absolute;
+  inset: 11px;
+  border-radius: 9999px;
+  background: #2563eb;
+  animation: j3-pulse-ring 1.8s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+.j3-driver-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.35) 0%, rgba(37, 99, 235, 0) 70%);
+}
+
+.leaflet-container {
+  font-family: var(--font-sans), sans-serif;
+  background: #eef3f8;
+}
+
+.leaflet-tile-pane {
+  filter: grayscale(0.55) sepia(0.35) hue-rotate(175deg) saturate(1.6) brightness(1.08) contrast(0.95);
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 12px 12px 12px 2px;
+  box-shadow: 0 8px 24px rgba(20, 22, 28, 0.18);
+}
+
+.leaflet-popup-content {
+  font-size: 12.5px;
+  color: var(--ink);
+  margin: 9px 12px;
+}
+
+.leaflet-popup-tip {
+  box-shadow: 0 8px 24px rgba(20, 22, 28, 0.1);
+}
+
+.leaflet-control-zoom {
+  border-radius: 10px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(20, 22, 28, 0.18) !important;
+}
+
+.leaflet-control-zoom a {
+  color: var(--ink) !important;
 }

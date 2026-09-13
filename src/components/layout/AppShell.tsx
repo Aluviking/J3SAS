@@ -2,13 +2,16 @@
 
 import { usePathname } from "next/navigation";
 import { Suspense, useState } from "react";
+import { AdministrativoAuthProvider } from "@/lib/administrativo-auth-context";
 import { AuthProvider } from "@/lib/auth-context";
 import { CartProvider } from "@/lib/cart-context";
 import { FabricanteAuthProvider } from "@/lib/fabricante-auth-context";
 import { FavoritesProvider } from "@/lib/favorites-context";
+import { RepartidorAuthProvider } from "@/lib/repartidor-auth-context";
 import CartPanel from "./CartPanel";
 import CelesteChat from "./CelesteChat";
 import ClubPromoToast from "./ClubPromoToast";
+import DeliveryNotificationToast from "./DeliveryNotificationToast";
 import Footer from "./Footer";
 import MobileBottomNav from "./MobileBottomNav";
 import PromoBar from "./PromoBar";
@@ -22,21 +25,31 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartPanelOpen, setCartPanelOpen] = useState(true);
 
+  // trailingSlash:true hace que Next sirva estas rutas como "/login/", etc.
+  // — se normaliza quitando el "/" final antes de comparar por igualdad.
+  const normalizedPath = pathname?.replace(/\/$/, "") || "";
+
   const isStandaloneAuthPage =
-    pathname?.startsWith("/fabricantes") ||
-    pathname === "/login" ||
-    pathname === "/registro" ||
-    pathname === "/recuperar-contrasena";
+    normalizedPath.startsWith("/fabricantes") ||
+    normalizedPath.startsWith("/administrativo") ||
+    normalizedPath.startsWith("/repartidor") ||
+    normalizedPath === "/login" ||
+    normalizedPath === "/registro" ||
+    normalizedPath === "/recuperar-contrasena";
 
   if (isStandaloneAuthPage) {
     return (
       <AuthProvider>
         <FabricanteAuthProvider>
-          <FavoritesProvider>
-            <CartProvider>
-              <div className="min-h-screen bg-canvas">{children}</div>
-            </CartProvider>
-          </FavoritesProvider>
+          <AdministrativoAuthProvider>
+            <RepartidorAuthProvider>
+              <FavoritesProvider>
+                <CartProvider>
+                  <div className="min-h-screen bg-canvas">{children}</div>
+                </CartProvider>
+              </FavoritesProvider>
+            </RepartidorAuthProvider>
+          </AdministrativoAuthProvider>
         </FabricanteAuthProvider>
       </AuthProvider>
     );
@@ -45,6 +58,8 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <AuthProvider>
     <FabricanteAuthProvider>
+    <AdministrativoAuthProvider>
+    <RepartidorAuthProvider>
     <FavoritesProvider>
     <CartProvider>
       <div className="flex flex-col min-h-screen bg-canvas">
@@ -76,11 +91,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         <Footer />
         <MobileBottomNav onCartClick={() => setCartOpen(true)} />
         <ClubPromoToast />
+        <DeliveryNotificationToast />
         <WhatsAppButton />
         <CelesteChat />
       </div>
     </CartProvider>
     </FavoritesProvider>
+    </RepartidorAuthProvider>
+    </AdministrativoAuthProvider>
     </FabricanteAuthProvider>
     </AuthProvider>
   );

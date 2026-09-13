@@ -44,19 +44,32 @@ function saveCustomers(list: StoredCustomer[]) {
   }
 }
 
+const DEMO_CUSTOMER_EMAIL = "cliente@j3sas.co";
+
+// Cuenta de cliente fija para pruebas — mismo espíritu que las cuentas
+// semilla de repartidor/administrativo, para no depender de registrarse
+// cada vez. Se crea una sola vez si todavía no existe.
+function ensureDemoCustomer() {
+  const customers = getCustomers();
+  if (customers.some((c) => c.email.toLowerCase() === DEMO_CUSTOMER_EMAIL)) return;
+  saveCustomers([
+    ...customers,
+    { id: "cus-demo", name: "Cliente Demo", email: DEMO_CUSTOMER_EMAIL, password: "cliente123" },
+  ]);
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
-      const raw = localStorage.getItem(SESSION_KEY);
-      if (raw) {
-        try {
-          setUser(JSON.parse(raw));
-        } catch {
-          localStorage.removeItem(SESSION_KEY);
-        }
+      try {
+        ensureDemoCustomer();
+        const raw = localStorage.getItem(SESSION_KEY);
+        if (raw) setUser(JSON.parse(raw));
+      } catch {
+        localStorage.removeItem(SESSION_KEY);
       }
       setLoading(false);
     });

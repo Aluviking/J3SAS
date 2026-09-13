@@ -4,6 +4,7 @@ import { LogOut, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import SavedPaymentMethods from "@/components/SavedPaymentMethods";
 import { useAuth } from "@/lib/auth-context";
 
 export default function CuentaPage() {
@@ -119,6 +120,8 @@ export default function CuentaPage() {
           Guardar cambios
         </button>
       </div>
+
+      <SavedPaymentMethods userId={user.id} />
 
       <button
         onClick={() => {

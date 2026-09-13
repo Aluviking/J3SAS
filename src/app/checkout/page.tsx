@@ -2,6 +2,7 @@
 
 import {
   BadgeCheck,
+  Check,
   CreditCard,
   Landmark,
   Loader2,
@@ -10,15 +11,21 @@ import {
   Smartphone,
   Tag,
   Truck,
+  UserRound,
   X,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import AddressPinPicker from "@/components/maps/AddressPinPicker";
 import { useAuth } from "@/lib/auth-context";
 import { useCart } from "@/lib/cart-context";
+import { createDeliveriesForOrder } from "@/lib/deliveries";
 import { findFabricanteByCode, type Fabricante } from "@/lib/fabricantes-data";
+import { currency } from "@/lib/mock-data";
+import { recordOrder } from "@/lib/orders";
+import { addPaymentMethod, getPaymentMethodsForUser, type SavedPaymentMethod } from "@/lib/payment-methods";
 import {
   banks,
   detectCardBrand,
@@ -26,8 +33,6 @@ import {
   formatExpiry,
   generateOrderNumber,
 } from "@/lib/payment-utils";
-import { currency } from "@/lib/mock-data";
-import { recordOrder } from "@/lib/orders";
 import { recordSale } from "@/lib/sales-ledger";
 
 type Method = "tarjeta" | "pse" | "nequi";
@@ -57,6 +62,7 @@ export default function CheckoutPage() {
     city: "",
     department: "",
   });
+  const [pin, setPin] = useState<{ lat: number; lng: number } | null>(null);
 
   useEffect(() => {
     if (!user?.name) return;
@@ -71,6 +77,24 @@ export default function CheckoutPage() {
   const [pse, setPse] = useState({ bank: "", docType: "CC", docNumber: "" });
   const [nequiPhone, setNequiPhone] = useState("");
   const [acceptedTerms, setAcceptedTerms] = useState(false);
+
+  const [savedMethods, setSavedMethods] = useState<SavedPaymentMethod[]>([]);
+  const [selectedSavedId, setSelectedSavedId] = useState<string | null>(null);
+  const [saveNewMethod, setSaveNewMethod] = useState(false);
+
+  useEffect(() => {
+    const run = () => {
+      if (!user) return;
+      const methods = getPaymentMethodsForUser(user.id);
+      setSavedMethods(methods);
+      const defaultMethod = methods.find((m) => m.isDefault);
+      if (defaultMethod) {
+        setSelectedSavedId(defaultMethod.id);
+        setMethod(defaultMethod.type);
+      }
+    };
+    run();
+  }, [user]);
 
   const [errors, setErrors] = useState<string[]>([]);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -144,16 +168,18 @@ export default function CheckoutPage() {
     if (!address.line) fieldErrs.line = "Falta la dirección.";
     if (!address.department) fieldErrs.department = "Falta el departamento.";
 
-    if (method === "tarjeta") {
-      if (card.number.replace(/\s/g, "").length < 13) fieldErrs.cardNumber = "Número de tarjeta inválido.";
-      if (!card.name) fieldErrs.cardName = "Falta el nombre del titular.";
-      if (!/^\d{2}\/\d{2}$/.test(card.expiry)) fieldErrs.cardExpiry = "Fecha inválida.";
-      if (card.cvv.length < 3) fieldErrs.cardCvv = "CVV inválido.";
-    } else if (method === "pse") {
-      if (!pse.bank) fieldErrs.pseBank = "Selecciona tu banco.";
-      if (!pse.docNumber) fieldErrs.pseDoc = "Falta el número de documento.";
-    } else if (method === "nequi") {
-      if (nequiPhone.replace(/\D/g, "").length < 10) fieldErrs.nequiPhone = "Número de celular inválido.";
+    if (!selectedSavedId) {
+      if (method === "tarjeta") {
+        if (card.number.replace(/\s/g, "").length < 13) fieldErrs.cardNumber = "Número de tarjeta inválido.";
+        if (!card.name) fieldErrs.cardName = "Falta el nombre del titular.";
+        if (!/^\d{2}\/\d{2}$/.test(card.expiry)) fieldErrs.cardExpiry = "Fecha inválida.";
+        if (card.cvv.length < 3) fieldErrs.cardCvv = "CVV inválido.";
+      } else if (method === "pse") {
+        if (!pse.bank) fieldErrs.pseBank = "Selecciona tu banco.";
+        if (!pse.docNumber) fieldErrs.pseDoc = "Falta el número de documento.";
+      } else if (method === "nequi") {
+        if (nequiPhone.replace(/\D/g, "").length < 10) fieldErrs.nequiPhone = "Número de celular inválido.";
+      }
     }
     if (!acceptedTerms) fieldErrs.terms = "Debes aceptar los términos y condiciones.";
 
@@ -185,7 +211,7 @@ export default function CheckoutPage() {
       orderNumber,
       date: new Date().toISOString(),
       method,
-      address,
+      address: { ...address, lat: pin?.lat, lng: pin?.lng },
       lines: lines.map(({ product, item, unitPrice, wholesaleApplied }) => ({
         productId: product.id,
         name: product.name,
@@ -206,7 +232,27 @@ export default function CheckoutPage() {
     await new Promise((resolve) => setTimeout(resolve, 1600));
 
     if (user) {
-      recordOrder({ ...order, userId: user.id });
+      const recordedOrder = { ...order, userId: user.id };
+      recordOrder(recordedOrder);
+      createDeliveriesForOrder(recordedOrder);
+
+      if (saveNewMethod && !selectedSavedId) {
+        if (method === "tarjeta") {
+          addPaymentMethod({
+            userId: user.id,
+            type: "tarjeta",
+            brand: detectCardBrand(card.number) ?? "Tarjeta",
+            last4: card.number.replace(/\s/g, "").slice(-4),
+            holderName: card.name,
+            expiry: card.expiry,
+            isDefault: false,
+          });
+        } else if (method === "nequi") {
+          addPaymentMethod({ userId: user.id, type: "nequi", nequiPhone, isDefault: false });
+        } else {
+          addPaymentMethod({ userId: user.id, type: "pse", pseBank: pse.bank, isDefault: false });
+        }
+      }
     }
 
     if (appliedFabricante && promoLines.length > 0) {
@@ -226,7 +272,7 @@ export default function CheckoutPage() {
     }
 
     try {
-      sessionStorage.setItem("j3sas_last_order", JSON.stringify(order));
+      sessionStorage.setItem("j3sas_last_order", JSON.stringify({ ...order, hasTracking: Boolean(user) }));
     } catch {
       // storage unavailable (private browsing, quota, blocked) — order was still recorded above
     }
@@ -258,6 +304,20 @@ export default function CheckoutPage() {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {!user && (
+        <div className="mb-5 flex items-start gap-3 bg-accent-soft border border-accent/30 rounded-tl-md px-4 py-3">
+          <UserRound size={16} className="text-accent shrink-0 mt-0.5" />
+          <p className="text-sm text-accent">
+            Estás comprando como invitado — este pedido no va a aparecer en &quot;Mis pedidos&quot; ni va a tener
+            seguimiento de entrega en vivo.{" "}
+            <Link href="/login" className="underline font-semibold hover:text-accent/80">
+              Inicia sesión
+            </Link>{" "}
+            antes de pagar si quieres poder verlo.
+          </p>
         </div>
       )}
 
@@ -313,6 +373,15 @@ export default function CheckoutPage() {
                 />
               </div>
             </div>
+
+            <div className="mt-4">
+              <label className="text-xs font-medium text-ink">
+                Marca tu ubicación exacta en el mapa (opcional, ayuda al repartidor)
+              </label>
+              <div className="mt-1.5">
+                <AddressPinPicker pin={pin} onChange={setPin} />
+              </div>
+            </div>
           </section>
 
           {/* Payment method */}
@@ -322,6 +391,52 @@ export default function CheckoutPage() {
               <h2 className="font-semibold text-ink">Método de pago</h2>
             </div>
 
+            {savedMethods.length > 0 && (
+              <div className="mb-4">
+                <p className="text-xs font-medium text-ink mb-2">Tus métodos guardados</p>
+                <div className="space-y-2">
+                  {savedMethods.map((m) => {
+                    const label =
+                      m.type === "tarjeta"
+                        ? `${m.brand ?? "Tarjeta"} •••• ${m.last4}`
+                        : m.type === "nequi"
+                          ? `Nequi •••• ${m.nequiPhone?.slice(-4)}`
+                          : `PSE · ${m.pseBank}`;
+                    const Icon = m.type === "tarjeta" ? CreditCard : m.type === "nequi" ? Smartphone : Landmark;
+                    const selected = selectedSavedId === m.id;
+                    return (
+                      <button
+                        key={m.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedSavedId(m.id);
+                          setMethod(m.type);
+                        }}
+                        className={`w-full flex items-center gap-2.5 rounded-tl-md border px-3 py-2.5 text-left transition-colors ${
+                          selected ? "border-ink bg-surface-alt" : "border-border hover:border-ink"
+                        }`}
+                      >
+                        <Icon size={16} className="text-ink shrink-0" />
+                        <span className="text-sm text-ink flex-1">{label}</span>
+                        {selected && <Check size={15} className="text-brand shrink-0" />}
+                      </button>
+                    );
+                  })}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedSavedId(null)}
+                    className={`w-full text-left text-xs font-medium px-3 py-2 rounded-tl-md transition-colors ${
+                      !selectedSavedId ? "bg-surface-alt text-ink" : "text-muted hover:text-ink"
+                    }`}
+                  >
+                    + Usar otro método de pago
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {!selectedSavedId && (
+            <>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { id: "tarjeta" as const, label: "Tarjeta", icon: CreditCard },
@@ -463,6 +578,19 @@ export default function CheckoutPage() {
                   Vas a recibir una notificación push en tu app Nequi para aprobar el pago.
                 </p>
               </div>
+            )}
+
+            {user && (
+              <label className="mt-4 flex items-center gap-2 text-xs text-muted">
+                <input
+                  type="checkbox"
+                  checked={saveNewMethod}
+                  onChange={(e) => setSaveNewMethod(e.target.checked)}
+                />
+                Guardar este método de pago para la próxima vez
+              </label>
+            )}
+            </>
             )}
 
             <label

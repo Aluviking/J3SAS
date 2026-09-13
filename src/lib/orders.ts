@@ -21,6 +21,8 @@ export type Order = {
     line: string;
     city: string;
     department: string;
+    lat?: number;
+    lng?: number;
   };
   lines: OrderLine[];
   subtotal: number;

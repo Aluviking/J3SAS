@@ -1,6 +1,6 @@
 "use client";
 
-import { Bell, Factory, Heart, LogOut, Menu, Package, Search, Settings, ShoppingBag, User } from "lucide-react";
+import { Bell, Factory, Heart, LogOut, Menu, Package, Rocket, Search, Settings, ShoppingBag, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { useAuth } from "@/lib/auth-context";
 import { useCart } from "@/lib/cart-context";
 import { useFabricanteAuth } from "@/lib/fabricante-auth-context";
 import { useFavorites } from "@/lib/favorites-context";
+import { useUnreadDeliveryNotifications } from "@/lib/use-delivery-notifications";
 
 export default function TopBar({
   onMenuClick,
@@ -25,6 +26,7 @@ export default function TopBar({
   const { fabricante, loading: fabricanteLoading } = useFabricanteAuth();
   const sessionLoading = authLoading || fabricanteLoading;
   const { ids: favoriteIds } = useFavorites();
+  const unreadDeliveries = useUnreadDeliveryNotifications();
   const router = useRouter();
   const searchParams = useSearchParams();
   const [query, setQuery] = useState("");
@@ -72,6 +74,14 @@ export default function TopBar({
       </form>
 
       <Link
+        href="/proximamente"
+        className="hidden md:flex items-center gap-1.5 h-10 shrink-0 bg-ink text-white text-xs font-semibold px-3.5 rounded-tl-lg transition-colors hover:bg-cta"
+      >
+        <Rocket size={14} />
+        Próximamente
+      </Link>
+
+      <Link
         href="/favoritos"
         aria-label="Favoritos"
         className="hidden md:flex relative w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink"
@@ -84,13 +94,22 @@ export default function TopBar({
         )}
       </Link>
       {!sessionLoading && user && (
-        <button
-          aria-label="Notificaciones"
+        <Link
+          href="/pedidos"
+          aria-label={
+            unreadDeliveries.length > 0
+              ? `Notificaciones: ${unreadDeliveries.length} pedido(s) en despacho`
+              : "Notificaciones"
+          }
           className="hidden md:flex relative w-10 h-10 rounded-tl-lg bg-surface border border-border items-center justify-center shrink-0 transition-colors hover:border-ink"
         >
           <Bell size={17} className="text-ink" />
-          <span className="absolute top-2 right-2.5 w-1.5 h-1.5 rounded-full bg-accent" />
-        </button>
+          {unreadDeliveries.length > 0 && (
+            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-tl-md bg-accent text-white text-[10px] font-semibold flex items-center justify-center">
+              {unreadDeliveries.length}
+            </span>
+          )}
+        </Link>
       )}
       {sessionLoading ? (
         <Link
