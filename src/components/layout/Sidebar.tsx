@@ -10,6 +10,7 @@ import {
   LifeBuoy,
   MapPin,
   Package,
+  Rocket,
   Settings,
   Sparkles,
   Tag,
@@ -104,6 +105,10 @@ export default function Sidebar({
 
         <nav className="mt-4 px-3">
           <div className="space-y-0.5">
+            <Link href="/proximamente" className={`${linkClass("/proximamente")} lg:hidden`}>
+              <Rocket size={18} />
+              <span className="flex-1">Próximamente</span>
+            </Link>
             {navItems.map(({ href, label, icon: Icon, badge }) => (
               <Link key={href} href={href} className={linkClass(href)}>
                 <Icon size={18} />

@@ -76,10 +76,10 @@ export default function TopBar({
       <Link
         href="/proximamente"
         aria-label="Próximamente"
-        className="flex items-center justify-center gap-1.5 h-10 w-10 md:w-auto shrink-0 bg-ink text-white text-xs font-semibold px-0 md:px-3.5 rounded-tl-lg transition-colors hover:bg-cta"
+        className="hidden md:flex items-center justify-center gap-1.5 h-10 w-auto shrink-0 bg-ink text-white text-xs font-semibold px-3.5 rounded-tl-lg transition-colors hover:bg-cta"
       >
         <Rocket size={15} />
-        <span className="hidden md:inline">Próximamente</span>
+        Próximamente
       </Link>
 
       <Link
