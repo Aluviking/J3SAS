@@ -97,10 +97,10 @@ export default function ProximamentePage() {
     <div>
       {/* Hero — incluye la vitrina del aliado destacado (RAMTEK) como parte
           del mismo banner inicial, no como sección aparte más abajo */}
-      <div className="relative overflow-hidden bg-ink px-4 lg:px-8 py-14 sm:py-20">
+      <div className="relative overflow-hidden bg-ink px-4 lg:px-8 py-8 sm:py-20">
         <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-cta/20 blur-3xl" />
         <div className="absolute -bottom-16 -left-10 w-72 h-72 rounded-full bg-brand/30 blur-3xl" />
-        <div className="relative grid lg:grid-cols-2 gap-8 items-stretch max-w-6xl mx-auto">
+        <div className="relative grid lg:grid-cols-2 gap-6 sm:gap-8 items-stretch max-w-6xl mx-auto">
           <div className="flex flex-col justify-center">
             <span className="inline-flex items-center gap-1.5 bg-cta/15 text-cta text-xs font-semibold px-3 py-1.5 rounded-tl-md w-fit">
               <Rocket size={13} />
