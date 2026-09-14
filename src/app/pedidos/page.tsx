@@ -85,7 +85,7 @@ function DeliveryTracking({ delivery }: { delivery: Delivery }) {
       {delivery.status !== "entregado" && delivery.status !== "pendiente_programar" && (
         <div className="mt-2.5">
           {delivery.status === "en_ruta" && hasDestination && (
-            <div className="relative">
+            <div>
               <LeafletMap
                 center={canTrack ? delivery.locationSharing.driverLastLocation! : delivery.destination}
                 zoom={13}
@@ -114,8 +114,10 @@ function DeliveryTracking({ delivery }: { delivery: Delivery }) {
                 route={route}
                 className="h-48"
               />
+              {/* Debajo del mapa (no encima) para no chocar nunca con los
+                  controles/atribución de Leaflet en pantallas angostas */}
               {routeInfo && canTrack && (
-                <div className="absolute left-2.5 bottom-2.5 z-[400] flex items-center gap-2 rounded-tl-lg bg-white/95 backdrop-blur px-3 py-1.5 shadow-lg border border-border">
+                <div className="mt-1.5 flex items-center gap-2 rounded-tl-lg bg-surface-alt px-3 py-1.5 border border-border">
                   <p className="text-xs font-bold text-ink leading-none">
                     Llega en {routeInfo.durationMin < 1 ? "< 1" : Math.round(routeInfo.durationMin)} min
                   </p>

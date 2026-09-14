@@ -154,10 +154,12 @@ export default function RepartidorMapaPage() {
         Arrastra los paquetes para organizar tu ruta de forma eficiente, sin ir de un lado a otro de la ciudad.
       </p>
 
-      <div className="relative">
+      <div>
         <RouteMap deliveries={activas} route={route} />
+        {/* Debajo del mapa (no encima) para no chocar nunca con los
+            controles/atribución de Leaflet en pantallas angostas */}
         {routeInfo && enRuta && (
-          <div className="absolute left-3 bottom-3 z-[400] flex items-center gap-3 rounded-tl-xl bg-white/95 backdrop-blur px-3.5 py-2 shadow-lg border border-border">
+          <div className="mt-2 flex items-center gap-3 rounded-tl-xl bg-surface-alt px-3.5 py-2 border border-border">
             <div>
               <p className="text-sm font-bold text-ink leading-none">
                 {routeInfo.durationMin < 1 ? "< 1" : Math.round(routeInfo.durationMin)} min

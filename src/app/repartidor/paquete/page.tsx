@@ -200,7 +200,7 @@ function PaqueteDetailContent() {
         </div>
 
         <div className="mt-4">
-          <div className="relative">
+          <div>
             <LeafletMap
               center={hasDestination ? delivery.destination : WAREHOUSE_ORIGIN}
               zoom={13}
@@ -229,8 +229,10 @@ function PaqueteDetailContent() {
               route={route}
               className="h-56"
             />
+            {/* Debajo del mapa (no encima) para no chocar nunca con los
+                controles/atribución de Leaflet en pantallas angostas */}
             {routeInfo && (delivery.status === "programado" || delivery.status === "en_ruta") && (
-              <div className="absolute left-3 bottom-3 z-[400] flex items-center gap-3 rounded-tl-xl bg-white/95 backdrop-blur px-3.5 py-2 shadow-lg border border-border">
+              <div className="mt-2 flex items-center gap-3 rounded-tl-xl bg-surface-alt px-3.5 py-2 border border-border">
                 <div>
                   <p className="text-sm font-bold text-ink leading-none">
                     {routeInfo.durationMin < 1 ? "< 1" : Math.round(routeInfo.durationMin)} min
@@ -240,7 +242,7 @@ function PaqueteDetailContent() {
                 <span className="h-7 w-px bg-border" />
                 <span
                   className={`text-[11px] font-semibold px-2 py-1 rounded-tl-sm ${
-                    delivery.status === "en_ruta" ? "bg-brand-soft text-brand" : "bg-surface-alt text-ink"
+                    delivery.status === "en_ruta" ? "bg-brand-soft text-brand" : "bg-surface text-ink"
                   }`}
                 >
                   {delivery.status === "en_ruta" ? "En camino" : "Programado"}
