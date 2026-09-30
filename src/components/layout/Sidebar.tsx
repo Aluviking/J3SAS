@@ -49,9 +49,10 @@ export default function Sidebar({
 }) {
   const pathname = usePathname();
   const { user } = useAuth();
+  const normalizedPath = pathname && pathname !== "/" ? pathname.replace(/\/$/, "") : pathname;
 
   const linkClass = (href: string) => {
-    const active = pathname === href;
+    const active = normalizedPath === href;
     return `flex items-center gap-3 rounded-tl-md px-3 py-2.5 text-sm font-medium transition-colors ${
       active ? "bg-cta text-white" : "text-ink/70 hover:bg-surface-alt hover:text-ink"
     }`;

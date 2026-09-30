@@ -5866,10 +5866,9 @@ export const products: Product[] = [
   },
   {
     id: "kitty-love-ice",
-    name: "Camiseta Kitty Love Ice",
-    category: "Camisetas",
-    audience: "mujer",
-    subcategories: ["Camiseta Oversize Dama Línea"],
+    name: "Camiseta Kitty Love Ice Niñas",
+    category: "Niños",
+    audience: "nina",
     price: 58900,
     originalPrice: 68900,
     wholesalePrice: 48000,
