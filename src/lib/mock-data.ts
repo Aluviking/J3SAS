@@ -1,4 +1,5 @@
 import { Flame, Mars, Smile, Users, Venus, type LucideIcon } from "lucide-react";
+import { hogarTechProducts } from "./hogar-tech-data";
 
 export type Category = {
   id: string;
@@ -110,9 +111,18 @@ export const AUDIENCE_GROUP_TYPES: Record<"hombre" | "dama", string[]> = {
   dama: ["Camisetas", "T-shirts", "Buzos", "Camisas", "Blusas", "Vestidos", "Chaquetas"],
 };
 
+const HOGAR_TECH_SLUGS: Record<string, string> = {
+  "Electrodomésticos": "electrodomesticos",
+  "Hogar y Cocina": "hogar-cocina",
+  "Tecnología": "tecnologia",
+  "Zona Gamer": "zona-gamer",
+  "Maletas y Accesorios": "maletas-accesorios",
+};
+
 export function audienceGroupSlug(product: Pick<Product, "category" | "audience">): string {
   if (product.category === "Niños") return "ninos";
   if (product.category === "Rescate") return "rescate";
+  if (product.category in HOGAR_TECH_SLUGS) return HOGAR_TECH_SLUGS[product.category];
   return product.audience === "mujer" ? "dama" : "hombre";
 }
 
@@ -6355,3 +6365,8 @@ export function getRelatedProducts(
   }
   return picked;
 }
+
+// Catálogo de hogar, cocina, electrodomésticos, tecnología, zona gamer y
+// maletas — se agrega al mismo arreglo de productos para que funcione con
+// todo lo existente (carrito, checkout, búsqueda, relacionados).
+products.push(...hogarTechProducts);

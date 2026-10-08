@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Disclaimer } from "@/components/DisclaimerModal";
 import ProductGridPage, { type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
+import { HOGAR_TECH_GROUP_TYPES } from "@/lib/hogar-tech-data";
 import { AUDIENCE_GROUP_TYPES, dedupeVariants, products, RESCATE_DISCLAIMER, type Product } from "@/lib/mock-data";
 
 type SlugConfig = {
@@ -112,6 +113,51 @@ const SLUGS: Record<string, SlugConfig> = {
   "chaquetas-hombre": {
     label: "Chaquetas Hombre",
     filter: (p) => p.category === "Chaquetas" && p.audience === "hombre",
+  },
+  electrodomesticos: {
+    label: "Electrodomésticos",
+    filter: (p) => p.category === "Electrodomésticos",
+    subFilters: HOGAR_TECH_GROUP_TYPES["Electrodomésticos"].map((s) => ({
+      key: s,
+      label: s,
+      field: "subcategory" as const,
+    })),
+  },
+  "hogar-cocina": {
+    label: "Hogar y Cocina",
+    filter: (p) => p.category === "Hogar y Cocina",
+    subFilters: HOGAR_TECH_GROUP_TYPES["Hogar y Cocina"].map((s) => ({
+      key: s,
+      label: s,
+      field: "subcategory" as const,
+    })),
+  },
+  tecnologia: {
+    label: "Tecnología",
+    filter: (p) => p.category === "Tecnología",
+    subFilters: HOGAR_TECH_GROUP_TYPES["Tecnología"].map((s) => ({
+      key: s,
+      label: s,
+      field: "subcategory" as const,
+    })),
+  },
+  "zona-gamer": {
+    label: "Zona Gamer",
+    filter: (p) => p.category === "Zona Gamer",
+    subFilters: HOGAR_TECH_GROUP_TYPES["Zona Gamer"].map((s) => ({
+      key: s,
+      label: s,
+      field: "subcategory" as const,
+    })),
+  },
+  "maletas-accesorios": {
+    label: "Maletas y Accesorios",
+    filter: (p) => p.category === "Maletas y Accesorios",
+    subFilters: HOGAR_TECH_GROUP_TYPES["Maletas y Accesorios"].map((s) => ({
+      key: s,
+      label: s,
+      field: "subcategory" as const,
+    })),
   },
 };
 

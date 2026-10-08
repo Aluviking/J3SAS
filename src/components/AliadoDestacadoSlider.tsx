@@ -3,7 +3,7 @@
 import { Boxes, ChevronLeft, ChevronRight, PackageSearch, ShoppingCart, Star } from "lucide-react";
 import { useEffect, useState } from "react";
 
-const ALIADOS = ["RAMTEK", "Casa Moreno", "Vitoria", "Iluminación", "Rosa Negra", "911", "Rubik Coffee"];
+const ALIADOS = ["Casa Moreno", "Vitoria", "Iluminación", "911", "Rubik Coffee"];
 const AUTO_MS = 4500;
 
 export default function AliadoDestacadoSlider({ ctaHref }: { ctaHref: string }) {

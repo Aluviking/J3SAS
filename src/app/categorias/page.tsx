@@ -34,6 +34,11 @@ export default function CategoriasPage() {
     { slug: "vestidos-dama", label: "Vestidos Dama", items: products.filter((p) => p.category === "Vestidos") },
     { slug: "chaquetas-dama", label: "Chaquetas Dama", items: products.filter((p) => p.category === "Chaquetas" && p.audience === "mujer") },
     { slug: "chaquetas-hombre", label: "Chaquetas Hombre", items: products.filter((p) => p.category === "Chaquetas" && p.audience === "hombre") },
+    { slug: "electrodomesticos", label: "Electrodomésticos", items: products.filter((p) => p.category === "Electrodomésticos") },
+    { slug: "hogar-cocina", label: "Hogar y Cocina", items: products.filter((p) => p.category === "Hogar y Cocina") },
+    { slug: "tecnologia", label: "Tecnología", items: products.filter((p) => p.category === "Tecnología") },
+    { slug: "zona-gamer", label: "Zona Gamer", items: products.filter((p) => p.category === "Zona Gamer") },
+    { slug: "maletas-accesorios", label: "Maletas y Accesorios", items: products.filter((p) => p.category === "Maletas y Accesorios") },
   ].filter((s) => s.items.length > 0);
 
   const totalProducts = products.length;

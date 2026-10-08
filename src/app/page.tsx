@@ -7,6 +7,45 @@ import HeroSlider from "@/components/HeroSlider";
 import ProductCard from "@/components/ProductCard";
 import { categories, currency, dedupeVariants, getBestSellers, products } from "@/lib/mock-data";
 
+const topCategories = [
+  {
+    id: "ropa",
+    label: "Ropa",
+    image: categories.find((c) => c.id === "hombre")!.image,
+    href: "/ropa",
+  },
+  {
+    id: "hogar-cocina",
+    label: "Hogar y Cocina",
+    image: "/products/hogar-tecnologia/hogar-y-cocina/2100143298.webp",
+    href: "/categorias/hogar-cocina",
+  },
+  {
+    id: "electrodomesticos",
+    label: "Electrodomésticos",
+    image: "/products/hogar-tecnologia/electrodomesticos/l62090.webp",
+    href: "/categorias/electrodomesticos",
+  },
+  {
+    id: "tecnologia",
+    label: "Tecnología",
+    image: "/products/hogar-tecnologia/tecnologia/j5159.webp",
+    href: "/categorias/tecnologia",
+  },
+  {
+    id: "zona-gamer",
+    label: "Zona Gamer",
+    image: "/products/hogar-tecnologia/zona-gamer/072-mv.webp",
+    href: "/categorias/zona-gamer",
+  },
+  {
+    id: "maletas-accesorios",
+    label: "Maletas y Accesorios",
+    image: "/products/hogar-tecnologia/maletas-y-accesorios/1017983.webp",
+    href: "/categorias/maletas-accesorios",
+  },
+];
+
 export default function Home() {
   const newArrivals = dedupeVariants(products).slice(0, 4);
   const bestSellers = getBestSellers(3);
@@ -64,9 +103,9 @@ export default function Home() {
               Ver todas
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
-            {categories.map(({ id, label, image, images, href }) => (
-              <CategoryTile key={id} id={id} label={label} image={image} images={images} href={href} />
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5">
+            {topCategories.map(({ id, label, image, href }) => (
+              <CategoryTile key={id} id={id} label={label} image={image} href={href} />
             ))}
           </div>
         </section>

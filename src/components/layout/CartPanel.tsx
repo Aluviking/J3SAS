@@ -225,6 +225,7 @@ export default function CartPanel({
 
           <Link
             href="/checkout"
+            onClick={onClose}
             className={`mt-2.5 flex items-center justify-center gap-2 bg-cta text-white text-sm font-semibold py-2.5 rounded-tl-lg transition-colors hover:bg-cta-dark ${
               lines.length === 0 ? "pointer-events-none opacity-50" : ""
             }`}

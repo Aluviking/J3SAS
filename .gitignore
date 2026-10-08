@@ -45,3 +45,6 @@ next-env.d.ts
 /public/**/*.png
 /public/**/*.jpg
 /public/**/*.jpeg
+
+# Documentos internos de proveedores — nunca se suben al repo.
+Propuesta de producto Ramtek*.xlsx

@@ -95,7 +95,7 @@ export default function ProximamentePage() {
 
   return (
     <div>
-      {/* Hero — incluye la vitrina del aliado destacado (RAMTEK) como parte
+      {/* Hero — incluye la vitrina de aliado destacado como parte
           del mismo banner inicial, no como sección aparte más abajo */}
       <div className="relative overflow-hidden bg-ink px-4 lg:px-8 py-8 sm:py-20">
         <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-cta/20 blur-3xl" />

@@ -265,6 +265,8 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           </div>
 
           {/* Size */}
+          {product.sizes.length > 0 && (
+          <>
           <p className="mt-4 text-sm font-medium text-ink">Selecciona la talla</p>
           <div className="mt-2 flex gap-2 flex-wrap">
             {product.sizes.map((s) => (
@@ -281,6 +283,8 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               </button>
             ))}
           </div>
+          </>
+          )}
 
           {/* Color (en móvil ya se elige arriba, sobre la foto) */}
           {colorVariants.length > 1 && (
