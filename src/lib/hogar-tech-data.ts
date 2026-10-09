@@ -8,6 +8,7 @@ const STORE = { name: "J3SAS", verified: true };
 export const hogarTechProducts: Product[] = [
   {
     id: "i41308",
+    sku: "J3-HOC-UTC-1",
     name: "Rallador morado en acero inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -23,6 +24,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i47650",
+    sku: "J3-HOC-UTC-2",
     name: "Rallador De Mesa Incametal",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -38,6 +40,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l63270",
+    sku: "J3-HOC-MOL-1",
     name: "Moledor De Sal Y Pimienta",
     category: "Hogar y Cocina",
     subcategories: ["Moledores"],
@@ -53,6 +56,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i47640",
+    sku: "J3-HOC-UTC-3",
     name: "Tablas Para Picar",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -68,6 +72,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41420",
+    sku: "J3-HOC-UTC-4",
     name: "Prensa Ajos En Acero Inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -83,6 +88,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41510",
+    sku: "J3-HOC-UTC-5",
     name: "Sacacorcho en acero inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -98,6 +104,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41460",
+    sku: "J3-HOC-UTC-6",
     name: "Cortador Para Pizza Echo En Acero Inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -113,6 +120,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41490",
+    sku: "J3-HOC-UTC-7",
     name: "Pela Papas Manual Vertical Acero Inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -128,6 +136,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41100",
+    sku: "J3-HOC-UTC-8",
     name: "Sacacorchos- Destapador- Abrelatas",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -143,6 +152,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i42065",
+    sku: "J3-HOC-UTC-9",
     name: "Tijeras Multiusos",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -158,6 +168,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41531",
+    sku: "J3-HOC-UTC-10",
     name: "Pinzas Nylon Multiusos",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -173,6 +184,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41411",
+    sku: "J3-HOC-UTC-11",
     name: "Batidor manual en acero inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -188,6 +200,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41430",
+    sku: "J3-HOC-UTC-12",
     name: "Cuchara Helado Incaino",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -203,6 +216,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i41500",
+    sku: "J3-HOC-UTC-13",
     name: "Brocha de Cocina Universal en Acero Inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -218,6 +232,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "i45350",
+    sku: "J3-HOC-UTC-14",
     name: "Vaporera Incametal para Alimentos de Acero",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -233,6 +248,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l41395",
+    sku: "J3-HOC-UTC-15",
     name: "Mandolina Multifuncional",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -248,6 +264,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l30006",
+    sku: "J3-HOC-BBP-1",
     name: "Barril ahumador de 6L con termometro",
     category: "Hogar y Cocina",
     subcategories: ["Bbq Y Parrillas"],
@@ -263,6 +280,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l30015",
+    sku: "J3-HOC-BBP-2",
     name: "Asador de barril de carbón de acero inoxidable de 20 libras",
     category: "Hogar y Cocina",
     subcategories: ["Bbq Y Parrillas"],
@@ -278,6 +296,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l30014",
+    sku: "J3-HOC-ACB-1",
     name: "Ganchos BBQ x 6 unidades",
     category: "Hogar y Cocina",
     subcategories: ["Accesorios Bbq"],
@@ -293,6 +312,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l19010",
+    sku: "J3-HOC-CHO-1",
     name: "Chocolatera en aluminio 2 Litros",
     category: "Hogar y Cocina",
     subcategories: ["Chocoteras"],
@@ -308,6 +328,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l36075",
+    sku: "J3-HOC-UTC-16",
     name: "Prensa Francesa Vidrio 600Ml",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -323,6 +344,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l36076",
+    sku: "J3-HOC-UTC-17",
     name: "Molino Manual Para Café",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -338,6 +360,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l36077",
+    sku: "J3-HOC-UTC-18",
     name: "Cafetera Chemex de vidrio 400 ml",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -353,6 +376,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l60761",
+    sku: "J3-HOC-UTC-19",
     name: "Spray De Aceite 100ml",
     category: "Hogar y Cocina",
     subcategories: ["Utencilios De Cocina"],
@@ -368,6 +392,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l79026",
+    sku: "J3-HOC-COC-1",
     name: "Caldero En Aluminio Fundido 24 Cm",
     category: "Hogar y Cocina",
     subcategories: ["Cocina Y Cocción"],
@@ -383,6 +408,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l79071",
+    sku: "J3-HOC-COC-2",
     name: "Caldero Cuadrado",
     category: "Hogar y Cocina",
     subcategories: ["Cocina Y Cocción"],
@@ -398,6 +424,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l79089",
+    sku: "J3-HOC-COC-3",
     name: "Caldero en Aluminio Fundido con Vertedero + Tapa 24 cm",
     category: "Hogar y Cocina",
     subcategories: ["Cocina Y Cocción"],
@@ -413,6 +440,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l62090",
+    sku: "J3-ELE-LIB-1",
     name: "Licuadora Élite Turbo Max Universal 1,8 litros",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -428,6 +456,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l88610",
+    sku: "J3-ELE-SAE-1",
     name: "Asador Electrico Universal 30 Cm Tapa Vidrio",
     category: "Electrodomésticos",
     subcategories: ["Sartenes Eléctricos"],
@@ -443,6 +472,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l39135",
+    sku: "J3-HOC-OLS-1",
     name: "Bateria Aliada 11 Piezas",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -458,6 +488,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l39457",
+    sku: "J3-HOC-OLS-2",
     name: "Bateria Aliada 7 Piezas",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -473,6 +504,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l39440",
+    sku: "J3-HOC-OLS-3",
     name: "Bateria Linea Aliada 4 Piezas",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -488,6 +520,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l39373",
+    sku: "J3-HOC-OLS-4",
     name: "Bateria Linea Aliada 6 Piezas",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -503,6 +536,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l72512",
+    sku: "J3-HOC-OLS-5",
     name: "Bateria Ultra 10 Piezas",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -518,6 +552,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l72513",
+    sku: "J3-HOC-OLS-6",
     name: "Bateria Ultra 12 Piezas",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -533,6 +568,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l92801",
+    sku: "J3-ELE-BAT-1",
     name: "Batidora Universal 5 Velocidades 150 Watts",
     category: "Electrodomésticos",
     subcategories: ["Batidoras"],
@@ -548,6 +584,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l66750",
+    sku: "J3-ELE-CAF-1",
     name: "Cafetera Inox. Universal 10 Tazas 1.25 ml",
     category: "Electrodomésticos",
     subcategories: ["Cafeteras"],
@@ -563,6 +600,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l65660",
+    sku: "J3-ELE-CAF-2",
     name: "Cafetera Universal de 4 a 6 tazas 600 ml",
     category: "Electrodomésticos",
     subcategories: ["Cafeteras"],
@@ -578,6 +616,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l66360",
+    sku: "J3-ELE-VEN-1",
     name: "Calentador Ambient Home Plus",
     category: "Electrodomésticos",
     subcategories: ["Ventilación"],
@@ -593,6 +632,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l66350",
+    sku: "J3-ELE-VEN-2",
     name: "Calentador De Ambiente Home",
     category: "Electrodomésticos",
     subcategories: ["Ventilación"],
@@ -608,6 +648,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l83696",
+    sku: "J3-ELE-EXP-1",
     name: "Exprimidor De Cítricos 1.5L",
     category: "Electrodomésticos",
     subcategories: ["Exprimidores"],
@@ -623,6 +664,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l89256",
+    sku: "J3-ELE-FRA-1",
     name: "Facilfry 3.2 Litros",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -638,6 +680,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l85770",
+    sku: "J3-ELE-PAR-1",
     name: "Hornilla Electrica 1Pt",
     category: "Electrodomésticos",
     subcategories: ["Parrillas"],
@@ -653,6 +696,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l71777",
+    sku: "J3-ELE-BAT-2",
     name: "Licuadora De Inmersion Universal con Jarra 800 ml",
     category: "Electrodomésticos",
     subcategories: ["Batidoras"],
@@ -668,6 +712,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l50861",
+    sku: "J3-ELE-LIB-2",
     name: "Licuadora Potency Mix",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -683,6 +728,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l62070",
+    sku: "J3-ELE-LIB-3",
     name: "Licuadora Ultra 600w más Vaso Picatodo Plateado",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -698,6 +744,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l71480",
+    sku: "J3-ELE-LIB-4",
     name: "Licuadora Universal Deportiva en Acero inoxidable 600 ml",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -713,6 +760,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l50803",
+    sku: "J3-ELE-LIB-5",
     name: "Licuadora Universal Negra con Vaso de vidrio 1,5 litros 4 Velocidades",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -728,6 +776,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l87377",
+    sku: "J3-ELE-PAN-1",
     name: "Mini Panini Universal",
     category: "Electrodomésticos",
     subcategories: ["Paninis"],
@@ -743,6 +792,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l37570",
+    sku: "J3-HOC-OLS-7",
     name: "Olla a presión Abre fácil en acero inoxidable 4 LITROS + TAPA VIDRIO",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -758,6 +808,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l37560",
+    sku: "J3-HOC-OLS-8",
     name: "Olla a presión Abre fácil en acero inoxidable 6 LITROS + TAPA VIDRIO",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -773,6 +824,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l85180",
+    sku: "J3-ELE-OLA-1",
     name: "Olla Arrocera Universal Gris Dos funciones 10 Tazas",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -788,6 +840,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l85160",
+    sku: "J3-ELE-OLA-2",
     name: "Olla Arrocera Universal Gris Dos funciones 7 tazas",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -803,6 +856,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l85320",
+    sku: "J3-ELE-OLA-3",
     name: "Olla arrocera Universal Negra 10 tazas",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -818,6 +872,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l85130",
+    sku: "J3-ELE-OLA-4",
     name: "Olla arrocera Universal Negra 5 tazas",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -833,6 +888,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l85330",
+    sku: "J3-ELE-OLA-5",
     name: "Olla arrocera Universal Negra 7 tazas",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -848,6 +904,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l37460",
+    sku: "J3-HOC-OLS-9",
     name: "Olla presión optima 6L",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -863,6 +920,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l25350",
+    sku: "J3-HOC-OLS-10",
     name: "Olla Presion Ultra Cierre Externo 3.5 Litros",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -878,6 +936,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l25450",
+    sku: "J3-HOC-OLS-11",
     name: "Olla Presion Ultra Cierre Externo 4.5 Litros",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -893,6 +952,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l25690",
+    sku: "J3-HOC-OLS-12",
     name: "Olla Presion Ultra Cierre Externo 6 Litros",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -908,6 +968,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l89130",
+    sku: "J3-ELE-PRA-1",
     name: "Picatodo Universal chopper Mix de 1.5 tazas",
     category: "Electrodomésticos",
     subcategories: ["Procesador De Alimentos"],
@@ -923,6 +984,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l95600",
+    sku: "J3-HOC-PLA-1",
     name: "Plancha A Vapor Universal 1200 W 200 Ml Gris",
     category: "Hogar y Cocina",
     subcategories: ["Planchas"],
@@ -938,6 +1000,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l82320",
+    sku: "J3-HOC-PLA-2",
     name: "Plancha a Vapor Universal Extra Liviana Azul",
     category: "Hogar y Cocina",
     subcategories: ["Planchas"],
@@ -953,6 +1016,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l40600",
+    sku: "J3-HOC-PLA-3",
     name: "Plancha Seca Universal Tradicional",
     category: "Hogar y Cocina",
     subcategories: ["Planchas"],
@@ -968,6 +1032,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l82340",
+    sku: "J3-HOC-PLA-4",
     name: "Plancha Universal a vapor Color Azul 1200 W",
     category: "Hogar y Cocina",
     subcategories: ["Planchas"],
@@ -983,6 +1048,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l82345",
+    sku: "J3-HOC-PLA-5",
     name: "Plancha Universal A Vapor Color Verde",
     category: "Hogar y Cocina",
     subcategories: ["Planchas"],
@@ -998,6 +1064,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l40690",
+    sku: "J3-HOC-PLA-6",
     name: "Plancha Vertical Plus",
     category: "Hogar y Cocina",
     subcategories: ["Planchas"],
@@ -1013,6 +1080,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l89270",
+    sku: "J3-ELE-PRA-2",
     name: "Procesador Alimentos 700 Ml Universal",
     category: "Electrodomésticos",
     subcategories: ["Procesador De Alimentos"],
@@ -1028,6 +1096,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l87340",
+    sku: "J3-ELE-SAN-1",
     name: "Sanduchera UNIVERSAL 4 Puestos Negro",
     category: "Electrodomésticos",
     subcategories: ["Sanducheras"],
@@ -1043,6 +1112,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l87312",
+    sku: "J3-ELE-PAN-2",
     name: "Sandwichera Universal Panini Grill 1000W 2 Puestos",
     category: "Electrodomésticos",
     subcategories: ["Paninis"],
@@ -1058,6 +1128,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l39600",
+    sku: "J3-HOC-OLS-13",
     name: "Set X3 Sart Aliada 18-20-24 Cm Sin Tapa",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -1073,6 +1144,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l71920",
+    sku: "J3-HOC-HER-1",
     name: "Tetera Elec Vidrio1.7L 1000W",
     category: "Hogar y Cocina",
     subcategories: ["Hervidores"],
@@ -1088,6 +1160,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "l75545",
+    sku: "J3-ELE-VEN-3",
     name: "Ventilador Dynamic Vento 3-1 Universal",
     category: "Electrodomésticos",
     subcategories: ["Ventilación"],
@@ -1103,6 +1176,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1510002117",
+    sku: "J3-ELE-CAF-3",
     name: "Caf Simply Brew Digital 1.5L Us",
     category: "Electrodomésticos",
     subcategories: ["Cafeteras"],
@@ -1118,6 +1192,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "5861023616",
+    sku: "J3-ELE-EXP-2",
     name: "Exprimidor Imusa Vitapress 1 L Negro",
     category: "Electrodomésticos",
     subcategories: ["Exprimidores"],
@@ -1133,6 +1208,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1510002317",
+    sku: "J3-ELE-FRA-2",
     name: "Freidora de Aire Imusa 3.2 Litros Esencial Negro",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -1148,6 +1224,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "7211004471",
+    sku: "J3-ELE-OLA-6",
     name: "Olla Multifuncional Imusa Multichef PRO 5 Litros",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -1163,6 +1240,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1510001744",
+    sku: "J3-ELE-SAN-2",
     name: "Sanduchera Imusa Basic 652 watts",
     category: "Electrodomésticos",
     subcategories: ["Sanducheras"],
@@ -1178,6 +1256,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1510001941",
+    sku: "J3-ELE-SAN-3",
     name: "Sanduchera Imusa Grill basic 850 watts",
     category: "Electrodomésticos",
     subcategories: ["Sanducheras"],
@@ -1193,6 +1272,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1510002066",
+    sku: "J3-ELE-FRA-3",
     name: "Freidora de aire Imusa Esencial 3.2L Mecánica Negra",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -1208,6 +1288,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "5861035468",
+    sku: "J3-ELE-FRA-4",
     name: "Freidora de aire Imusa Max 5L digital negra",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -1223,6 +1304,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "5861035503",
+    sku: "J3-ELE-FRA-5",
     name: "Freidora de aire Imusa Max 5L mecánica inox",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -1238,6 +1320,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "5861035467",
+    sku: "J3-ELE-FRA-6",
     name: "Freidora de aire Imusa Max 5L Digital Inox",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -1253,6 +1336,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1510002873",
+    sku: "J3-ELE-FRA-7",
     name: "Freidora de aire Imusa Extra Superficie 4L Digital",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -1268,6 +1352,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "7114000584",
+    sku: "J3-HOC-OLS-14",
     name: "Olla a Presión Imusa Talent Master 7 Litros Acero Inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -1283,6 +1368,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "7114000583",
+    sku: "J3-HOC-OLS-15",
     name: "Olla a Presión Imusa Talent Master 4 Litros Acero Inoxidable",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -1298,6 +1384,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "5861027392",
+    sku: "J3-HOC-OLS-16",
     name: "Olla a Presión Imusa Smart 4,5 Litros Cierre Interno",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -1313,6 +1400,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "2100143299",
+    sku: "J3-HOC-OLS-17",
     name: "Bateria 7pz Imusa Titanium Max Antiadherente Inducción",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -1328,6 +1416,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "2100143298",
+    sku: "J3-HOC-OLS-18",
     name: "Bateria 5pz Imusa Titanium Max Antiadherente Inducción",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -1343,6 +1432,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1510002855",
+    sku: "J3-ELE-SAN-4",
     name: "Sanduchera & Parrilla Eléctrica Imusa Inicio Compact con Placas Antiadherentes",
     category: "Electrodomésticos",
     subcategories: ["Sanducheras"],
@@ -1358,6 +1448,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "7211419782",
+    sku: "J3-ELE-LIB-6",
     name: "Licuadora de Mano Imusa Quickchef+, 500 Watts , modo silencioso, accesorios incluidos",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -1373,6 +1464,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "5861035551",
+    sku: "J3-ELE-LIB-7",
     name: "Licuadora Imusa Ultraforce +,2 velocidades, 1000W, Vaso de Vidrio 2.2L",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -1388,6 +1480,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "7211419261",
+    sku: "J3-ELE-LIB-8",
     name: "Licuadora Imusa Ultraforce 2X, 1100W, Vaso de Vidrio 2L + Picatodo",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -1403,6 +1496,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "7211419242",
+    sku: "J3-HOC-TET-1",
     name: "Hervidor Imusa Súbito 1.7L Inox",
     category: "Hogar y Cocina",
     subcategories: ["Teteras"],
@@ -1418,6 +1512,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "5861033195",
+    sku: "J3-HOC-OLS-19",
     name: "Cafetera Italiana Imusa Espresso 3 tazas Roja",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -1433,6 +1528,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "100690566",
+    sku: "J3-HOC-BBQ-1",
     name: "Asador De Carbon Barbecue Home Elements",
     category: "Hogar y Cocina",
     subcategories: ["Bbq"],
@@ -1448,6 +1544,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299896382",
+    sku: "J3-ELE-BAT-3",
     name: "Batidora De Inmersion + Jarra Personal Tritan 300W He-538N",
     category: "Electrodomésticos",
     subcategories: ["Batidoras"],
@@ -1463,6 +1560,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "728997354",
+    sku: "J3-ELE-BAT-4",
     name: "Batidora Electrica 5Vel Mas Turbo Mod He 1459 Home",
     category: "Electrodomésticos",
     subcategories: ["Batidoras"],
@@ -1478,6 +1576,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "728994006",
+    sku: "J3-ELE-CAF-4",
     name: "Cafetera Electrica 12 Tazas Mod He 7031 A Home Elements",
     category: "Electrodomésticos",
     subcategories: ["Cafeteras"],
@@ -1493,6 +1592,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299896501",
+    sku: "J3-ELE-CRI-1",
     name: "Crispetera Electrica Roja",
     category: "Electrodomésticos",
     subcategories: ["Crispeteras"],
@@ -1508,6 +1608,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299894476",
+    sku: "J3-ELE-PAR-2",
     name: "Estufa 1P Electrica 1.000W He-001Dg Gris Jaspeado",
     category: "Electrodomésticos",
     subcategories: ["Parrillas"],
@@ -1523,6 +1624,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299895089",
+    sku: "J3-ELE-PAR-3",
     name: "Estufa Electrica Gris Turquesa 2 Puestos",
     category: "Electrodomésticos",
     subcategories: ["Parrillas"],
@@ -1538,6 +1640,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299897408",
+    sku: "J3-ELE-HER-1",
     name: "Jarra Hervidora 1,8 Lts Acero Inoxidable",
     category: "Electrodomésticos",
     subcategories: ["Hervidores"],
@@ -1553,6 +1656,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299900712",
+    sku: "J3-ELE-LIB-9",
     name: "Licuadora 2815At Jarra Vidrio Con Chopper 500 Helvv500At",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -1568,6 +1672,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299894261",
+    sku: "J3-ELE-LOE-1",
     name: "Lonchera Electrica",
     category: "Electrodomésticos",
     subcategories: ["Loncheras Eléctricas"],
@@ -1582,6 +1687,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901126",
+    sku: "J3-ELE-WAF-1",
     name: "Mini Wafflera",
     category: "Electrodomésticos",
     subcategories: ["Wafleras"],
@@ -1597,6 +1703,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299897406",
+    sku: "J3-ELE-OME-1",
     name: "Multi Express/ Omeletera Negra",
     category: "Electrodomésticos",
     subcategories: ["Omeleteras"],
@@ -1612,6 +1719,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299897401",
+    sku: "J3-ELE-PRA-3",
     name: "Picatodo 1,3 Lts Negro",
     category: "Electrodomésticos",
     subcategories: ["Procesador De Alimentos"],
@@ -1627,6 +1735,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299895808",
+    sku: "J3-ELE-PIM-1",
     name: "Pizza Maker 1300W Ref. He-828G",
     category: "Electrodomésticos",
     subcategories: ["Pizza Maker"],
@@ -1642,6 +1751,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299895102",
+    sku: "J3-ELE-PLA-1",
     name: "Plancha Vertical Con Rafaga De Vapor & Accesorios",
     category: "Electrodomésticos",
     subcategories: ["Planchas"],
@@ -1657,6 +1767,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "728996363",
+    sku: "J3-ELE-SAE-2",
     name: "Sarten Wok Electrico Antiad Stone. 30Cm T/Vidrio Heplyd401 Prestig",
     category: "Electrodomésticos",
     subcategories: ["Sartenes Eléctricos"],
@@ -1672,6 +1783,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299896670",
+    sku: "J3-HOC-ENS-1",
     name: "Set X 5 Ensaladeras Blanca Forma Hoja",
     category: "Hogar y Cocina",
     subcategories: ["Ensaladeras"],
@@ -1687,6 +1799,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299895306",
+    sku: "J3-HOC-TER-1",
     name: "Termo Acero Doble Pared 0,32L He-100Z Color",
     category: "Hogar y Cocina",
     subcategories: ["Termos"],
@@ -1702,6 +1815,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299892687",
+    sku: "J3-HOC-TER-2",
     name: "Termo Acero Doble Pared 0,5L He-100Z Color",
     category: "Hogar y Cocina",
     subcategories: ["Termos"],
@@ -1717,6 +1831,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299892693",
+    sku: "J3-HOC-TER-3",
     name: "Termo Acero Doble Pared 1,0L He-100Z Color",
     category: "Hogar y Cocina",
     subcategories: ["Termos"],
@@ -1731,6 +1846,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299896482",
+    sku: "J3-HOC-TER-4",
     name: "Termo Acero Doble Pared Con Funda",
     category: "Hogar y Cocina",
     subcategories: ["Termos"],
@@ -1746,6 +1862,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299896746",
+    sku: "J3-ELE-WAF-2",
     name: "Wafflera Negra",
     category: "Electrodomésticos",
     subcategories: ["Wafleras"],
@@ -1761,6 +1878,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899204",
+    sku: "J3-ELE-OLA-7",
     name: "Olla Arrocera 0,6L Negra Hear04N",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -1776,6 +1894,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299898829",
+    sku: "J3-ELE-OLA-8",
     name: "Olla Arrocera 1,0 Lts Negra Heoa-10N",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -1791,6 +1910,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899484",
+    sku: "J3-ELE-OLA-9",
     name: "Olla Arrocera 1,8 Lts Negra Con Vaporera Hear-18N",
     category: "Electrodomésticos",
     subcategories: ["Ollas Arroceras"],
@@ -1806,6 +1926,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901891",
+    sku: "J3-ELE-BAT-5",
     name: "Batidora Negra-Hebp3500N",
     category: "Electrodomésticos",
     subcategories: ["Batidoras"],
@@ -1821,6 +1942,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299900065",
+    sku: "J3-ELE-CAF-5",
     name: "Cafetera 6 Tazas Negra V/Vidrio Hecm9420Ss",
     category: "Electrodomésticos",
     subcategories: ["Cafeteras"],
@@ -1836,6 +1958,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299902188",
+    sku: "J3-ELE-CAF-6",
     name: "Cafetera Electrica 10 Tazas Jarra Acero Inoxidable Hecai10Ss",
     category: "Electrodomésticos",
     subcategories: ["Cafeteras"],
@@ -1851,6 +1974,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299898424",
+    sku: "J3-ELE-CAF-7",
     name: "Cafetera Coffe Home - Capuchinera Hecm-2033N",
     category: "Electrodomésticos",
     subcategories: ["Cafeteras"],
@@ -1866,6 +1990,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899968",
+    sku: "J3-ELE-EXP-3",
     name: "Exprimidor De Jugo 1.4L Negro Hecj606N",
     category: "Electrodomésticos",
     subcategories: ["Exprimidores"],
@@ -1881,6 +2006,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299897729",
+    sku: "J3-ELE-EXP-4",
     name: "Extractor De Jugos 1,2 Lts",
     category: "Electrodomésticos",
     subcategories: ["Exprimidores"],
@@ -1896,6 +2022,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299897970",
+    sku: "J3-ELE-PRA-4",
     name: "Picatodo 350 Ml Negro Hemc-4422",
     category: "Electrodomésticos",
     subcategories: ["Procesador De Alimentos"],
@@ -1911,6 +2038,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299897404",
+    sku: "J3-ELE-CHO-1",
     name: "Chocolate Maker",
     category: "Electrodomésticos",
     subcategories: ["Chocoteras"],
@@ -1926,6 +2054,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299902135",
+    sku: "J3-ELE-ASA-1",
     name: "Asador Electrico Grill Pro Heaea16N",
     category: "Electrodomésticos",
     subcategories: ["Asadores"],
@@ -1941,6 +2070,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901331",
+    sku: "J3-ELE-HOT-1",
     name: "Horno Tostador 9L Negro 800W Heht09N",
     category: "Electrodomésticos",
     subcategories: ["Hornos Tostadores"],
@@ -1956,6 +2086,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901332",
+    sku: "J3-ELE-HOT-2",
     name: "Horno Multifuncional 5 En 1 23L Negro 1800W Hehcp23N",
     category: "Electrodomésticos",
     subcategories: ["Hornos Tostadores"],
@@ -1971,6 +2102,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899966",
+    sku: "J3-ELE-LIB-10",
     name: "Licuadora Maxi Power 1.8L Hebl9011N",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -1986,6 +2118,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299898635",
+    sku: "J3-ELE-LIB-11",
     name: "Licuadora 2 Velocidades + Pulso Y Picatodo Helvp500N",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -2001,6 +2134,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901029",
+    sku: "J3-ELE-LIB-12",
     name: "Licuadora Jarra Vidrio 1.5L 550W",
     category: "Electrodomésticos",
     subcategories: ["Licuadoras Y Batidoras"],
@@ -2016,6 +2150,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299902133",
+    sku: "J3-ELE-CRE-1",
     name: "Crepera He",
     category: "Electrodomésticos",
     subcategories: ["Creperas"],
@@ -2031,6 +2166,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901329",
+    sku: "J3-ELE-WAF-3",
     name: "Wafflera 2 Puestos Cuadrada Hewm155N",
     category: "Electrodomésticos",
     subcategories: ["Wafleras"],
@@ -2046,6 +2182,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901876",
+    sku: "J3-ELE-FRA-8",
     name: "Freidora Aire 4 Lts Negra-He440N",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -2061,6 +2198,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299902137",
+    sku: "J3-ELE-FRA-9",
     name: "Freidora 11L Doble Canastilla He",
     category: "Electrodomésticos",
     subcategories: ["Freidoras De Aire"],
@@ -2076,6 +2214,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299896720",
+    sku: "J3-ELE-EST-1",
     name: "Estufa 1P Electrica 1.000W He-E1 Negra",
     category: "Electrodomésticos",
     subcategories: ["Estufas"],
@@ -2091,6 +2230,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899972",
+    sku: "J3-ELE-PLA-2",
     name: "Plancha Seca Con Rociador Gris - Azul Heps207Ga",
     category: "Electrodomésticos",
     subcategories: ["Planchas"],
@@ -2106,6 +2246,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899973",
+    sku: "J3-ELE-PLA-3",
     name: "Plancha A Vapor Y Seco Antiadherente Hepv268A",
     category: "Electrodomésticos",
     subcategories: ["Planchas"],
@@ -2121,6 +2262,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299901107",
+    sku: "J3-ELE-SAN-5",
     name: "Sanduchera 2 Puestos Platos Cobre Hesm2P155Nc",
     category: "Electrodomésticos",
     subcategories: ["Sanducheras"],
@@ -2136,6 +2278,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899970",
+    sku: "J3-HOC-OLS-20",
     name: "Bateria Acero 5 Piezas Heba5Ss",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -2151,6 +2294,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299899971",
+    sku: "J3-HOC-OLS-21",
     name: "Bateria 7 Pzas Acero Inox Acc Silicona Heba7Ss",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -2166,6 +2310,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299900690",
+    sku: "J3-HOC-OLS-22",
     name: "Olla A Presion Aluminio Con Tapa Acero 11 Lts",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -2181,6 +2326,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299900227",
+    sku: "J3-HOC-OLS-23",
     name: "Olla A Presion Aluminio Con Tapa Acero 5,6 Lts",
     category: "Hogar y Cocina",
     subcategories: ["Ollas Y Sartenes"],
@@ -2196,6 +2342,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299900521",
+    sku: "J3-HOC-ASA-1",
     name: "Asador De Carbon Barbecue Rojo Hebbq9014R",
     category: "Hogar y Cocina",
     subcategories: ["Asadores"],
@@ -2211,6 +2358,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "728997932",
+    sku: "J3-HOC-CUB-1",
     name: "Set De Cubiertos X 24 Pzas Acero Inox C/ Soporte Metalico He",
     category: "Hogar y Cocina",
     subcategories: ["Cubiertos"],
@@ -2226,6 +2374,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299900929",
+    sku: "J3-HOC-VAJ-1",
     name: "Vajilla 4/16 Blanca Con Borde Rojo Hevv-1604",
     category: "Hogar y Cocina",
     subcategories: ["Vajillas"],
@@ -2241,6 +2390,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299900855",
+    sku: "J3-HOC-VAJ-2",
     name: "Set X 5 Bowl Borde Decorado Hesh-5Td",
     category: "Hogar y Cocina",
     subcategories: ["Vajillas"],
@@ -2256,6 +2406,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299902149",
+    sku: "J3-HOC-REF-1",
     name: "Juego 3 Recipientes Redondos Vidrio Color Ambar Ct",
     category: "Hogar y Cocina",
     subcategories: ["Refractarias"],
@@ -2271,6 +2422,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299893639",
+    sku: "J3-ELE-VTL-1",
     name: "Ventilador Pedestal 16\" Hesf-16G",
     category: "Electrodomésticos",
     subcategories: ["Ventiladores"],
@@ -2286,6 +2438,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "299898321",
+    sku: "J3-ELE-VTL-2",
     name: "Vent Pedestal Negro 18P Cx1 Maxiflow Élite",
     category: "Electrodomésticos",
     subcategories: ["Ventiladores"],
@@ -2301,6 +2454,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "077-mv",
+    sku: "J3-TEC-AUD-1",
     name: "Diadema Jyrpods Max",
     category: "Tecnología",
     subcategories: ["Audífonos"],
@@ -2315,6 +2469,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "012-mv",
+    sku: "J3-TEC-AUD-2",
     name: "Diadema Con Microfono Stereo Tipo Dj",
     category: "Tecnología",
     subcategories: ["Audífonos"],
@@ -2329,6 +2484,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "072-mv",
+    sku: "J3-GAM-DIA-1",
     name: "Diadema Gamer Maximus RGB",
     category: "Zona Gamer",
     subcategories: ["Diademas"],
@@ -2343,6 +2499,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "073-mv",
+    sku: "J3-GAM-DIA-2",
     name: "Diadema Gamer RGB Orion con innovador sistema de conexión 2 en 1",
     category: "Zona Gamer",
     subcategories: ["Diademas"],
@@ -2357,6 +2514,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "074-mv",
+    sku: "J3-GAM-DIA-3",
     name: "Diadema Gamer Anubis",
     category: "Zona Gamer",
     subcategories: ["Diademas"],
@@ -2371,6 +2529,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "075-mv",
+    sku: "J3-GAM-DIA-4",
     name: "Edicion Especial Vortes Rgb",
     category: "Zona Gamer",
     subcategories: ["Diademas"],
@@ -2385,6 +2544,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "076-mv",
+    sku: "J3-GAM-DIA-5",
     name: "Diadema Gamer Espiral",
     category: "Zona Gamer",
     subcategories: ["Diademas"],
@@ -2399,6 +2559,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "mcjr-002",
+    sku: "J3-TEC-AUD-3",
     name: "Microfono con Solapa",
     category: "Tecnología",
     subcategories: ["Audífonos"],
@@ -2413,6 +2574,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "mcjr-003",
+    sku: "J3-GAM-MIG-1",
     name: "Microfono Gamer",
     category: "Zona Gamer",
     subcategories: ["Microfono Gamer"],
@@ -2427,6 +2589,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5217",
+    sku: "J3-TEC-PAR-1",
     name: "Parlantes Usb Premium",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2441,6 +2604,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5218",
+    sku: "J3-TEC-PAR-2",
     name: "Parlantes Línea Premium",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2455,6 +2619,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5249",
+    sku: "J3-TEC-PAR-3",
     name: "Parlantes Gamer Rgb",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2469,6 +2634,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5210",
+    sku: "J3-GAM-PAR-1",
     name: "Parlantes USB Gamer RGB",
     category: "Zona Gamer",
     subcategories: ["Parlantes"],
@@ -2483,6 +2649,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "mgjr-041",
+    sku: "J3-TEC-ACC-1",
     name: "Mouse Gamer",
     category: "Tecnología",
     subcategories: ["Accesorios Computo"],
@@ -2497,6 +2664,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "mgjr-047",
+    sku: "J3-GAM-MOU-1",
     name: "Mouse Gamer Alambrico Pro Zero Rgb",
     category: "Zona Gamer",
     subcategories: ["Mouse"],
@@ -2511,6 +2679,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "tmjr-024",
+    sku: "J3-TEC-ACC-2",
     name: "Teclado Classico Multimedia",
     category: "Tecnología",
     subcategories: ["Accesorios Computo"],
@@ -2525,6 +2694,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "tgmjr-014",
+    sku: "J3-GAM-TEC-1",
     name: "Teclado Membrana Usb Jyr Vikingo",
     category: "Zona Gamer",
     subcategories: ["Teclados"],
@@ -2539,6 +2709,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "ctmgjr-013",
+    sku: "J3-GAM-TEC-2",
     name: "Combo Gamer 4 En 1 Rgb",
     category: "Zona Gamer",
     subcategories: ["Teclados"],
@@ -2553,6 +2724,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "ctmgjr-015",
+    sku: "J3-GAM-TEC-3",
     name: "Combo Gamer Multimedia",
     category: "Zona Gamer",
     subcategories: ["Teclados"],
@@ -2567,6 +2739,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "ts-km01",
+    sku: "J3-TEC-ACC-3",
     name: "Combo Alámbrico Multimedia",
     category: "Tecnología",
     subcategories: ["Accesorios Computo"],
@@ -2581,6 +2754,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "sw-gm054",
+    sku: "J3-TEC-ACC-4",
     name: "Combo Gamer 4 en 1",
     category: "Tecnología",
     subcategories: ["Accesorios Computo"],
@@ -2595,6 +2769,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "ctmgjr-018",
+    sku: "J3-GAM-TEC-4",
     name: "Combo Gamer Legendary",
     category: "Zona Gamer",
     subcategories: ["Teclados"],
@@ -2609,6 +2784,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "mhjr-009",
+    sku: "J3-GAM-MOR-1",
     name: "Mochila Gamer",
     category: "Zona Gamer",
     subcategories: ["Morrales"],
@@ -2623,6 +2799,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "wk-5321",
+    sku: "J3-TEC-PAR-4",
     name: "Parlante Bluetooth + Lamprara",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2637,6 +2814,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5211",
+    sku: "J3-TEC-PAR-5",
     name: "Parlante Hielera",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2651,6 +2829,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "wk-5658",
+    sku: "J3-TEC-PAR-6",
     name: "Parlante Bluetooth",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2665,6 +2844,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5194",
+    sku: "J3-TEC-PAR-7",
     name: "Cabina Activa 8\" Recargable",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2679,6 +2859,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "tmjr-008",
+    sku: "J3-TEC-ACC-5",
     name: "Teclado multimedia High Sensitive",
     category: "Tecnología",
     subcategories: ["Accesorios Computo"],
@@ -2693,6 +2874,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "tgmjr-015",
+    sku: "J3-GAM-TEC-5",
     name: "Teclado Gamer Crysta",
     category: "Zona Gamer",
     subcategories: ["Teclados"],
@@ -2707,6 +2889,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "zidli-d5-pro",
+    sku: "J3-TEC-PAR-8",
     name: "Parlante Bluetooth",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2721,6 +2904,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "zidli-d85",
+    sku: "J3-TEC-PAR-9",
     name: "Parlante Bluetooth",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2735,6 +2919,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5159",
+    sku: "J3-TEC-PAR-10",
     name: "Cabina Activa Recargable Pulgadas 8\"",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2750,6 +2935,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5160",
+    sku: "J3-TEC-PAR-11",
     name: "Cabina Activa Recargable pulgadas 10\"",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2765,6 +2951,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5240",
+    sku: "J3-TEC-PAR-12",
     name: "Cabina Activa Recargable pulgadas 8\"",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2780,6 +2967,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5244",
+    sku: "J3-TEC-PAR-13",
     name: "Cabina Activa Recargable pulgadas 8\" DOBLE",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2795,6 +2983,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "j5243",
+    sku: "J3-TEC-PAR-14",
     name: "Cabina Activa Doble Recargable pulgadas 10\" DOBLE",
     category: "Tecnología",
     subcategories: ["Parlantes"],
@@ -2810,6 +2999,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "ctmgjr-016",
+    sku: "J3-GAM-TEC-6",
     name: "Combo Gamer 3 En 1 Pro Zero Rgb",
     category: "Zona Gamer",
     subcategories: ["Teclados"],
@@ -2824,6 +3014,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "jc-019",
+    sku: "J3-TEC-VIJ-1",
     name: "Consola De Mano Lite Game Retro Recargable",
     category: "Tecnología",
     subcategories: ["Video Juegos"],
@@ -2838,6 +3029,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1010487",
+    sku: "J3-MAL-MNL-1",
     name: "Bolso manos libres Moon de lona Negro",
     category: "Maletas y Accesorios",
     subcategories: ["Manos Libres"],
@@ -2853,6 +3045,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1037841",
+    sku: "J3-MAL-MOR-1",
     name: "Morral Sierra en lona para hombre manija cuero",
     category: "Maletas y Accesorios",
     subcategories: ["Morrales"],
@@ -2868,6 +3061,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1010269",
+    sku: "J3-MAL-MOR-2",
     name: "Morral express",
     category: "Maletas y Accesorios",
     subcategories: ["Morrales"],
@@ -2883,6 +3077,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1038113",
+    sku: "J3-MAL-MNL-2",
     name: "Manos libres Harrington de lona y cuero para hombre casual",
     category: "Maletas y Accesorios",
     subcategories: ["Manos Libres"],
@@ -2898,6 +3093,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1023850",
+    sku: "J3-MAL-MLT-1",
     name: "Maleta 20 Supernova",
     category: "Maletas y Accesorios",
     subcategories: ["Maletas"],
@@ -2913,6 +3109,7 @@ export const hogarTechProducts: Product[] = [
   },
   {
     id: "1017983",
+    sku: "J3-MAL-MOR-3",
     name: "Morral Millenial",
     category: "Maletas y Accesorios",
     subcategories: ["Morrales"],

@@ -71,6 +71,8 @@ export type Audience = "hombre" | "mujer" | "nino" | "nina";
 
 export type Product = {
   id: string;
+  /** Código de referencia interno (ej. "J3-02CMO-5"), visible en la ficha del producto. */
+  sku?: string;
   name: string;
   category: string;
   audience?: Audience;
@@ -132,6 +134,7 @@ const STORE = { name: "J3SAS", verified: true };
 export const products: Product[] = [
   {
     id: "brooklyn",
+    sku: "J3-01CMO-1",
     name: "Camiseta Brooklyn Limited Edition",
     category: "Camisetas",
     audience: "hombre",
@@ -151,6 +154,7 @@ export const products: Product[] = [
   },
   {
     id: "california",
+    sku: "J3-01CMO-2",
     name: "Camiseta California Street",
     category: "Camisetas",
     audience: "hombre",
@@ -170,6 +174,7 @@ export const products: Product[] = [
   },
   {
     id: "denim",
+    sku: "J3-01CMO-3",
     name: "Camiseta Denim Patchwork",
     category: "Camisetas",
     audience: "hombre",
@@ -189,6 +194,7 @@ export const products: Product[] = [
   },
   {
     id: "exclusive",
+    sku: "J3-01CMO-4",
     name: "Camiseta Exclusive Pinstripe",
     category: "Camisetas",
     audience: "hombre",
@@ -207,6 +213,7 @@ export const products: Product[] = [
   },
   {
     id: "dragon",
+    sku: "J3-01CMO-5",
     name: "Camiseta Dragón Tribal",
     category: "Camisetas",
     audience: "hombre",
@@ -225,6 +232,7 @@ export const products: Product[] = [
   },
   {
     id: "void",
+    sku: "J3-01CMO-6",
     name: "Camiseta Void Gothic",
     category: "Camisetas",
     audience: "hombre",
@@ -244,6 +252,7 @@ export const products: Product[] = [
   },
   {
     id: "looney-bugs",
+    sku: "J3-01CMO-7",
     name: "Camiseta Looney Tunes Bugs",
     category: "Camisetas",
     audience: "hombre",
@@ -263,6 +272,7 @@ export const products: Product[] = [
   },
   {
     id: "coyote",
+    sku: "J3-01CMO-8",
     name: "Camiseta Looney Tunes Coyote",
     category: "Camisetas",
     audience: "hombre",
@@ -282,6 +292,7 @@ export const products: Product[] = [
   },
   {
     id: "daffy",
+    sku: "J3-01CMO-9",
     name: "Camiseta Looney Tunes Daffy",
     category: "Camisetas",
     audience: "hombre",
@@ -301,6 +312,7 @@ export const products: Product[] = [
   },
   {
     id: "mickey-cowboys",
+    sku: "J3-01CMO-10",
     name: "Camiseta Mickey Cowboys",
     category: "Camisetas",
     audience: "hombre",
@@ -320,6 +332,7 @@ export const products: Product[] = [
   },
   {
     id: "mickey-wow",
+    sku: "J3-01CMO-11",
     name: "Camiseta Mickey WOW",
     category: "Camisetas",
     audience: "hombre",
@@ -339,6 +352,7 @@ export const products: Product[] = [
   },
   {
     id: "urbn",
+    sku: "J3-01CMO-12",
     name: "Camiseta URBN Experience",
     category: "Camisetas",
     audience: "hombre",
@@ -358,6 +372,7 @@ export const products: Product[] = [
   },
   {
     id: "samurai",
+    sku: "J3-01CMO-13",
     name: "Camiseta Samurai Sakura",
     category: "Camisetas",
     audience: "hombre",
@@ -377,6 +392,7 @@ export const products: Product[] = [
   },
   {
     id: "yakuza",
+    sku: "J3-01CMO-14",
     name: "Camiseta Yakuza Underworld",
     category: "Camisetas",
     audience: "hombre",
@@ -396,6 +412,7 @@ export const products: Product[] = [
   },
   {
     id: "eagle-crest",
+    sku: "J3-01CMO-15",
     name: "Camiseta Eagle Crest",
     category: "Camisetas",
     audience: "hombre",
@@ -414,6 +431,7 @@ export const products: Product[] = [
   },
   {
     id: "blue-star",
+    sku: "J3-01CMO-16",
     name: "Camiseta Blue Star",
     category: "Camisetas",
     audience: "hombre",
@@ -432,6 +450,7 @@ export const products: Product[] = [
   },
   {
     id: "antler-forest",
+    sku: "J3-01CMO-17",
     name: "Camiseta Antler Forest",
     category: "Camisetas",
     audience: "hombre",
@@ -450,6 +469,7 @@ export const products: Product[] = [
   },
   {
     id: "newspaper-type",
+    sku: "J3-01CMO-18",
     name: "Camiseta Newspaper Type",
     category: "Camisetas",
     audience: "hombre",
@@ -468,6 +488,7 @@ export const products: Product[] = [
   },
   {
     id: "la-23",
+    sku: "J3-01CMO-19",
     name: "Camiseta LA 23",
     category: "Camisetas",
     audience: "hombre",
@@ -486,6 +507,7 @@ export const products: Product[] = [
   },
   {
     id: "grunge-type",
+    sku: "J3-01CMO-20",
     name: "Camiseta Grunge Type",
     category: "Camisetas",
     audience: "hombre",
@@ -504,6 +526,7 @@ export const products: Product[] = [
   },
   {
     id: "king-crest",
+    sku: "J3-01CMO-21",
     name: "Camiseta King Crest",
     category: "Camisetas",
     audience: "hombre",
@@ -522,6 +545,7 @@ export const products: Product[] = [
   },
   {
     id: "flames",
+    sku: "J3-01CMO-22",
     name: "Camiseta Flames",
     category: "Camisetas",
     audience: "hombre",
@@ -540,6 +564,7 @@ export const products: Product[] = [
   },
   {
     id: "brooklyn-boston",
+    sku: "J3-01CMO-23",
     name: "Camiseta Brooklyn Boston",
     category: "Camisetas",
     audience: "hombre",
@@ -558,6 +583,7 @@ export const products: Product[] = [
   },
   {
     id: "cool-cats",
+    sku: "J3-01CMO-24",
     name: "Camiseta Cool Cats",
     category: "Camisetas",
     audience: "hombre",
@@ -576,6 +602,7 @@ export const products: Product[] = [
   },
   {
     id: "old-school-bugs",
+    sku: "J3-01CMO-25",
     name: "Camiseta Old School Bugs",
     category: "Camisetas",
     audience: "hombre",
@@ -594,6 +621,7 @@ export const products: Product[] = [
   },
   {
     id: "orelsan-chicago",
+    sku: "J3-01CMO-26",
     name: "Camiseta Chicago Verde",
     category: "Camisetas",
     audience: "hombre",
@@ -612,6 +640,7 @@ export const products: Product[] = [
   },
   {
     id: "street-mode",
+    sku: "J3-01CMO-27",
     name: "Camiseta Street Mode",
     category: "Camisetas",
     audience: "hombre",
@@ -630,6 +659,7 @@ export const products: Product[] = [
   },
   {
     id: "brooklyn-93",
+    sku: "J3-01CMO-28",
     name: "Camiseta Brooklyn 93",
     category: "Camisetas",
     audience: "hombre",
@@ -648,6 +678,7 @@ export const products: Product[] = [
   },
   {
     id: "boston-30",
+    sku: "J3-01CMO-29",
     name: "Camiseta Boston 30",
     category: "Camisetas",
     audience: "hombre",
@@ -666,6 +697,7 @@ export const products: Product[] = [
   },
   {
     id: "paris-france",
+    sku: "J3-01CMO-30",
     name: "Camiseta Paris France",
     category: "Camisetas",
     audience: "hombre",
@@ -684,6 +716,7 @@ export const products: Product[] = [
   },
   {
     id: "la-dodgers",
+    sku: "J3-01CMO-31",
     name: "Camiseta LA Denim Logo",
     category: "Camisetas",
     audience: "hombre",
@@ -702,6 +735,7 @@ export const products: Product[] = [
   },
   {
     id: "magic",
+    sku: "J3-01CMO-32",
     name: "Camiseta Magic",
     category: "Camisetas",
     audience: "hombre",
@@ -720,6 +754,7 @@ export const products: Product[] = [
   },
   {
     id: "urban-grunge",
+    sku: "J3-01CMO-33",
     name: "Camiseta Urban Grunge",
     category: "Camisetas",
     audience: "hombre",
@@ -738,6 +773,7 @@ export const products: Product[] = [
   },
   {
     id: "brooklyn-passion",
+    sku: "J3-01CMO-34",
     name: "Camiseta Brooklyn Passion",
     category: "Camisetas",
     audience: "hombre",
@@ -756,6 +792,7 @@ export const products: Product[] = [
   },
   {
     id: "bugs-star",
+    sku: "J3-01CMO-35",
     name: "Camiseta Bugs Bunny Star",
     category: "Camisetas",
     audience: "hombre",
@@ -774,6 +811,7 @@ export const products: Product[] = [
   },
   {
     id: "nyc-athletic",
+    sku: "J3-01CMO-36",
     name: "Camiseta NYC Athletic",
     category: "Camisetas",
     audience: "hombre",
@@ -792,6 +830,7 @@ export const products: Product[] = [
   },
   {
     id: "hh-monogram",
+    sku: "J3-01CMO-37",
     name: "Camiseta HH Monogram",
     category: "Camisetas",
     audience: "hombre",
@@ -810,6 +849,7 @@ export const products: Product[] = [
   },
   {
     id: "harry-potter",
+    sku: "J3-01CMO-38",
     name: "Camiseta Harry Potter 07",
     category: "Camisetas",
     audience: "hombre",
@@ -828,6 +868,7 @@ export const products: Product[] = [
   },
   {
     id: "short-flame-skull",
+    sku: "J3-01PN-1",
     name: "Pantaloneta Flame Skull",
     category: "Pantalonetas",
     audience: "hombre",
@@ -845,6 +886,7 @@ export const products: Product[] = [
   },
   {
     id: "short-navy-basic",
+    sku: "J3-01PN-2",
     name: "Pantaloneta Navy Básica",
     category: "Pantalonetas",
     audience: "hombre",
@@ -862,6 +904,7 @@ export const products: Product[] = [
   },
   {
     id: "short-friends-dont-lie",
+    sku: "J3-01PN-3",
     name: "Pantaloneta Friends Don't Lie",
     category: "Pantalonetas",
     audience: "hombre",
@@ -879,6 +922,7 @@ export const products: Product[] = [
   },
   {
     id: "short-uptop-liberty",
+    sku: "J3-01PN-4",
     name: "Pantaloneta Uptop Liberty",
     category: "Pantalonetas",
     audience: "hombre",
@@ -896,6 +940,7 @@ export const products: Product[] = [
   },
   {
     id: "short-bulls-23",
+    sku: "J3-01PN-5",
     name: "Pantaloneta Bulls 23",
     category: "Pantalonetas",
     audience: "hombre",
@@ -913,6 +958,7 @@ export const products: Product[] = [
   },
   {
     id: "short-puerto-rico-pin",
+    sku: "J3-01PN-6",
     name: "Pantaloneta Puerto Rico Pinstripe",
     category: "Pantalonetas",
     audience: "hombre",
@@ -930,6 +976,7 @@ export const products: Product[] = [
   },
   {
     id: "short-puerto-rico-scenic",
+    sku: "J3-01PN-7",
     name: "Pantaloneta Puerto Rico Escénica",
     category: "Pantalonetas",
     audience: "hombre",
@@ -947,6 +994,7 @@ export const products: Product[] = [
   },
   {
     id: "short-gold-camo-star",
+    sku: "J3-01PN-8",
     name: "Pantaloneta Gold Camo Star",
     category: "Pantalonetas",
     audience: "hombre",
@@ -964,6 +1012,7 @@ export const products: Product[] = [
   },
   {
     id: "short-new-york-nh",
+    sku: "J3-01PN-9",
     name: "Pantaloneta New York NH",
     category: "Pantalonetas",
     audience: "hombre",
@@ -981,6 +1030,7 @@ export const products: Product[] = [
   },
   {
     id: "short-wave-navy",
+    sku: "J3-01PN-10",
     name: "Pantaloneta Wave Navy",
     category: "Pantalonetas",
     audience: "hombre",
@@ -1001,6 +1051,7 @@ export const products: Product[] = [
   },
   {
     id: "short-wave-teal",
+    sku: "J3-01PN-11",
     name: "Pantaloneta Wave Teal",
     category: "Pantalonetas",
     audience: "hombre",
@@ -1019,6 +1070,7 @@ export const products: Product[] = [
   },
   {
     id: "short-tiger-blue",
+    sku: "J3-01PN-12",
     name: "Pantaloneta Tiger Blue",
     category: "Pantalonetas",
     audience: "hombre",
@@ -1036,6 +1088,7 @@ export const products: Product[] = [
   },
   {
     id: "short-la-23",
+    sku: "J3-01PN-13",
     name: "Pantaloneta Los Angeles 23",
     category: "Pantalonetas",
     audience: "hombre",
@@ -1053,6 +1106,7 @@ export const products: Product[] = [
   },
   {
     id: "short-ny-pinstripe",
+    sku: "J3-01PN-14",
     name: "Pantaloneta NY Pinstripe Gótica",
     category: "Pantalonetas",
     audience: "hombre",
@@ -1070,6 +1124,7 @@ export const products: Product[] = [
   },
   {
     id: "short-negative-grunge",
+    sku: "J3-01PN-15",
     name: "Pantaloneta Negative Grunge",
     category: "Pantalonetas",
     audience: "hombre",
@@ -1087,6 +1142,7 @@ export const products: Product[] = [
   },
   {
     id: "short-ny-monogram-camo",
+    sku: "J3-01PN-16",
     name: "Pantaloneta NY Monogram Camo",
     category: "Pantalonetas",
     audience: "hombre",
@@ -1104,6 +1160,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-azul-cielo",
+    sku: "J3-01PL-1",
     name: "Polo Azul Cielo",
     category: "Polos",
     audience: "hombre",
@@ -1124,6 +1181,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-azul-oscuro",
+    sku: "J3-01PL-2",
     name: "Polo Azul Oscuro",
     category: "Polos",
     audience: "hombre",
@@ -1142,6 +1200,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-azul-rey",
+    sku: "J3-01PL-3",
     name: "Polo Azul Rey",
     category: "Polos",
     audience: "hombre",
@@ -1160,6 +1219,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-azul-turquesa",
+    sku: "J3-01PL-4",
     name: "Polo Azul Turquesa",
     category: "Polos",
     audience: "hombre",
@@ -1178,6 +1238,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-beige",
+    sku: "J3-01PL-5",
     name: "Polo Beige",
     category: "Polos",
     audience: "hombre",
@@ -1196,6 +1257,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-blanca",
+    sku: "J3-01PL-6",
     name: "Polo Blanca",
     category: "Polos",
     audience: "hombre",
@@ -1214,6 +1276,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-gris-clara",
+    sku: "J3-01PL-7",
     name: "Polo Gris Clara",
     category: "Polos",
     audience: "hombre",
@@ -1232,6 +1295,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-gris-oscuro",
+    sku: "J3-01PL-8",
     name: "Polo Gris Oscuro",
     category: "Polos",
     audience: "hombre",
@@ -1250,6 +1314,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-moradito",
+    sku: "J3-01PL-9",
     name: "Polo Morado",
     category: "Polos",
     audience: "hombre",
@@ -1268,6 +1333,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-mostaza",
+    sku: "J3-01PL-10",
     name: "Polo Mostaza",
     category: "Polos",
     audience: "hombre",
@@ -1286,6 +1352,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-naranja",
+    sku: "J3-01PL-11",
     name: "Polo Naranja",
     category: "Polos",
     audience: "hombre",
@@ -1304,6 +1371,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-negra",
+    sku: "J3-01PL-12",
     name: "Polo Negra",
     category: "Polos",
     audience: "hombre",
@@ -1322,6 +1390,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-rojo",
+    sku: "J3-01PL-13",
     name: "Polo Rojo",
     category: "Polos",
     audience: "hombre",
@@ -1340,6 +1409,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-rosa",
+    sku: "J3-01PL-14",
     name: "Polo Rosa",
     category: "Polos",
     audience: "hombre",
@@ -1358,6 +1428,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-verde-flux",
+    sku: "J3-01PL-15",
     name: "Polo Verde Flúor",
     category: "Polos",
     audience: "hombre",
@@ -1376,6 +1447,7 @@ export const products: Product[] = [
   },
   {
     id: "polo-verde-militar",
+    sku: "J3-01PL-16",
     name: "Polo Verde Militar",
     category: "Polos",
     audience: "hombre",
@@ -1394,6 +1466,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-azul-turquesa",
+    sku: "J3-05BZ-1",
     name: "Buzo Azul Turquesa",
     category: "Buzos",
     audience: "hombre",
@@ -1413,6 +1486,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-azul",
+    sku: "J3-05BZ-2",
     name: "Buzo Azul",
     category: "Buzos",
     audience: "hombre",
@@ -1432,6 +1506,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-beige",
+    sku: "J3-05BZ-3",
     name: "Buzo Beige",
     category: "Buzos",
     audience: "hombre",
@@ -1451,6 +1526,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-blanco",
+    sku: "J3-05BZ-4",
     name: "Buzo Blanco",
     category: "Buzos",
     audience: "hombre",
@@ -1470,6 +1546,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-gris",
+    sku: "J3-05BZ-5",
     name: "Buzo Gris",
     category: "Buzos",
     audience: "hombre",
@@ -1489,6 +1566,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-morado-claro",
+    sku: "J3-05BZ-6",
     name: "Buzo Morado Claro",
     category: "Buzos",
     audience: "hombre",
@@ -1508,6 +1586,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-morado-oscuro",
+    sku: "J3-05BZ-7",
     name: "Buzo Morado Oscuro",
     category: "Buzos",
     audience: "hombre",
@@ -1529,6 +1608,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-mostaza",
+    sku: "J3-05BZ-8",
     name: "Buzo Mostaza",
     category: "Buzos",
     audience: "hombre",
@@ -1548,6 +1628,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-naranja",
+    sku: "J3-05BZ-9",
     name: "Buzo Naranja",
     category: "Buzos",
     audience: "hombre",
@@ -1567,6 +1648,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-negro",
+    sku: "J3-05BZ-10",
     name: "Buzo Negro",
     category: "Buzos",
     audience: "hombre",
@@ -1586,6 +1668,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-pastel",
+    sku: "J3-05BZ-11",
     name: "Buzo Pastel",
     category: "Buzos",
     audience: "hombre",
@@ -1605,6 +1688,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-rosa-claro",
+    sku: "J3-05BZ-12",
     name: "Buzo Rosa Claro",
     category: "Buzos",
     audience: "hombre",
@@ -1624,6 +1708,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-rosa",
+    sku: "J3-05BZ-13",
     name: "Buzo Rosa",
     category: "Buzos",
     audience: "hombre",
@@ -1643,6 +1728,7 @@ export const products: Product[] = [
   },
   {
     id: "buzo-verde-militar",
+    sku: "J3-05BZ-14",
     name: "Buzo Verde Militar",
     category: "Buzos",
     audience: "hombre",
@@ -1662,6 +1748,7 @@ export const products: Product[] = [
   },
   {
     id: "dragon-ball-z",
+    sku: "J3-01CMOP-1",
     name: "Camiseta Dragon Ball Z",
     category: "Camisetas",
     audience: "hombre",
@@ -1680,6 +1767,7 @@ export const products: Product[] = [
   },
   {
     id: "lilo-stitch",
+    sku: "J3-01CMOP-2",
     name: "Camiseta Lilo & Stitch",
     category: "Camisetas",
     audience: "hombre",
@@ -1698,6 +1786,7 @@ export const products: Product[] = [
   },
   {
     id: "batman",
+    sku: "J3-01CMOP-3",
     name: "Camiseta Batman",
     category: "Camisetas",
     audience: "hombre",
@@ -1716,6 +1805,7 @@ export const products: Product[] = [
   },
   {
     id: "muttik-skater",
+    sku: "J3-01CMOP-4",
     name: "Camiseta Muttik Skater",
     category: "Camisetas",
     audience: "hombre",
@@ -1734,6 +1824,7 @@ export const products: Product[] = [
   },
   {
     id: "spongebob-crazy-beige",
+    sku: "J3-01CMOP-5",
     name: "Camiseta SpongeBob Crazy (Beige)",
     category: "Camisetas",
     audience: "hombre",
@@ -1752,6 +1843,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-fluorescente",
+    sku: "J3-02CMOP-1",
     name: "Camiseta Stitch Lima Fluorescente",
     category: "Camisetas",
     audience: "mujer",
@@ -1773,6 +1865,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-azul",
+    sku: "J3-02CMOP-2",
     name: "Camiseta Stitch Lima Azul",
     category: "Camisetas",
     audience: "mujer",
@@ -1792,6 +1885,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-azul-oscuro",
+    sku: "J3-02CMOP-3",
     name: "Camiseta Stitch Lima Azul Oscuro",
     category: "Camisetas",
     audience: "mujer",
@@ -1811,6 +1905,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-turquesa",
+    sku: "J3-02CMOP-4",
     name: "Camiseta Stitch Lima Turquesa",
     category: "Camisetas",
     audience: "mujer",
@@ -1830,6 +1925,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-menta",
+    sku: "J3-02CMOP-5",
     name: "Camiseta Stitch Lima Menta",
     category: "Camisetas",
     audience: "mujer",
@@ -1849,6 +1945,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-verde-oliva",
+    sku: "J3-02CMOP-6",
     name: "Camiseta Stitch Lima Verde Oliva",
     category: "Camisetas",
     audience: "mujer",
@@ -1868,6 +1965,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-mostaza",
+    sku: "J3-02CMOP-7",
     name: "Camiseta Stitch Lima Mostaza",
     category: "Camisetas",
     audience: "mujer",
@@ -1887,6 +1985,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-naranja",
+    sku: "J3-02CMOP-8",
     name: "Camiseta Stitch Lima Naranja",
     category: "Camisetas",
     audience: "mujer",
@@ -1906,6 +2005,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-rojo",
+    sku: "J3-02CMOP-9",
     name: "Camiseta Stitch Lima Rojo",
     category: "Camisetas",
     audience: "mujer",
@@ -1925,6 +2025,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-rosa",
+    sku: "J3-02CMOP-10",
     name: "Camiseta Stitch Lima Rosa",
     category: "Camisetas",
     audience: "mujer",
@@ -1944,6 +2045,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-morado",
+    sku: "J3-02CMOP-11",
     name: "Camiseta Stitch Lima Morado",
     category: "Camisetas",
     audience: "mujer",
@@ -1963,6 +2065,7 @@ export const products: Product[] = [
   },
   {
     id: "stitch-lima-vino-tinto",
+    sku: "J3-02CMOP-12",
     name: "Camiseta Stitch Lima Vino Tinto",
     category: "Camisetas",
     audience: "mujer",
@@ -1982,6 +2085,7 @@ export const products: Product[] = [
   },
   {
     id: "spongebob-crazy-morado",
+    sku: "J3-02CMOP-13",
     name: "Camiseta SpongeBob Crazy (Morado)",
     category: "Camisetas",
     audience: "mujer",
@@ -2000,6 +2104,7 @@ export const products: Product[] = [
   },
   {
     id: "mickey-fisherman",
+    sku: "J3-02CMOP-14",
     name: "Camiseta Mickey Mouse Pescador",
     category: "Camisetas",
     audience: "mujer",
@@ -2018,6 +2123,7 @@ export const products: Product[] = [
   },
   {
     id: "mickey-friends",
+    sku: "J3-01CMOP-6",
     name: "Camiseta Mickey Friends",
     category: "Camisetas",
     audience: "hombre",
@@ -2038,6 +2144,7 @@ export const products: Product[] = [
 
   {
     id: "cm-28-massachusetts",
+    sku: "J3-02CMO-1",
     name: "Camiseta Oversize 28 Massachusetts",
     category: "Camisetas",
     audience: "mujer",
@@ -2057,6 +2164,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-mickey-cafe",
+    sku: "J3-02CMO-2",
     name: "Camiseta Oversize Mickey Original",
     category: "Camisetas",
     audience: "mujer",
@@ -2076,6 +2184,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-scooby-doo",
+    sku: "J3-02CMO-3",
     name: "Camiseta Oversize Scooby-Doo Adventures",
     category: "Camisetas",
     audience: "mujer",
@@ -2095,6 +2204,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-silvestre",
+    sku: "J3-02CMO-4",
     name: "Camiseta Oversize Silvestre",
     category: "Camisetas",
     audience: "mujer",
@@ -2114,6 +2224,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-betty-boop",
+    sku: "J3-02CMO-5",
     name: "Camiseta Oversize Betty Boop Dodgers",
     category: "Camisetas",
     audience: "mujer",
@@ -2133,6 +2244,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-betty-boop-morada",
+    sku: "J3-02CMO-6",
     name: "Camiseta Oversize Betty Boop Biker",
     category: "Camisetas",
     audience: "mujer",
@@ -2152,6 +2264,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-bob-dog",
+    sku: "J3-02CMO-7",
     name: "Camiseta Oversize Bob Dog",
     category: "Camisetas",
     audience: "mujer",
@@ -2171,6 +2284,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-brooklyn",
+    sku: "J3-02CMO-8",
     name: "Camiseta Oversize Brooklyn Genius",
     category: "Camisetas",
     audience: "mujer",
@@ -2190,6 +2304,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-bugs-bunny",
+    sku: "J3-02CMO-9",
     name: "Camiseta Oversize Bugs Bunny",
     category: "Camisetas",
     audience: "mujer",
@@ -2209,6 +2324,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-bunny-queen",
+    sku: "J3-02CMO-10",
     name: "Camiseta Oversize Bunny Queen",
     category: "Camisetas",
     audience: "mujer",
@@ -2228,6 +2344,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-california-rosa",
+    sku: "J3-02CMO-11",
     name: "Camiseta Oversize California Vintage",
     category: "Camisetas",
     audience: "mujer",
@@ -2247,6 +2364,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-cherry",
+    sku: "J3-02CMO-12",
     name: "Camiseta Oversize Cherry Berry Days",
     category: "Camisetas",
     audience: "mujer",
@@ -2266,6 +2384,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-cherry-black",
+    sku: "J3-02CMO-13",
     name: "Camiseta Oversize Cherry Black",
     category: "Camisetas",
     audience: "mujer",
@@ -2285,6 +2404,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-corazones-azules",
+    sku: "J3-02CMO-14",
     name: "Camiseta Oversize Corazones Azules",
     category: "Camisetas",
     audience: "mujer",
@@ -2304,6 +2424,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-denim",
+    sku: "J3-02CMO-15",
     name: "Camiseta Oversize Denim Monograma",
     category: "Camisetas",
     audience: "mujer",
@@ -2323,6 +2444,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-garfield",
+    sku: "J3-02CMO-16",
     name: "Camiseta Oversize Garfield",
     category: "Camisetas",
     audience: "mujer",
@@ -2342,6 +2464,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-gotico-rosa",
+    sku: "J3-02CMO-17",
     name: "Camiseta Oversize Gótica Snow White",
     category: "Camisetas",
     audience: "mujer",
@@ -2361,6 +2484,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-hello-kitty",
+    sku: "J3-02CMO-18",
     name: "Camiseta Oversize Hello Kitty",
     category: "Camisetas",
     audience: "mujer",
@@ -2380,6 +2504,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-mickey-mini",
+    sku: "J3-02CMO-19",
     name: "Camiseta Oversize Mickey y Minnie",
     category: "Camisetas",
     audience: "mujer",
@@ -2399,6 +2524,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-minnie-mouse",
+    sku: "J3-02CMO-20",
     name: "Camiseta Oversize Minnie Mouse",
     category: "Camisetas",
     audience: "mujer",
@@ -2418,6 +2544,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-new-york-usa",
+    sku: "J3-02CMO-21",
     name: "Camiseta Oversize New York City USA",
     category: "Camisetas",
     audience: "mujer",
@@ -2437,6 +2564,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-oso-arcoiris",
+    sku: "J3-02CMO-22",
     name: "Camiseta Oversize Oso Care Bears",
     category: "Camisetas",
     audience: "mujer",
@@ -2456,6 +2584,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-oso-azul",
+    sku: "J3-02CMO-23",
     name: "Camiseta Oversize Oso Good Love",
     category: "Camisetas",
     audience: "mujer",
@@ -2475,6 +2604,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-oso-cafe",
+    sku: "J3-02CMO-24",
     name: "Camiseta Oversize Oso Just Smile",
     category: "Camisetas",
     audience: "mujer",
@@ -2494,6 +2624,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-piolin",
+    sku: "J3-02CMO-25",
     name: "Camiseta Oversize Piolín Brooklyn",
     category: "Camisetas",
     audience: "mujer",
@@ -2513,6 +2644,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-power-chicas",
+    sku: "J3-02CMO-26",
     name: "Camiseta Oversize Chicas Superpoderosas",
     category: "Camisetas",
     audience: "mujer",
@@ -2532,6 +2664,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-rosa",
+    sku: "J3-02CMO-27",
     name: "Camiseta Oversize Pink Deportivo",
     category: "Camisetas",
     audience: "mujer",
@@ -2551,6 +2684,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-tigre-rosa",
+    sku: "J3-02CMO-28",
     name: "Camiseta Oversize Tigre Cool",
     category: "Camisetas",
     audience: "mujer",
@@ -2570,6 +2704,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-tom-jerry-rosa",
+    sku: "J3-02CMO-29",
     name: "Camiseta Oversize Tom and Jerry BFF",
     category: "Camisetas",
     audience: "mujer",
@@ -2589,6 +2724,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-oveja",
+    sku: "J3-02TS-1",
     name: "Camiseta Ovejita Blanca",
     category: "T-shirts",
     audience: "mujer",
@@ -2609,6 +2745,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-oveja-negra",
+    sku: "J3-02TS-2",
     name: "Camiseta Ovejita Negra",
     category: "T-shirts",
     audience: "mujer",
@@ -2627,6 +2764,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-unknown-gris",
+    sku: "J3-02CMO-30",
     name: "Camiseta Oversize Unknown Gris",
     category: "Camisetas",
     audience: "mujer",
@@ -2646,6 +2784,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-estrellas-perla",
+    sku: "J3-02TS-3",
     name: "Camiseta Estrellas y Perlas Blanca",
     category: "T-shirts",
     audience: "mujer",
@@ -2666,6 +2805,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-estrellas-perla-verde-agua-marina",
+    sku: "J3-02TS-4",
     name: "Camiseta Estrellas y Perlas Verde Agua Marina",
     category: "T-shirts",
     audience: "mujer",
@@ -2684,6 +2824,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-unknown-negra",
+    sku: "J3-02CMO-31",
     name: "Camiseta Oversize Unknown Negra",
     category: "Camisetas",
     audience: "mujer",
@@ -2705,6 +2846,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-time-is-precious",
+    sku: "J3-02TS-5",
     name: "Camiseta Time is Precious Negra",
     category: "T-shirts",
     audience: "mujer",
@@ -2725,6 +2867,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-time-is-precious-gris",
+    sku: "J3-02TS-6",
     name: "Camiseta Time is Precious Gris",
     category: "T-shirts",
     audience: "mujer",
@@ -2743,6 +2886,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-time-is-precious-blanca",
+    sku: "J3-02TS-7",
     name: "Camiseta Time is Precious Blanca",
     category: "T-shirts",
     audience: "mujer",
@@ -2761,6 +2905,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-pedreria-vino",
+    sku: "J3-02TSP-1",
     name: "Camiseta Pedrería Vino",
     category: "T-shirts",
     audience: "mujer",
@@ -2781,6 +2926,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-pedreria-negra",
+    sku: "J3-02TSP-2",
     name: "Camiseta Pedrería Negra",
     category: "T-shirts",
     audience: "mujer",
@@ -2799,6 +2945,7 @@ export const products: Product[] = [
   },
   {
     id: "cm-pedreria-blanca-hombros",
+    sku: "J3-02TSP-3",
     name: "Camiseta Pedrería Blanca",
     category: "T-shirts",
     audience: "mujer",
@@ -2817,6 +2964,7 @@ export const products: Product[] = [
   },
   {
     id: "ch-venado",
+    sku: "J3-01CMO-39",
     name: "Camiseta Oversize Venado",
     category: "Camisetas",
     audience: "hombre",
@@ -2836,6 +2984,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-rosa-palo",
+    sku: "J3-02BL-1",
     name: "Blusa Halter Rosa Palo",
     category: "Blusas",
     audience: "mujer",
@@ -2854,6 +3003,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-azul",
+    sku: "J3-02BL-2",
     name: "Blusa Halter Azul Turquesa",
     category: "Blusas",
     audience: "mujer",
@@ -2872,6 +3022,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-rojo-palo",
+    sku: "J3-02BL-3",
     name: "Blusa Halter Rojo",
     category: "Blusas",
     audience: "mujer",
@@ -2890,6 +3041,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-rosa",
+    sku: "J3-02BL-4",
     name: "Blusa Halter Fucsia",
     category: "Blusas",
     audience: "mujer",
@@ -2908,6 +3060,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-verde-militar",
+    sku: "J3-02BL-5",
     name: "Blusa Halter Verde Militar",
     category: "Blusas",
     audience: "mujer",
@@ -2928,6 +3081,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-larga-morado-oscuro",
+    sku: "J3-02BL-6",
     name: "Blusa Manga Larga Morado Oscuro",
     category: "Blusas",
     audience: "mujer",
@@ -2948,6 +3102,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-larga-azul",
+    sku: "J3-02BL-7",
     name: "Blusa Manga Larga Azul",
     category: "Blusas",
     audience: "mujer",
@@ -2966,6 +3121,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-larga-gris",
+    sku: "J3-02BL-8",
     name: "Blusa Manga Larga Gris",
     category: "Blusas",
     audience: "mujer",
@@ -2984,6 +3140,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-larga-rosa",
+    sku: "J3-02BL-9",
     name: "Blusa Manga Larga Rosa",
     category: "Blusas",
     audience: "mujer",
@@ -3002,6 +3159,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-elegante-salmon",
+    sku: "J3-02BLP-1",
     name: "Blusa Elegante Pedrería Salmón",
     category: "Blusas",
     audience: "mujer",
@@ -3022,6 +3180,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-elegante-fucsia",
+    sku: "J3-02BLP-2",
     name: "Blusa Elegante Pedrería Fucsia",
     category: "Blusas",
     audience: "mujer",
@@ -3040,6 +3199,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-elegante-negra",
+    sku: "J3-02BLP-3",
     name: "Blusa Elegante Pedrería Negra",
     category: "Blusas",
     audience: "mujer",
@@ -3058,6 +3218,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-transparente-rojo",
+    sku: "J3-02BLP-4",
     name: "Blusa Elegante Manga Transparente Rojo",
     category: "Blusas",
     audience: "mujer",
@@ -3078,6 +3239,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-transparente-agua-marina",
+    sku: "J3-02BLP-5",
     name: "Blusa Elegante Manga Transparente Agua Marina",
     category: "Blusas",
     audience: "mujer",
@@ -3096,6 +3258,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-transparente-azul-marino",
+    sku: "J3-02BLP-6",
     name: "Blusa Elegante Manga Transparente Azul Marino",
     category: "Blusas",
     audience: "mujer",
@@ -3114,6 +3277,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-transparente-negro",
+    sku: "J3-02BLP-7",
     name: "Blusa Elegante Manga Transparente Negro",
     category: "Blusas",
     audience: "mujer",
@@ -3132,6 +3296,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-transparente-salmon",
+    sku: "J3-02BLP-8",
     name: "Blusa Elegante Manga Transparente Salmón",
     category: "Blusas",
     audience: "mujer",
@@ -3150,6 +3315,7 @@ export const products: Product[] = [
   },
   {
     id: "blusa-transparente-vino-tinto",
+    sku: "J3-02BLP-9",
     name: "Blusa Elegante Manga Transparente Vino Tinto",
     category: "Blusas",
     audience: "mujer",
@@ -3168,6 +3334,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-pepitas-negra",
+    sku: "J3-02CS-1",
     name: "Camisa Larga Dama Pepitas",
     category: "Camisas",
     audience: "mujer",
@@ -3185,6 +3352,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-rosas-salmon",
+    sku: "J3-02BL-10",
     name: "Blusa Rosas Salmón",
     category: "Blusas",
     audience: "mujer",
@@ -3203,6 +3371,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-rosas-azul-marino",
+    sku: "J3-02BL-11",
     name: "Blusa Rosas Azul Marino",
     category: "Blusas",
     audience: "mujer",
@@ -3223,6 +3392,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-rosas-blanco",
+    sku: "J3-02BL-12",
     name: "Blusa Rosas Blanco",
     category: "Blusas",
     audience: "mujer",
@@ -3241,6 +3411,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-rosas-negro",
+    sku: "J3-02BL-13",
     name: "Blusa Rosas Negro",
     category: "Blusas",
     audience: "mujer",
@@ -3259,6 +3430,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-rosas-rojo",
+    sku: "J3-02BL-14",
     name: "Blusa Rosas Rojo",
     category: "Blusas",
     audience: "mujer",
@@ -3277,6 +3449,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-rosas-teal",
+    sku: "J3-02BL-15",
     name: "Blusa Rosas Teal",
     category: "Blusas",
     audience: "mujer",
@@ -3295,6 +3468,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-textura-turquesa",
+    sku: "J3-02VE-1",
     name: "Vestido Textura Rosas Turquesa",
     category: "Vestidos",
     audience: "mujer",
@@ -3315,6 +3489,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-textura-azul-marino",
+    sku: "J3-02VE-2",
     name: "Vestido Textura Rosas Azul Marino",
     category: "Vestidos",
     audience: "mujer",
@@ -3333,6 +3508,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-textura-beige",
+    sku: "J3-02VE-3",
     name: "Vestido Textura Rosas Beige",
     category: "Vestidos",
     audience: "mujer",
@@ -3351,6 +3527,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-textura-fucsia",
+    sku: "J3-02VE-4",
     name: "Vestido Textura Rosas Fucsia",
     category: "Vestidos",
     audience: "mujer",
@@ -3369,6 +3546,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-textura-negro",
+    sku: "J3-02VE-5",
     name: "Vestido Textura Rosas Negro",
     category: "Vestidos",
     audience: "mujer",
@@ -3387,6 +3565,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-textura-rojo",
+    sku: "J3-02VE-6",
     name: "Vestido Textura Rosas Rojo",
     category: "Vestidos",
     audience: "mujer",
@@ -3405,6 +3584,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-textura-verde-menta",
+    sku: "J3-02VE-7",
     name: "Vestido Textura Rosas Verde Menta",
     category: "Vestidos",
     audience: "mujer",
@@ -3423,6 +3603,7 @@ export const products: Product[] = [
   },
   {
     id: "vestido-licra-negro",
+    sku: "J3-02VE-8",
     name: "Vestido Tipo Licra Negro",
     category: "Vestidos",
     audience: "mujer",
@@ -3440,6 +3621,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-pedreria-blanca",
+    sku: "J3-02CSP-1",
     name: "Camisa Pedrería Dorada Blanca",
     category: "Camisas",
     audience: "mujer",
@@ -3460,6 +3642,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-pedreria-dorada-negra",
+    sku: "J3-02CSP-2",
     name: "Camisa Pedrería Dorada Negra",
     category: "Camisas",
     audience: "mujer",
@@ -3478,6 +3661,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-encaje-negra",
+    sku: "J3-02CS-2",
     name: "Camisa Negra Encaje y Perlas",
     category: "Camisas",
     audience: "mujer",
@@ -3494,6 +3678,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-sin-cuello-crema",
+    sku: "J3-02CS-3",
     name: "Camisa Larga sin Cuello Crema",
     category: "Camisas",
     audience: "mujer",
@@ -3514,6 +3699,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-sin-cuello-blanca",
+    sku: "J3-02CS-4",
     name: "Camisa Larga sin Cuello Blanca",
     category: "Camisas",
     audience: "mujer",
@@ -3532,6 +3718,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-sin-cuello-azul-agua-marina",
+    sku: "J3-02CS-5",
     name: "Camisa Larga sin Cuello Azul Agua Marina",
     category: "Camisas",
     audience: "mujer",
@@ -3550,6 +3737,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-sin-cuello-negro-cafe",
+    sku: "J3-02CS-6",
     name: "Camisa Larga sin Cuello Negro Café",
     category: "Camisas",
     audience: "mujer",
@@ -3568,6 +3756,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-sin-cuello-rojo",
+    sku: "J3-02CS-7",
     name: "Camisa Larga sin Cuello Rojo",
     category: "Camisas",
     audience: "mujer",
@@ -3586,6 +3775,7 @@ export const products: Product[] = [
   },
   {
     id: "camisa-sin-cuello-rosa",
+    sku: "J3-02CS-8",
     name: "Camisa Larga sin Cuello Rosa",
     category: "Camisas",
     audience: "mujer",
@@ -3604,6 +3794,7 @@ export const products: Product[] = [
   },
   {
     id: "nina-stitch-comic",
+    sku: "J3-04CM-1",
     name: "Camiseta Stitch Comic Niñas",
     category: "Niños",
     audience: "nina",
@@ -3622,6 +3813,7 @@ export const products: Product[] = [
   },
   {
     id: "nino-mario-bros",
+    sku: "J3-03CM-1",
     name: "Camiseta Super Mario Bros Niño",
     category: "Niños",
     audience: "nino",
@@ -3640,6 +3832,7 @@ export const products: Product[] = [
   },
   {
     id: "nino-lancer-evo",
+    sku: "J3-03CM-2",
     name: "Camiseta Lancer Evolution Niño",
     category: "Niños",
     audience: "nino",
@@ -3658,6 +3851,7 @@ export const products: Product[] = [
   },
   {
     id: "ninas-minnie-daisy",
+    sku: "J3-04CM-2",
     name: "Camiseta Minnie & Daisy Niñas",
     category: "Niños",
     audience: "nina",
@@ -3676,6 +3870,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-bunny-beige",
+    sku: "J3-0206CR-1",
     name: "Croptop Rescate Bunny Beige",
     category: "Rescate",
     audience: "mujer",
@@ -3696,6 +3891,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-bunny-ladrillo",
+    sku: "J3-0206CR-2",
     name: "Croptop Rescate Bunny Ladrillo",
     category: "Rescate",
     audience: "mujer",
@@ -3714,6 +3910,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-cool-today",
+    sku: "J3-0206CR-3",
     name: "Croptop Rescate Cool Today",
     category: "Rescate",
     audience: "mujer",
@@ -3731,6 +3928,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-estrella",
+    sku: "J3-0206CMP-1",
     name: "Camiseta Rescate Estrella",
     category: "Rescate",
     audience: "mujer",
@@ -3747,6 +3945,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-kings-gris",
+    sku: "J3-0106CM-1",
     name: "Camiseta Rescate Kings Gris",
     category: "Rescate",
     audience: "hombre",
@@ -3766,6 +3965,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-kings-rosa",
+    sku: "J3-0106CM-2",
     name: "Camiseta Rescate Kings Rosa",
     category: "Rescate",
     audience: "hombre",
@@ -3783,6 +3983,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-osito-turquesa",
+    sku: "J3-0106CM-3",
     name: "Camiseta Rescate Osito Cool Turquesa",
     category: "Rescate",
     audience: "hombre",
@@ -3801,6 +4002,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-osito-azul",
+    sku: "J3-0106CM-4",
     name: "Camiseta Rescate Osito Cool Azul",
     category: "Rescate",
     audience: "hombre",
@@ -3820,6 +4022,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-osito-morado",
+    sku: "J3-0106CM-5",
     name: "Camiseta Rescate Osito Cool Morado",
     category: "Rescate",
     audience: "hombre",
@@ -3837,6 +4040,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-osito-rosa",
+    sku: "J3-0106CM-6",
     name: "Camiseta Rescate Osito Cool Rosa",
     category: "Rescate",
     audience: "hombre",
@@ -3854,6 +4058,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-pantera-beige",
+    sku: "J3-0206CR-4",
     name: "Croptop Rescate Pantera Enamorada Beige",
     category: "Rescate",
     audience: "mujer",
@@ -3874,6 +4079,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-pantera-salmon",
+    sku: "J3-0206CR-5",
     name: "Croptop Rescate Pantera Enamorada Salmón",
     category: "Rescate",
     audience: "mujer",
@@ -3892,6 +4098,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-picas-rosa",
+    sku: "J3-0106CM-7",
     name: "Camiseta Rescate As de Picas Rosa",
     category: "Rescate",
     audience: "hombre",
@@ -3911,6 +4118,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-picas-cafe",
+    sku: "J3-0106CM-8",
     name: "Camiseta Rescate As de Picas Café",
     category: "Rescate",
     audience: "hombre",
@@ -3928,6 +4136,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-picas-gris",
+    sku: "J3-0106CM-9",
     name: "Camiseta Rescate As de Picas Gris",
     category: "Rescate",
     audience: "hombre",
@@ -3945,6 +4154,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-pizza-pretty",
+    sku: "J3-0206CR-6",
     name: "Croptop Rescate Pizza & Pretty",
     category: "Rescate",
     audience: "mujer",
@@ -3962,6 +4172,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-saco-yisus",
+    sku: "J3-0206SC-1",
     name: "Saco Retrato Sagrado",
     category: "Rescate",
     audience: "mujer",
@@ -3978,6 +4189,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-vestido-piel",
+    sku: "J3-02VE-9",
     name: "Vestido Ajustado Piel",
     category: "Vestidos",
     audience: "mujer",
@@ -3998,6 +4210,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-vestido-negro",
+    sku: "J3-02VE-10",
     name: "Vestido Ajustado Negro",
     category: "Vestidos",
     audience: "mujer",
@@ -4016,6 +4229,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-vestido-rojo",
+    sku: "J3-02VE-11",
     name: "Vestido Ajustado Rojo",
     category: "Vestidos",
     audience: "mujer",
@@ -4034,6 +4248,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-vestido-azul",
+    sku: "J3-02VE-12",
     name: "Vestido Ajustado Azul",
     category: "Vestidos",
     audience: "mujer",
@@ -4052,6 +4267,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-vestido-gris",
+    sku: "J3-02VE-13",
     name: "Vestido Ajustado Gris",
     category: "Vestidos",
     audience: "mujer",
@@ -4070,6 +4286,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-vestido-bolsillos",
+    sku: "J3-02VE-14",
     name: "Vestido Recto Bolsillos",
     category: "Vestidos",
     audience: "mujer",
@@ -4087,6 +4304,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-tigre",
+    sku: "J3-02CH-1",
     name: "Chaqueta Encaje Tigre",
     category: "Chaquetas",
     audience: "mujer",
@@ -4105,6 +4323,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-minnie-dama",
+    sku: "J3-02CH-2",
     name: "Chaqueta Acolchada Minnie",
     category: "Chaquetas",
     audience: "mujer",
@@ -4122,6 +4341,7 @@ export const products: Product[] = [
   },
   {
     id: "chaqueta-denim-hombre",
+    sku: "J3-01CH-1",
     name: "Chaqueta Denim Militar",
     category: "Chaquetas",
     audience: "hombre",
@@ -4139,6 +4359,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-minnie-nina-rosa",
+    sku: "J3-04CH-1",
     name: "Chaqueta Niña Minnie Rosa",
     category: "Niños",
     audience: "nina",
@@ -4158,6 +4379,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-minnie-nina-roja",
+    sku: "J3-04CH-2",
     name: "Chaqueta Niña Minnie Roja",
     category: "Niños",
     audience: "nina",
@@ -4176,6 +4398,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-mickey-azul",
+    sku: "J3-03CH-1",
     name: "Chaqueta Niño Mickey Azul",
     category: "Niños",
     audience: "nino",
@@ -4192,6 +4415,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-corazon-rojo",
+    sku: "J3-0106CM-10",
     name: "Camiseta Rescate Corazón Rojo",
     category: "Rescate",
     audience: "hombre",
@@ -4208,6 +4432,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-k-corona",
+    sku: "J3-0106CM-11",
     name: "Camiseta Rescate K Corona",
     category: "Rescate",
     audience: "hombre",
@@ -4224,6 +4449,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-picas-allover-fucsia",
+    sku: "J3-0106CM-12",
     name: "Camiseta Rescate As de Picas All-Over Fucsia",
     category: "Rescate",
     audience: "hombre",
@@ -4243,6 +4469,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-picas-allover-azul",
+    sku: "J3-0106CM-13",
     name: "Camiseta Rescate As de Picas All-Over Azul",
     category: "Rescate",
     audience: "hombre",
@@ -4260,6 +4487,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-picas-allover-blanca",
+    sku: "J3-0106CM-14",
     name: "Camiseta Rescate As de Picas All-Over Blanca",
     category: "Rescate",
     audience: "hombre",
@@ -4277,6 +4505,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-picas-allover-dorada",
+    sku: "J3-0106CM-15",
     name: "Camiseta Rescate As de Picas All-Over Dorada",
     category: "Rescate",
     audience: "hombre",
@@ -4294,6 +4523,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-diamante",
+    sku: "J3-0106CM-16",
     name: "Camiseta Rescate Diamante",
     category: "Rescate",
     audience: "hombre",
@@ -4310,6 +4540,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-rosa-poker-beige",
+    sku: "J3-0106CM-17",
     name: "Camiseta Rescate Rosa Poker Beige",
     category: "Rescate",
     audience: "hombre",
@@ -4329,6 +4560,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-rosa-poker-cafe",
+    sku: "J3-0106CM-18",
     name: "Camiseta Rescate Rosa Poker Café",
     category: "Rescate",
     audience: "hombre",
@@ -4346,6 +4578,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-skull-dark",
+    sku: "J3-0106CM-19",
     name: "Camiseta Rescate Skull Dark",
     category: "Rescate",
     audience: "hombre",
@@ -4362,6 +4595,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-nave-oliva",
+    sku: "J3-0106CM-20",
     name: "Camiseta Rescate Nave F-22 Verde Oliva",
     category: "Rescate",
     audience: "hombre",
@@ -4381,6 +4615,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-nave-crema",
+    sku: "J3-0106CM-21",
     name: "Camiseta Rescate Nave F-22 Crema",
     category: "Rescate",
     audience: "hombre",
@@ -4398,6 +4633,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-nave-negra",
+    sku: "J3-0106CM-22",
     name: "Camiseta Rescate Nave F-22 Negra",
     category: "Rescate",
     audience: "hombre",
@@ -4415,6 +4651,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-tiorico",
+    sku: "J3-0106CM-23",
     name: "Camiseta Rescate Tío Rico",
     category: "Rescate",
     audience: "hombre",
@@ -4432,6 +4669,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-blusa-blanca",
+    sku: "J3-0206BL-1",
     name: "Blusa Rescate Cuello Rojo",
     category: "Rescate",
     audience: "mujer",
@@ -4448,6 +4686,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-bluson-turquesa",
+    sku: "J3-0206BN-1",
     name: "Blusón Rescate Rock Turquesa",
     category: "Rescate",
     audience: "mujer",
@@ -4467,6 +4706,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-bluson-blanco",
+    sku: "J3-0206BN-2",
     name: "Blusón Rescate Rock Blanco",
     category: "Rescate",
     audience: "mujer",
@@ -4484,6 +4724,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-minnie-negra",
+    sku: "J3-0206CM-1",
     name: "Camiseta Rescate Minnie Dream Big Negra",
     category: "Rescate",
     audience: "mujer",
@@ -4503,6 +4744,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-minnie-blanca",
+    sku: "J3-0206CM-2",
     name: "Camiseta Rescate Minnie Dream Big Blanca",
     category: "Rescate",
     audience: "mujer",
@@ -4520,6 +4762,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-minnie-verde-oliva",
+    sku: "J3-0206CM-3",
     name: "Camiseta Rescate Minnie Dream Big Verde Oliva",
     category: "Rescate",
     audience: "mujer",
@@ -4537,6 +4780,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-minnie-rosa",
+    sku: "J3-0206CM-4",
     name: "Camiseta Rescate Minnie Dream Big Rosa",
     category: "Rescate",
     audience: "mujer",
@@ -4554,6 +4798,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-flor-negra",
+    sku: "J3-0106CM-24",
     name: "Camiseta Rescate Flor Negra",
     category: "Rescate",
     audience: "hombre",
@@ -4571,6 +4816,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-oso-wide-negra",
+    sku: "J3-0106CM-25",
     name: "Camiseta Rescate Faker Panda",
     category: "Rescate",
     audience: "hombre",
@@ -4588,6 +4834,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-oso-mitad-negra",
+    sku: "J3-0106CM-26",
     name: "Camiseta Rescate Oso Mitad Now Negra",
     category: "Rescate",
     audience: "hombre",
@@ -4608,6 +4855,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-oso-mitad-verde",
+    sku: "J3-0106CM-27",
     name: "Camiseta Rescate Oso Mitad Now Verde",
     category: "Rescate",
     audience: "hombre",
@@ -4626,6 +4874,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-oso-rayo-verde",
+    sku: "J3-0106CM-28",
     name: "Camiseta Rescate Oso Rayo Right Now Verde",
     category: "Rescate",
     audience: "hombre",
@@ -4646,6 +4895,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-oso-rayo-negra",
+    sku: "J3-0106CM-29",
     name: "Camiseta Rescate Oso Rayo Right Now Negra",
     category: "Rescate",
     audience: "hombre",
@@ -4664,6 +4914,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-cuerina-cafe",
+    sku: "J3-0206CH-1",
     name: "Chaqueta Rescate Cuerina Café",
     category: "Rescate",
     audience: "mujer",
@@ -4683,6 +4934,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-cuerina-crema",
+    sku: "J3-0206CH-2",
     name: "Chaqueta Rescate Cuerina Crema",
     category: "Rescate",
     audience: "mujer",
@@ -4700,6 +4952,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-chaqueta-cuerina-vino",
+    sku: "J3-0206CH-3",
     name: "Chaqueta Rescate Cuerina Vino Tinto",
     category: "Rescate",
     audience: "mujer",
@@ -4717,6 +4970,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-blusa-unica",
+    sku: "J3-0206BL-2",
     name: "Blusa Rescate Lunares",
     category: "Rescate",
     audience: "mujer",
@@ -4733,6 +4987,7 @@ export const products: Product[] = [
   },
   {
     id: "nino-chaqueta-goofy",
+    sku: "J3-03CH-2",
     name: "Chaqueta Niño Goofy",
     category: "Niños",
     audience: "nino",
@@ -4750,6 +5005,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-croptop-lilo-stitch",
+    sku: "J3-0206CR-7",
     name: "Croptop Rescate Lilo & Stitch",
     category: "Rescate",
     audience: "mujer",
@@ -4767,6 +5023,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-conejo-smile-agua-marina",
+    sku: "J3-0106CM-30",
     name: "Camiseta Rescate Conejo Smile Agua Marina",
     category: "Rescate",
     audience: "hombre",
@@ -4786,6 +5043,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-conejo-smile-blanco",
+    sku: "J3-0106CM-31",
     name: "Camiseta Rescate Conejo Smile Blanco",
     category: "Rescate",
     audience: "hombre",
@@ -4803,6 +5061,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-conejo-smile-marfil",
+    sku: "J3-0106CM-32",
     name: "Camiseta Rescate Conejo Smile Marfil",
     category: "Rescate",
     audience: "hombre",
@@ -4820,6 +5079,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-conejo-nice-try-marfil",
+    sku: "J3-0106CM-33",
     name: "Camiseta Rescate Conejo Nice Try Marfil",
     category: "Rescate",
     audience: "hombre",
@@ -4839,6 +5099,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-conejo-nice-try-agua-marina",
+    sku: "J3-0106CM-34",
     name: "Camiseta Rescate Conejo Nice Try Agua Marina",
     category: "Rescate",
     audience: "hombre",
@@ -4856,6 +5117,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-conejo-nice-try-blanco",
+    sku: "J3-0106CM-35",
     name: "Camiseta Rescate Conejo Nice Try Blanco",
     category: "Rescate",
     audience: "hombre",
@@ -4873,6 +5135,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-angel-agua-marina",
+    sku: "J3-0206CM-5",
     name: "Camiseta Rescate Stitch & Angel Agua Marina",
     category: "Rescate",
     audience: "mujer",
@@ -4892,6 +5155,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-angel-azul",
+    sku: "J3-0206CM-6",
     name: "Camiseta Rescate Stitch & Angel Azul",
     category: "Rescate",
     audience: "mujer",
@@ -4909,6 +5173,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-cowgirl-rosa",
+    sku: "J3-0206CM-7",
     name: "Camiseta Rescate Stitch Cowgirl Rosa",
     category: "Rescate",
     audience: "mujer",
@@ -4928,6 +5193,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-cowgirl-rojo",
+    sku: "J3-0206CM-8",
     name: "Camiseta Rescate Stitch Cowgirl Rojo",
     category: "Rescate",
     audience: "mujer",
@@ -4945,6 +5211,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-mymelody-rosa",
+    sku: "J3-0206CM-9",
     name: "Camiseta Rescate My Melody Rosa",
     category: "Rescate",
     audience: "mujer",
@@ -4964,6 +5231,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-mymelody-morada",
+    sku: "J3-0206CM-10",
     name: "Camiseta Rescate My Melody Morada",
     category: "Rescate",
     audience: "mujer",
@@ -4981,6 +5249,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-dj-negro",
+    sku: "J3-0106CM-36",
     name: "Camiseta Rescate DJ Negro",
     category: "Rescate",
     audience: "hombre",
@@ -5000,6 +5269,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-dj-amarilla",
+    sku: "J3-0106CM-37",
     name: "Camiseta Rescate DJ Amarilla",
     category: "Rescate",
     audience: "hombre",
@@ -5017,6 +5287,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-dj-blanco",
+    sku: "J3-0106CM-38",
     name: "Camiseta Rescate DJ Blanco",
     category: "Rescate",
     audience: "hombre",
@@ -5034,6 +5305,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-dj-marfil",
+    sku: "J3-0106CM-39",
     name: "Camiseta Rescate DJ Marfil",
     category: "Rescate",
     audience: "hombre",
@@ -5051,6 +5323,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-dj-verde-militar",
+    sku: "J3-0106CM-40",
     name: "Camiseta Rescate DJ Verde Militar",
     category: "Rescate",
     audience: "hombre",
@@ -5068,6 +5341,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-osito-funny-agua-marina",
+    sku: "J3-0206CM-11",
     name: "Camiseta Rescate Osito Funny Agua Marina",
     category: "Rescate",
     audience: "mujer",
@@ -5087,6 +5361,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-osito-funny-blanca",
+    sku: "J3-0206CM-12",
     name: "Camiseta Rescate Osito Funny Blanca",
     category: "Rescate",
     audience: "mujer",
@@ -5104,6 +5379,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-osito-funny-marfil",
+    sku: "J3-0206CM-13",
     name: "Camiseta Rescate Osito Funny Marfil",
     category: "Rescate",
     audience: "mujer",
@@ -5121,6 +5397,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-solo",
+    sku: "J3-0206CM-14",
     name: "Camiseta Rescate Stitch",
     category: "Rescate",
     audience: "mujer",
@@ -5137,6 +5414,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-fight-hard-amarillo",
+    sku: "J3-0106CM-41",
     name: "Camiseta Rescate Fight Hard Amarillo",
     category: "Rescate",
     audience: "hombre",
@@ -5156,6 +5434,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-fight-hard-blanco",
+    sku: "J3-0106CM-42",
     name: "Camiseta Rescate Fight Hard Blanco",
     category: "Rescate",
     audience: "hombre",
@@ -5173,6 +5452,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-fight-hard-marfil",
+    sku: "J3-0106CM-43",
     name: "Camiseta Rescate Fight Hard Marfil",
     category: "Rescate",
     audience: "hombre",
@@ -5190,6 +5470,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-hello-kitty-verde-militar",
+    sku: "J3-0206CM-15",
     name: "Camiseta Rescate Hello Kitty Verde Militar",
     category: "Rescate",
     audience: "mujer",
@@ -5209,6 +5490,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-hello-kitty-negra",
+    sku: "J3-0206CM-16",
     name: "Camiseta Rescate Hello Kitty Negra",
     category: "Rescate",
     audience: "mujer",
@@ -5226,6 +5508,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-hello-kitty-azul",
+    sku: "J3-0206CM-17",
     name: "Camiseta Rescate Hello Kitty Azul",
     category: "Rescate",
     audience: "mujer",
@@ -5243,6 +5526,7 @@ export const products: Product[] = [
   },
   {
     id: "harvibal-crema",
+    sku: "J3-01CMO-40",
     name: "Camiseta Harvibal Crema",
     category: "Camisetas",
     audience: "hombre",
@@ -5262,6 +5546,7 @@ export const products: Product[] = [
   },
   {
     id: "signo-negra",
+    sku: "J3-01CMO-41",
     name: "Camiseta Signo Negra",
     category: "Camisetas",
     audience: "hombre",
@@ -5281,6 +5566,7 @@ export const products: Product[] = [
   },
   {
     id: "doberman",
+    sku: "J3-01CMO-42",
     name: "Camiseta Doberman",
     category: "Camisetas",
     audience: "hombre",
@@ -5299,6 +5585,7 @@ export const products: Product[] = [
   },
   {
     id: "dino-tiedye",
+    sku: "J3-03CM-3",
     name: "Camiseta Dino Tie-Dye Niño",
     category: "Niños",
     audience: "nino",
@@ -5316,6 +5603,7 @@ export const products: Product[] = [
   },
   {
     id: "coyote-acme",
+    sku: "J3-03CM-4",
     name: "Camiseta Coyote ACME Niño",
     category: "Niños",
     audience: "nino",
@@ -5333,6 +5621,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-bob-esponja",
+    sku: "J3-0206CM-18",
     name: "Camiseta Rescate Bob Esponja",
     category: "Rescate",
     audience: "mujer",
@@ -5349,6 +5638,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-betty-boop-negra",
+    sku: "J3-0206CM-19",
     name: "Camiseta Rescate Betty Boop Negra",
     category: "Rescate",
     audience: "mujer",
@@ -5368,6 +5658,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-betty-boop-verde-militar",
+    sku: "J3-0206CM-20",
     name: "Camiseta Rescate Betty Boop Verde Militar",
     category: "Rescate",
     audience: "mujer",
@@ -5385,6 +5676,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-pedreria-crema",
+    sku: "J3-0206CMP-2",
     name: "Camiseta Rescate Stitch Pedrería Crema",
     category: "Rescate",
     audience: "mujer",
@@ -5403,6 +5695,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-pedreria-lila",
+    sku: "J3-0206CMP-3",
     name: "Camiseta Rescate Stitch Pedrería Lila",
     category: "Rescate",
     audience: "mujer",
@@ -5424,6 +5717,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-pedreria-cognac",
+    sku: "J3-0206CMP-4",
     name: "Camiseta Rescate Stitch Pedrería Cognac",
     category: "Rescate",
     audience: "mujer",
@@ -5442,6 +5736,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-pedreria-amarillo",
+    sku: "J3-0206CMP-5",
     name: "Camiseta Rescate Stitch Pedrería Amarillo",
     category: "Rescate",
     audience: "mujer",
@@ -5460,6 +5755,7 @@ export const products: Product[] = [
   },
   {
     id: "rescate-stitch-pedreria-rosa",
+    sku: "J3-0206CMP-6",
     name: "Camiseta Rescate Stitch Pedrería Rosa",
     category: "Rescate",
     audience: "mujer",
@@ -5478,6 +5774,7 @@ export const products: Product[] = [
   },
   {
     id: "karma-gato",
+    sku: "J3-02CMO-32",
     name: "Camiseta Karma Gato",
     category: "Camisetas",
     audience: "mujer",
@@ -5497,6 +5794,7 @@ export const products: Product[] = [
   },
   {
     id: "kitty-love-ice",
+    sku: "J3-04CM-3",
     name: "Camiseta Kitty Love Ice Niñas",
     category: "Niños",
     audience: "nina",
@@ -5514,6 +5812,7 @@ export const products: Product[] = [
   },
   {
     id: "bob-esponja-invertebros",
+    sku: "J3-02CMO-33",
     name: "Camiseta Bob Esponja Invertebros",
     category: "Camisetas",
     audience: "mujer",
@@ -5532,6 +5831,7 @@ export const products: Product[] = [
   },
   {
     id: "space-cat",
+    sku: "J3-02CMO-34",
     name: "Camiseta I Need My Space",
     category: "Camisetas",
     audience: "mujer",
@@ -5551,6 +5851,7 @@ export const products: Product[] = [
   },
   {
     id: "daffy-duck-grafiti",
+    sku: "J3-01CMO-43",
     name: "Camiseta Daffy Duck Grafiti",
     category: "Camisetas",
     audience: "hombre",
@@ -5570,6 +5871,7 @@ export const products: Product[] = [
   },
   {
     id: "blossom-ppg",
+    sku: "J3-04CM-4",
     name: "Camiseta Blossom Niña",
     category: "Niños",
     audience: "nina",
@@ -5587,6 +5889,7 @@ export const products: Product[] = [
   },
   {
     id: "garfield-split",
+    sku: "J3-03CM-5",
     name: "Camiseta Garfield Niño",
     category: "Niños",
     audience: "nino",
@@ -5604,6 +5907,7 @@ export const products: Product[] = [
   },
   {
     id: "sonic-lightning",
+    sku: "J3-03CM-6",
     name: "Camiseta Sonic Niño",
     category: "Niños",
     audience: "nino",
@@ -5621,6 +5925,7 @@ export const products: Product[] = [
   },
   {
     id: "betty-peace-rosa",
+    sku: "J3-02CM-1",
     name: "Camiseta Betty Boop Peace Rosa",
     category: "Camisetas",
     audience: "mujer",
@@ -5641,6 +5946,7 @@ export const products: Product[] = [
   },
   {
     id: "betty-peace-vino-tinto",
+    sku: "J3-02CM-2",
     name: "Camiseta Betty Boop Peace Vino Tinto",
     category: "Camisetas",
     audience: "mujer",
@@ -5660,6 +5966,7 @@ export const products: Product[] = [
   },
   {
     id: "betty-peace-verde-limon",
+    sku: "J3-02CM-3",
     name: "Camiseta Betty Boop Peace Verde Limón",
     category: "Camisetas",
     audience: "mujer",

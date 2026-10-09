@@ -130,6 +130,9 @@ export default function ProductDetailClient({ product }: { product: Product }) {
       <div className="lg:hidden">
         <p className="text-sm text-muted">{product.category}</p>
         <h1 className="mt-1 text-2xl font-semibold text-ink">{product.name}</h1>
+        {product.sku && (
+          <p className="mt-0.5 text-xs text-muted font-mono">SKU: {product.sku}</p>
+        )}
 
         <div
           className={`relative mt-3 rounded-tl-3xl overflow-hidden border border-border aspect-[4/5] ${
@@ -234,6 +237,9 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         <div>
           <p className="hidden lg:block text-sm text-muted">{product.category}</p>
           <h1 className="hidden lg:block mt-1 text-2xl font-semibold text-ink">{product.name}</h1>
+          {product.sku && (
+            <p className="hidden lg:block mt-0.5 text-xs text-muted font-mono">SKU: {product.sku}</p>
+          )}
           <div className="mt-2 flex items-center gap-3">
             <span className="text-2xl font-semibold text-ink">
               {currency.format(product.price)}
