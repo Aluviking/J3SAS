@@ -6,7 +6,7 @@ import type { ConceptProduct } from "@/lib/proximamente-data";
 export default function ConceptProductCard({ product }: { product: ConceptProduct }) {
   return (
     <div className="group">
-      <div className="relative rounded-tl-2xl overflow-hidden aspect-square border border-border bg-surface-alt transition-shadow duration-300 group-hover:shadow-[0_12px_28px_rgba(20,22,28,0.12)]">
+      <div className="relative rounded-tl-2xl overflow-hidden aspect-[4/5] border border-border bg-surface-alt transition-shadow duration-300 group-hover:shadow-[0_12px_28px_rgba(20,22,28,0.12)]">
         <Image
           src={product.image}
           alt={product.name}

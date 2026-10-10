@@ -1,15 +1,21 @@
 "use client";
 
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import DisclaimerModal, { type Disclaimer } from "@/components/DisclaimerModal";
 import ProductCard from "@/components/ProductCard";
 import { dedupeVariants, type Product } from "@/lib/mock-data";
 
 type SortOption = "relevancia" | "precio-asc" | "precio-desc" | "rating";
 export type SubFilterField = "audience" | "category" | "subcategory";
-export type SubFilter = { key: string; label: string; field?: SubFilterField };
+export type SubFilter = {
+  key: string;
+  label: string;
+  field?: SubFilterField;
+  /** Alternativa a `field`: condición arbitraria cuando un solo campo no alcanza. */
+  predicate?: (p: Product) => boolean;
+};
 
 const sortOptions: { value: SortOption; label: string }[] = [
   { value: "relevancia", label: "Relevancia" },
@@ -27,6 +33,7 @@ export default function ProductGridPage({
   subFilterField,
   parentLink,
   disclaimer,
+  headerExtra,
 }: {
   title: string;
   subtitle?: string;
@@ -38,10 +45,16 @@ export default function ProductGridPage({
   parentLink?: { label: string; href: string };
   /** Aviso emergente que se muestra siempre (sin persistencia) al entrar. */
   disclaimer?: Disclaimer;
+  /** Contenido libre entre el subtítulo y los filtros (ej. tarjetas destacadas). */
+  headerExtra?: ReactNode;
 }) {
   const [sort, setSort] = useState<SortOption>("relevancia");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
+  const subFilterScrollRef = useRef<HTMLDivElement>(null);
+  const scrollSubFilters = (dir: 1 | -1) => {
+    subFilterScrollRef.current?.scrollBy({ left: dir * 220, behavior: "smooth" });
+  };
   const [activeFilter, setActiveFilter] = useState<string>("todos");
   const [activeSubcategory, setActiveSubcategory] = useState<string>("todos");
 
@@ -54,8 +67,11 @@ export default function ProductGridPage({
   // aplicar todavía el tipo de prenda. Sirve tanto para calcular qué tipos
   // de prenda existen dentro de esa selección como para el filtro final.
   const primaryFiltered = useMemo(() => {
-    const activeField = subFilters?.find((f) => f.key === activeFilter)?.field ?? subFilterField;
-    if (activeFilter === "todos" || !activeField) return products;
+    if (activeFilter === "todos") return products;
+    const activeSubFilter = subFilters?.find((f) => f.key === activeFilter);
+    if (activeSubFilter?.predicate) return products.filter(activeSubFilter.predicate);
+    const activeField = activeSubFilter?.field ?? subFilterField;
+    if (!activeField) return products;
     return products.filter((p) => {
       if (activeField === "audience") return p.audience === activeFilter;
       if (activeField === "category") return p.category === activeFilter;
@@ -123,6 +139,8 @@ export default function ProductGridPage({
       <h1 className="text-xl font-semibold text-ink">{title}</h1>
       {subtitle && <p className="mt-1 text-sm text-muted">{subtitle}</p>}
 
+      {headerExtra}
+
       {categoryTabs && categoryTabs.length > 1 && (
         <div className="mt-3 flex items-center gap-2">
           {categoryTabs.map((tab) => (
@@ -142,30 +160,59 @@ export default function ProductGridPage({
       )}
 
       {subFilters && subFilters.length > 0 && (
-        <div className="mt-3 flex items-center gap-2 flex-wrap">
-          <button
-            onClick={() => selectPrimary("todos")}
-            className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
-              activeFilter === "todos"
-                ? "bg-ink text-white"
-                : "bg-surface-alt text-ink hover:bg-surface border border-border"
+        <div className="mt-3 flex items-center gap-1.5">
+          {subFilters.length > 8 && (
+            <button
+              type="button"
+              aria-label="Ver anteriores"
+              onClick={() => scrollSubFilters(-1)}
+              className="shrink-0 w-7 h-7 rounded-full border border-border bg-surface flex items-center justify-center hover:bg-surface-alt transition-colors"
+            >
+              <ChevronLeft size={15} className="text-ink" />
+            </button>
+          )}
+
+          <div
+            ref={subFilterScrollRef}
+            className={`no-scrollbar flex items-center gap-2 overflow-x-auto scroll-smooth ${
+              subFilters.length > 8 ? "flex-nowrap" : "flex-wrap"
             }`}
           >
-            Todos
-          </button>
-          {subFilters.map((f) => (
             <button
-              key={f.key}
-              onClick={() => selectPrimary(f.key)}
-              className={`text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
-                activeFilter === f.key
+              onClick={() => selectPrimary("todos")}
+              className={`shrink-0 text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
+                activeFilter === "todos"
                   ? "bg-ink text-white"
                   : "bg-surface-alt text-ink hover:bg-surface border border-border"
               }`}
             >
-              {f.label}
+              Todos
             </button>
-          ))}
+            {subFilters.map((f) => (
+              <button
+                key={f.key}
+                onClick={() => selectPrimary(f.key)}
+                className={`shrink-0 text-sm font-medium px-3 py-1.5 rounded-tl-md transition-colors ${
+                  activeFilter === f.key
+                    ? "bg-ink text-white"
+                    : "bg-surface-alt text-ink hover:bg-surface border border-border"
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </div>
+
+          {subFilters.length > 8 && (
+            <button
+              type="button"
+              aria-label="Ver más"
+              onClick={() => scrollSubFilters(1)}
+              className="shrink-0 w-7 h-7 rounded-full border border-border bg-surface flex items-center justify-center hover:bg-surface-alt transition-colors"
+            >
+              <ChevronRight size={15} className="text-ink" />
+            </button>
+          )}
         </div>
       )}
 

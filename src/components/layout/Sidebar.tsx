@@ -64,96 +64,98 @@ export default function Sidebar({
         <div onClick={onClose} className="fixed inset-0 bg-black/40 z-40 lg:hidden" />
       )}
       <aside
-        className={`fixed lg:sticky top-0 left-0 h-screen w-64 shrink-0 bg-surface border-r border-border flex flex-col overflow-y-auto z-50 transition-transform duration-200 lg:translate-x-0 ${
+        className={`fixed lg:static top-0 left-0 h-screen lg:h-auto w-64 shrink-0 bg-surface border-r border-border overflow-y-auto lg:overflow-visible z-50 transition-transform duration-200 lg:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="relative px-4 pt-5 pb-4 flex justify-center border-b border-border shrink-0">
-          <button
-            onClick={onClose}
-            aria-label="Cerrar menú"
-            className="lg:hidden absolute top-4 right-4 w-8 h-8 rounded-tl-md bg-surface-alt flex items-center justify-center z-10"
-          >
-            <X size={16} className="text-ink" />
-          </button>
-          <Link href="/" className="relative w-24 h-48 shrink-0">
-            <Image
-              src="/logo-j3.webp"
-              alt="Comercializadora J3"
-              fill
-              className="object-contain"
-              priority
-            />
-          </Link>
-        </div>
-
-        {user && (
-          <div className="px-4 mt-4">
-            <Link
-              href="/cuenta"
-              className="flex items-center gap-2.5 bg-surface-alt rounded-tl-md px-3 py-2.5 hover:bg-brand-soft transition-colors"
+        <div className="flex flex-col lg:sticky lg:top-0">
+          <div className="relative px-4 pt-5 pb-4 flex justify-center border-b border-border shrink-0">
+            <button
+              onClick={onClose}
+              aria-label="Cerrar menú"
+              className="lg:hidden absolute top-4 right-4 w-8 h-8 rounded-tl-md bg-surface-alt flex items-center justify-center z-10"
             >
-              <div className="w-8 h-8 rounded-tl-sm bg-ink text-white text-xs font-semibold flex items-center justify-center shrink-0">
-                {user.name.charAt(0).toUpperCase()}
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-medium text-ink truncate">{user.name}</p>
-                <p className="text-xs text-muted truncate">{user.email}</p>
-              </div>
+              <X size={16} className="text-ink" />
+            </button>
+            <Link href="/" className="relative w-24 h-48 shrink-0">
+              <Image
+                src="/logo-j3.webp"
+                alt="Comercializadora J3"
+                fill
+                className="object-contain"
+                priority
+              />
             </Link>
           </div>
-        )}
 
-        <nav className="mt-4 px-3">
-          <div className="space-y-0.5">
-            <Link href="/proximamente" className={`${linkClass("/proximamente")} lg:hidden`}>
-              <Rocket size={18} />
-              <span className="flex-1">Próximamente</span>
-            </Link>
-            {navItems.map(({ href, label, icon: Icon, badge }) => (
-              <Link key={href} href={href} className={linkClass(href)}>
-                <Icon size={18} />
-                <span className="flex-1">{label}</span>
-                {badge && (
-                  <span className="text-[10px] font-semibold bg-accent text-white px-1.5 py-0.5 rounded-tl-sm">
-                    {badge}
-                  </span>
-                )}
+          {user && (
+            <div className="px-4 mt-4">
+              <Link
+                href="/cuenta"
+                className="flex items-center gap-2.5 bg-surface-alt rounded-tl-md px-3 py-2.5 hover:bg-brand-soft transition-colors"
+              >
+                <div className="w-8 h-8 rounded-tl-sm bg-ink text-white text-xs font-semibold flex items-center justify-center shrink-0">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-medium text-ink truncate">{user.name}</p>
+                  <p className="text-xs text-muted truncate">{user.email}</p>
+                </div>
               </Link>
-            ))}
-          </div>
+            </div>
+          )}
 
-          <div className="mt-5 pt-4 border-t border-border space-y-0.5">
-            {accountItems.map(({ href, label, icon: Icon }) => (
-              <Link key={href} href={href} className={linkClass(href)}>
-                <Icon size={18} />
-                <span>{label}</span>
+          <nav className="mt-4 px-3">
+            <div className="space-y-0.5">
+              <Link href="/proximamente" className={`${linkClass("/proximamente")} lg:hidden`}>
+                <Rocket size={18} />
+                <span className="flex-1">Próximamente</span>
               </Link>
-            ))}
-          </div>
-        </nav>
+              {navItems.map(({ href, label, icon: Icon, badge }) => (
+                <Link key={href} href={href} className={linkClass(href)}>
+                  <Icon size={18} />
+                  <span className="flex-1">{label}</span>
+                  {badge && (
+                    <span className="text-[10px] font-semibold bg-accent text-white px-1.5 py-0.5 rounded-tl-sm">
+                      {badge}
+                    </span>
+                  )}
+                </Link>
+              ))}
+            </div>
 
-        <div className="p-3">
-          <div className="relative overflow-hidden rounded-tl-2xl bg-ink p-4">
-            <p className="text-xs font-medium text-white/70">Oferta especial</p>
-            <p className="mt-1 text-lg font-semibold text-white leading-tight">
-              Hasta 50% de descuento
-            </p>
+            <div className="mt-5 pt-4 border-t border-border space-y-0.5">
+              {accountItems.map(({ href, label, icon: Icon }) => (
+                <Link key={href} href={href} className={linkClass(href)}>
+                  <Icon size={18} />
+                  <span>{label}</span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          <div className="p-3">
+            <div className="relative overflow-hidden rounded-tl-2xl bg-ink p-4">
+              <p className="text-xs font-medium text-white/70">Línea Rescate</p>
+              <p className="mt-1 text-lg font-semibold text-white leading-tight">
+                Precios especiales
+              </p>
+              <Link
+                href="/categorias/rescate"
+                className="mt-3 inline-block text-xs font-semibold bg-cta text-white px-3 py-1.5 rounded-tl-sm hover:bg-cta-dark transition-colors"
+              >
+                Ver línea
+              </Link>
+            </div>
+
             <Link
-              href="/ofertas"
-              className="mt-3 inline-block text-xs font-semibold bg-cta text-white px-3 py-1.5 rounded-tl-sm hover:bg-cta-dark transition-colors"
+              href="/soporte"
+              className="mt-3 w-full flex items-center gap-2 text-xs text-muted px-2 py-2 hover:text-ink transition-colors"
             >
-              Ver ofertas
+              <LifeBuoy size={14} />
+              Ayuda · Soporte 24/7
             </Link>
           </div>
-
-          <Link
-            href="/soporte"
-            className="mt-3 w-full flex items-center gap-2 text-xs text-muted px-2 py-2 hover:text-ink transition-colors"
-          >
-            <LifeBuoy size={14} />
-            Ayuda · Soporte 24/7
-          </Link>
         </div>
       </aside>
     </>

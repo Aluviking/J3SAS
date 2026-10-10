@@ -57,7 +57,7 @@ export default function TopBar({
 
       <form
         onSubmit={handleSearch}
-        className={`flex-1 flex items-center gap-2 bg-surface border border-border rounded-tl-lg pl-4 pr-1.5 py-2 max-w-xl transition-[max-width] duration-200 ${
+        className={`flex-1 min-w-0 flex items-center gap-2 bg-surface border border-border rounded-tl-lg pl-4 pr-1.5 py-2 max-w-xl transition-[max-width] duration-200 ${
           cartPanelOpen ? "xl:max-w-xl" : "xl:max-w-3xl"
         }`}
       >

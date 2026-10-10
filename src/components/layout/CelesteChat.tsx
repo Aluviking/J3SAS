@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircleHeart, Send, Sparkles, X } from "lucide-react";
+import { ArrowLeft, MessageCircleHeart, Send, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -501,40 +501,43 @@ export default function CelesteChat() {
             setShowGreeting(false);
           }}
           aria-label="Hablar con Celeste, asesora virtual"
-          className="fixed bottom-36 lg:bottom-20 right-4 z-50 flex items-center gap-2 bg-ink text-white rounded-full pl-4 pr-5 py-3 shadow-lg hover:bg-ink/90 transition-colors"
+          className="fixed bottom-36 lg:bottom-20 right-4 z-50 w-12 h-12 rounded-full bg-ink shadow-lg flex items-center justify-center hover:bg-ink/90 transition-colors"
         >
-          <MessageCircleHeart size={20} className="text-accent" />
-          <span className="text-sm font-semibold hidden sm:inline">Celeste</span>
+          <MessageCircleHeart size={22} className="text-accent" />
         </button>
       )}
 
       {open && (
-        <div className="fixed bottom-4 right-4 z-50 w-[calc(100vw-2rem)] max-w-sm h-[32rem] max-h-[75vh] bg-surface border border-border rounded-tl-2xl shadow-2xl flex flex-col overflow-hidden">
-          <div className="flex items-center justify-between gap-2 bg-ink text-white px-4 py-3 shrink-0">
-            <div className="flex items-center gap-2 min-w-0">
-              <span className="w-8 h-8 rounded-full bg-accent/90 flex items-center justify-center shrink-0">
-                <Sparkles size={16} className="text-white" />
-              </span>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold leading-tight">Celeste</p>
-                <p className="text-[11px] text-white/70 leading-tight">Asesora J3 · en línea</p>
-              </div>
-            </div>
+        <div className="fixed bottom-4 right-4 z-50 w-[calc(100vw-2rem)] max-w-sm h-[32rem] max-h-[75vh] rounded-tl-2xl shadow-2xl flex flex-col overflow-hidden">
+          {/* fondo de foto + degradado, como un chat sobre una imagen */}
+          <div className="absolute inset-0">
+            <Image src="/products/category-covers/ropa.webp" alt="" fill className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-b from-ink/80 via-ink/55 to-ink/85" />
+          </div>
+
+          <div className="relative flex items-center gap-3 px-4 py-3 shrink-0">
             <button
               onClick={() => setOpen(false)}
               aria-label="Cerrar chat"
-              className="w-7 h-7 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors shrink-0"
+              className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-white/10 transition-colors shrink-0 text-white"
             >
-              <X size={16} />
+              <ArrowLeft size={18} />
             </button>
+            <div className="min-w-0">
+              <p className="text-sm font-bold text-white leading-tight">Celeste</p>
+              <p className="text-[11px] text-white/80 leading-tight flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0" />
+                en línea
+              </p>
+            </div>
           </div>
 
-          <div ref={scrollRef} className="flex-1 overflow-y-auto px-3 py-3 space-y-3">
+          <div ref={scrollRef} className="relative flex-1 overflow-y-auto px-3 py-2 space-y-3">
             {messages.map((m, i) => (
               <div key={i} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`max-w-[85%] rounded-tl-lg px-3 py-2 text-sm leading-relaxed ${
-                    m.role === "user" ? "bg-ink text-white" : "bg-surface-alt text-ink"
+                  className={`max-w-[85%] rounded-tl-xl px-3 py-2 text-sm leading-relaxed backdrop-blur-md shadow-lg ${
+                    m.role === "user" ? "bg-ink/80 text-white" : "bg-white/90 text-ink"
                   }`}
                 >
                   <p className="whitespace-pre-wrap">{m.content}</p>
@@ -567,28 +570,32 @@ export default function CelesteChat() {
             ))}
             {loading && (
               <div className="flex justify-start">
-                <div className="bg-surface-alt text-muted rounded-tl-lg px-3 py-2 text-sm">Escribiendo…</div>
+                <div className="bg-white/90 backdrop-blur-md text-muted rounded-tl-xl px-3 py-2 text-sm shadow-lg">
+                  Escribiendo…
+                </div>
               </div>
             )}
-            {error && <p className="text-xs text-accent text-center">{error}</p>}
+            {error && <p className="text-xs text-white text-center bg-accent/90 rounded-tl-md py-1.5 px-2">{error}</p>}
           </div>
 
-          <div className="flex items-center gap-2 border-t border-border p-2.5 shrink-0">
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && send()}
-              placeholder="Escríbele a Celeste…"
-              className="flex-1 bg-surface-alt border border-border rounded-tl-md px-3 py-2 text-sm text-ink placeholder:text-muted outline-none"
-            />
-            <button
-              onClick={send}
-              disabled={loading || !input.trim()}
-              aria-label="Enviar mensaje"
-              className="w-9 h-9 rounded-tl-md bg-cta text-white flex items-center justify-center shrink-0 transition-colors hover:bg-cta-dark disabled:opacity-50"
-            >
-              <Send size={16} />
-            </button>
+          <div className="relative p-3 shrink-0">
+            <div className="flex items-center gap-2 bg-white/95 backdrop-blur-md rounded-full pl-4 pr-1.5 py-1.5 shadow-lg">
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && send()}
+                placeholder="Escríbele a Celeste…"
+                className="flex-1 bg-transparent text-sm text-ink placeholder:text-muted outline-none min-w-0"
+              />
+              <button
+                onClick={send}
+                disabled={loading || !input.trim()}
+                aria-label="Enviar mensaje"
+                className="w-9 h-9 rounded-full bg-cta text-white flex items-center justify-center shrink-0 transition-colors hover:bg-cta-dark disabled:opacity-50"
+              >
+                <Send size={15} />
+              </button>
+            </div>
           </div>
         </div>
       )}

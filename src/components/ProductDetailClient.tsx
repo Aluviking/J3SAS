@@ -76,8 +76,38 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const [size, setSize] = useState(product.sizes[0]);
   const [added, setAdded] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const colorVariants = getVariantSiblings(product);
   const rescateDesignKey = product.variantGroup ?? product.id;
+  const variantIndex = colorVariants.findIndex((v) => v.id === product.id);
+
+  // Deslizar sobre la foto en móvil pasa al siguiente/anterior color — misma
+  // navegación que ya usan los puntos de color, solo con gesto de swipe.
+  const goToVariant = (direction: 1 | -1) => {
+    if (colorVariants.length <= 1 || variantIndex === -1) return;
+    const next = colorVariants[(variantIndex + direction + colorVariants.length) % colorVariants.length];
+    if (next.id !== product.id) router.push(`/producto/${next.id}`);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => setTouchStartX(e.touches[0].clientX);
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const deltaX = e.changedTouches[0].clientX - touchStartX;
+    setTouchStartX(null);
+    if (Math.abs(deltaX) < 50) return;
+    goToVariant(deltaX < 0 ? 1 : -1);
+  };
+
+  // Mismo gesto con mouse (arrastrar y soltar) — para que también funcione
+  // probando en una ventana angosta del navegador, no solo con touch real.
+  const handleMouseDown = (e: React.MouseEvent) => setTouchStartX(e.clientX);
+  const handleMouseUp = (e: React.MouseEvent) => {
+    if (touchStartX === null) return;
+    const deltaX = e.clientX - touchStartX;
+    setTouchStartX(null);
+    if (Math.abs(deltaX) < 50) return;
+    goToVariant(deltaX < 0 ? 1 : -1);
+  };
 
   const handleAdd = () => {
     addItem(product.id, size);
@@ -135,7 +165,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         )}
 
         <div
-          className={`relative mt-3 rounded-tl-3xl overflow-hidden border border-border aspect-[4/5] ${
+          onTouchStart={colorVariants.length > 1 ? handleTouchStart : undefined}
+          onTouchEnd={colorVariants.length > 1 ? handleTouchEnd : undefined}
+          onMouseDown={colorVariants.length > 1 ? handleMouseDown : undefined}
+          onMouseUp={colorVariants.length > 1 ? handleMouseUp : undefined}
+          className={`relative mt-3 rounded-tl-3xl overflow-hidden border border-border aspect-[4/5] select-none ${
             basicCatalogPhoto ? "bg-white" : "bg-surface-alt"
           }`}
         >
@@ -145,11 +179,31 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             fill
             className={basicCatalogPhoto ? "object-contain p-6" : "object-cover"}
           />
+          {colorVariants.length > 1 && (
+            <>
+              {/* degradado para que los puntos se vean aunque la foto tenga
+                  fondo claro */}
+              <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-ink/50 to-transparent pointer-events-none" />
+              <div className="absolute bottom-2.5 inset-x-0 flex items-center justify-center gap-1.5">
+                {colorVariants.map((v) => (
+                  <span
+                    key={v.id}
+                    className={`h-1.5 rounded-full transition-all shadow-sm ${
+                      v.id === product.id ? "w-5 bg-white" : "w-1.5 bg-white/70"
+                    }`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         {colorVariants.length > 1 && (
           <div className="mt-3">
-            <p className="text-sm font-medium text-ink">Selecciona el color</p>
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-ink">Selecciona el color</p>
+              <p className="text-[11px] text-muted">Desliza la foto para cambiar ↔</p>
+            </div>
             <div className="mt-2 flex gap-2 flex-wrap">
               {colorVariants.map((v) => (
                 <button
@@ -174,7 +228,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
               <button
                 key={g.src}
                 onClick={() => setActiveThumb(i)}
-                className={`relative aspect-square rounded-tl-md overflow-hidden border transition-colors ${
+                className={`relative aspect-[4/5] rounded-tl-md overflow-hidden border transition-colors ${
                   activeThumb === i ? "border-ink" : "border-border"
                 } ${basicCatalogPhoto ? "bg-white" : "bg-surface-alt"}`}
               >
@@ -214,7 +268,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
                 <button
                   key={g.src}
                   onClick={() => setActiveThumb(i)}
-                  className={`relative aspect-square rounded-tl-md overflow-hidden border transition-colors ${
+                  className={`relative aspect-[4/5] rounded-tl-md overflow-hidden border transition-colors ${
                     activeThumb === i ? "border-ink" : "border-border"
                   } ${basicCatalogPhoto ? "bg-white" : "bg-surface-alt"}`}
                 >

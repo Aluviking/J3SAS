@@ -1,8 +1,16 @@
 import { notFound } from "next/navigation";
+import CategoryTile from "@/components/CategoryTile";
 import type { Disclaimer } from "@/components/DisclaimerModal";
 import ProductGridPage, { type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
 import { HOGAR_TECH_GROUP_TYPES } from "@/lib/hogar-tech-data";
-import { AUDIENCE_GROUP_TYPES, dedupeVariants, products, RESCATE_DISCLAIMER, type Product } from "@/lib/mock-data";
+import {
+  AUDIENCE_GROUP_TYPES,
+  categories,
+  dedupeVariants,
+  products,
+  RESCATE_DISCLAIMER,
+  type Product,
+} from "@/lib/mock-data";
 
 type SlugConfig = {
   label: string;
@@ -15,9 +23,9 @@ type SlugConfig = {
   sortPriority?: (p: Product) => number;
   /** Aviso emergente que se muestra siempre (sin persistencia) al entrar a la sección. */
   disclaimer?: Disclaimer;
+  /** Muestra las tarjetas Hombres/Dama/Niños/Unisex/Rescate arriba — deben verse en las 5 secciones de ropa, no solo en /ropa. */
+  showAudienceCards?: boolean;
 };
-
-const HOMBRE_DAMA_TABS = ["hombre", "dama", "ninos", "unisex"];
 
 const SLUGS: Record<string, SlugConfig> = {
   hombre: {
@@ -28,6 +36,7 @@ const SLUGS: Record<string, SlugConfig> = {
       { key: "Unisex", label: "Unisex", field: "subcategory" as const },
     ],
     subFilterField: "category",
+    showAudienceCards: true,
   },
   dama: {
     label: "Dama",
@@ -39,6 +48,7 @@ const SLUGS: Record<string, SlugConfig> = {
     subFilterField: "category",
     sortPriority: (p) =>
       p.category === "Blusas" || p.category === "Camisas" || p.category === "Vestidos" ? 0 : 1,
+    showAudienceCards: true,
   },
   rescate: {
     label: "Rescate",
@@ -51,6 +61,7 @@ const SLUGS: Record<string, SlugConfig> = {
     ],
     subFilterField: "audience",
     disclaimer: RESCATE_DISCLAIMER,
+    showAudienceCards: true,
   },
   ninos: {
     label: "Niños",
@@ -60,11 +71,12 @@ const SLUGS: Record<string, SlugConfig> = {
       { key: "nina", label: "Niña" },
     ],
     subFilterField: "audience",
+    showAudienceCards: true,
   },
   unisex: {
     label: "Unisex",
     filter: (p) => p.category === "Buzos",
-    tabs: HOMBRE_DAMA_TABS,
+    showAudienceCards: true,
   },
   "oversize-hombre": {
     label: "Oversize Hombre Moda Línea",
@@ -199,6 +211,15 @@ export default async function CategoriaPage({
       subFilterField={config.subFilterField}
       parentLink={{ label: "Subcategorías", href: "/categorias" }}
       disclaimer={config.disclaimer}
+      headerExtra={
+        config.showAudienceCards ? (
+          <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
+            {categories.map(({ id, label, image, images, href }) => (
+              <CategoryTile key={id} id={id} label={label} image={image} images={images} href={href} />
+            ))}
+          </div>
+        ) : undefined
+      }
     />
   );
 }

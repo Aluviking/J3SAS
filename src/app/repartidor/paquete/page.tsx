@@ -149,11 +149,12 @@ function PaqueteDetailContent() {
       setRoute(result.coords);
       setRouteInfo({ distanceKm: result.distanceKm, durationMin: result.durationMin });
     }
-    // Al arrancar, se activa de una vez el seguimiento en vivo de ambos
-    // lados — sin pedirle un clic extra ni al repartidor ni al cliente.
+    // Al arrancar se activa el lado del repartidor (es él quien da clic
+    // aquí). El consentimiento del cliente NO se otorga por su cuenta — debe
+    // activarlo él mismo con "Activar seguimiento en vivo" en Mis pedidos.
     updateDelivery(delivery.id, {
       status: "en_ruta",
-      locationSharing: { ...delivery.locationSharing, driverConsent: true, customerConsent: true },
+      locationSharing: { ...delivery.locationSharing, driverConsent: true },
     });
   };
 

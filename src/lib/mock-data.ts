@@ -4346,7 +4346,7 @@ export const products: Product[] = [
     category: "Chaquetas",
     audience: "hombre",
     price: 64900,
-    wholesalePrice: 92000,
+    wholesalePrice: 48000,
     wholesaleMinQty: 12,
     image: "/products/hombre/Chaqueta hombre/Chaqueta denim Talla M y L hombre/Chaqueta denim Talla M y L hombre modelo.webp",
     frontImage: "/products/hombre/Chaqueta hombre/Chaqueta denim Talla M y L hombre/Chaqueta denim Talla M y L hombre.webp",

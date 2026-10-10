@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const slides = [
-  { src: "/banners/banner1.webp", alt: "Comercializadora J3: directo, sin intermediarios", href: "/colecciones" },
-  { src: "/banners/banner2.webp", alt: "Comercializadora J3: colección directa", href: "/colecciones" },
-  { src: "/banners/banner3.webp", alt: "Comercializadora J3: fabricantes, directo a ti", href: "/programa-aliados" },
+  { src: "/banners/banner1.webp", alt: "Aquí hay de todo, parce: ropa, cocina, tecnología y más", href: "/categorias" },
+  { src: "/banners/banner2.webp", alt: "Su parche: estrene estilo, estrene calle", href: "/ropa" },
+  { src: "/banners/banner3.webp", alt: "Modo juego activado: zona gamer", href: "/categorias/zona-gamer" },
+  { src: "/banners/banner4.webp", alt: "¿Pa' dónde nos vamos?: maletas, morrales y accesorios", href: "/categorias/maletas-accesorios" },
 ];
 
 export default function HeroSlider() {
@@ -20,7 +21,7 @@ export default function HeroSlider() {
 
   return (
     <section className="relative overflow-hidden rounded-tl-3xl bg-ink">
-      <div className="relative aspect-[16/9] sm:aspect-[16/7] overflow-hidden">
+      <div className="relative aspect-[1376/768] overflow-hidden">
         <div
           className="flex h-full transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${index * 100}%)` }}

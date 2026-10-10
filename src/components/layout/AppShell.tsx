@@ -15,6 +15,7 @@ import DeliveryNotificationToast from "./DeliveryNotificationToast";
 import Footer from "./Footer";
 import MobileBottomNav from "./MobileBottomNav";
 import PromoBar from "./PromoBar";
+import RescateToast from "./RescateToast";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import WhatsAppButton from "./WhatsAppButton";
@@ -79,7 +80,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 cartPanelOpen={cartPanelOpen}
               />
             </Suspense>
-            <main className="flex-1 pb-16 lg:pb-0">{children}</main>
+            <main className="flex-1">{children}</main>
           </div>
           <CartPanel
             open={cartOpen}
@@ -89,8 +90,14 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
           />
         </div>
         <Footer />
+        {/* Reserva espacio real DESPUÉS del footer para que el navbar móvil
+            (fixed, flota encima de lo que haya en pantalla) nunca lo tape —
+            antes este padding estaba en <main>, que va ANTES del footer y
+            por eso no servía para este caso. */}
+        <div className="lg:hidden h-20 pb-[env(safe-area-inset-bottom)]" aria-hidden />
         <MobileBottomNav onCartClick={() => setCartOpen(true)} />
         <ClubPromoToast />
+        <RescateToast />
         <DeliveryNotificationToast />
         <WhatsAppButton />
         <CelesteChat />

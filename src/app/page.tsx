@@ -5,49 +5,51 @@ import CategoryTile from "@/components/CategoryTile";
 import { CountdownBlocks } from "@/components/CountdownTimer";
 import HeroSlider from "@/components/HeroSlider";
 import ProductCard from "@/components/ProductCard";
-import { categories, currency, dedupeVariants, getBestSellers, products } from "@/lib/mock-data";
+import { HOGAR_TECH_CATEGORIES } from "@/lib/hogar-tech-data";
+import { currency, dedupeVariants, getBestSellers, products, type Product } from "@/lib/mock-data";
 
+// El catálogo está cargado en bloques por categoría (toda la Ropa primero,
+// luego cada línea de hogar-tecnología), así que tomar los primeros N en
+// orden natural solo mostraba Ropa. Se intercala un producto de cada
+// categoría para que "Nuevos ingresos" muestre variedad real.
+function pickDiverseArrivals(list: Product[], count: number): Product[] {
+  const order = ["Ropa", ...HOGAR_TECH_CATEGORIES];
+  const buckets = new Map(order.map((k) => [k, [] as Product[]]));
+  for (const p of list) {
+    const key = HOGAR_TECH_CATEGORIES.includes(p.category) ? p.category : "Ropa";
+    buckets.get(key)?.push(p);
+  }
+
+  const result: Product[] = [];
+  let remaining = true;
+  while (remaining && result.length < count) {
+    remaining = false;
+    for (const key of order) {
+      if (result.length >= count) break;
+      const bucket = buckets.get(key)!;
+      if (bucket.length) {
+        result.push(bucket.shift()!);
+        remaining = true;
+      }
+    }
+  }
+  return result;
+}
+
+// Portadas estilo editorial/lifestyle por categoría (no fotos de producto
+// puntual ni de modelo). Ninguna existía en el catálogo del proveedor, así
+// que se usaron fotos libres de uso comercial (licencia Unsplash/Pexels).
 const topCategories = [
-  {
-    id: "ropa",
-    label: "Ropa",
-    image: categories.find((c) => c.id === "hombre")!.image,
-    href: "/ropa",
-  },
-  {
-    id: "hogar-cocina",
-    label: "Hogar y Cocina",
-    image: "/products/hogar-tecnologia/hogar-y-cocina/2100143298.webp",
-    href: "/categorias/hogar-cocina",
-  },
-  {
-    id: "electrodomesticos",
-    label: "Electrodomésticos",
-    image: "/products/hogar-tecnologia/electrodomesticos/l62090.webp",
-    href: "/categorias/electrodomesticos",
-  },
-  {
-    id: "tecnologia",
-    label: "Tecnología",
-    image: "/products/hogar-tecnologia/tecnologia/j5159.webp",
-    href: "/categorias/tecnologia",
-  },
-  {
-    id: "zona-gamer",
-    label: "Zona Gamer",
-    image: "/products/hogar-tecnologia/zona-gamer/072-mv.webp",
-    href: "/categorias/zona-gamer",
-  },
-  {
-    id: "maletas-accesorios",
-    label: "Maletas y Accesorios",
-    image: "/products/hogar-tecnologia/maletas-y-accesorios/1017983.webp",
-    href: "/categorias/maletas-accesorios",
-  },
+  { id: "ropa", label: "Ropa", image: "/products/category-covers/ropa.webp", href: "/ropa" },
+  { id: "hogar-cocina", label: "Hogar y Cocina", image: "/products/category-covers/hogar-cocina.webp", href: "/categorias/hogar-cocina" },
+  { id: "electrodomesticos", label: "Electrodomésticos", image: "/products/category-covers/electrodomesticos.webp", href: "/categorias/electrodomesticos" },
+  { id: "tecnologia", label: "Tecnología", image: "/products/category-covers/tecnologia.webp", href: "/categorias/tecnologia" },
+  { id: "zona-gamer", label: "Zona Gamer", image: "/products/category-covers/zona-gamer.webp", href: "/categorias/zona-gamer" },
+  { id: "maletas-accesorios", label: "Maletas y Accesorios", image: "/products/category-covers/maletas.webp", href: "/categorias/maletas-accesorios" },
 ];
 
 export default function Home() {
-  const newArrivals = dedupeVariants(products).slice(0, 4);
+  const newArrivals = pickDiverseArrivals(dedupeVariants(products), 4);
   const bestSellers = getBestSellers(3);
 
   return (

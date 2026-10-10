@@ -76,24 +76,29 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items]);
 
   const addItem = (productId: string, size?: string, qty = 1) => {
+    const stock = products.find((p) => p.id === productId)?.stock ?? Infinity;
     setItems((prev) => {
       const existing = prev.findIndex(
         (i) => i.productId === productId && i.size === size
       );
       if (existing >= 0) {
         const next = [...prev];
-        next[existing] = { ...next[existing], qty: next[existing].qty + qty };
+        const nextQty = Math.min(next[existing].qty + qty, stock);
+        next[existing] = { ...next[existing], qty: nextQty };
         return next;
       }
-      return [...prev, { productId, size, qty }];
+      return [...prev, { productId, size, qty: Math.min(qty, stock) }];
     });
   };
 
   const updateQty = (index: number, qty: number) => {
     setItems((prev) => {
       if (qty <= 0) return prev.filter((_, i) => i !== index);
+      const item = prev[index];
+      if (!item) return prev;
+      const stock = products.find((p) => p.id === item.productId)?.stock ?? Infinity;
       const next = [...prev];
-      next[index] = { ...next[index], qty };
+      next[index] = { ...next[index], qty: Math.min(qty, stock) };
       return next;
     });
   };

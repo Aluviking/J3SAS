@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import ProductGridPage from "@/components/ProductGridPage";
-import { products } from "@/lib/mock-data";
+import { dedupeVariants, products } from "@/lib/mock-data";
 
 export default function SearchResults() {
   const q = useSearchParams().get("q") ?? "";
@@ -14,7 +14,9 @@ export default function SearchResults() {
         )
       )
     : [];
-  const count = results.length;
+  // dedupeVariants() es lo mismo que aplica ProductGridPage para el grid —
+  // el contador debe reflejar lo que realmente se ve, no las variantes crudas.
+  const count = dedupeVariants(results).length;
 
   return (
     <ProductGridPage

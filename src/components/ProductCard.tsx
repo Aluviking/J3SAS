@@ -21,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
     <div className="group">
       <Link href={`/producto/${product.id}`} className="block">
         <div
-          className={`relative rounded-tl-2xl overflow-hidden aspect-square border border-border transition-shadow duration-300 group-hover:shadow-[0_12px_28px_rgba(20,22,28,0.12)] ${
+          className={`relative rounded-tl-2xl overflow-hidden aspect-[4/5] border border-border transition-shadow duration-300 group-hover:shadow-[0_12px_28px_rgba(20,22,28,0.12)] ${
             basicCatalogPhoto ? "bg-white" : "bg-surface-alt"
           }`}
         >
