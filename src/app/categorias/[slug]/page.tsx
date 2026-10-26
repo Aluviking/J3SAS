@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import CategoryTile from "@/components/CategoryTile";
 import type { Disclaimer } from "@/components/DisclaimerModal";
 import ProductGridPage, { type SubFilter, type SubFilterField } from "@/components/ProductGridPage";
+import { ARTE_GROUP_TYPES } from "@/lib/arte-data";
 import { HOGAR_TECH_GROUP_TYPES } from "@/lib/hogar-tech-data";
 import {
   AUDIENCE_GROUP_TYPES,
@@ -102,6 +103,14 @@ const SLUGS: Record<string, SlugConfig> = {
     label: "Pantaloneta Hombre",
     filter: (p) => p.category === "Pantalonetas",
   },
+  "jeans-hombre": {
+    label: "Jeans Hombre",
+    filter: (p) => p.category === "Jeans" && p.audience === "hombre",
+  },
+  "jeans-dama": {
+    label: "Jeans Dama",
+    filter: (p) => p.category === "Jeans" && p.audience === "mujer",
+  },
   "polo-hombre": {
     label: "Polo Hombre",
     filter: (p) => p.category === "Polos",
@@ -170,6 +179,31 @@ const SLUGS: Record<string, SlugConfig> = {
       label: s,
       field: "subcategory" as const,
     })),
+  },
+  arte: {
+    label: "Arte",
+    filter: (p) => p.category === "Arte",
+    subFilters: ARTE_GROUP_TYPES.map((s) => ({
+      key: s,
+      label: s,
+      field: "subcategory" as const,
+    })),
+  },
+  uniformes: {
+    label: "Uniformes",
+    filter: (p) => p.category === "Uniformes",
+  },
+  dotacion: {
+    label: "Dotación",
+    filter: (p) => p.category === "Dotación",
+  },
+  folclor: {
+    label: "Folclor",
+    filter: (p) => p.category === "Folclor",
+  },
+  gorras: {
+    label: "Gorras",
+    filter: (p) => p.category === "Gorras",
   },
 };
 

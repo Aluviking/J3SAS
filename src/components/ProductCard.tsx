@@ -40,6 +40,11 @@ export default function ProductCard({ product }: { product: Product }) {
               -{discount}%
             </span>
           )}
+          {product.stock === 0 && (
+            <span className="absolute top-2 left-2 bg-ink/80 text-white text-[11px] font-semibold px-2 py-0.5 rounded-tl-md">
+              Agotado
+            </span>
+          )}
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -98,8 +103,9 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
         <button
           onClick={() => addItem(product.id)}
+          disabled={product.stock === 0}
           aria-label={`Agregar ${product.name} al carrito`}
-          className="w-7 h-7 rounded-tl-md bg-cta text-white flex items-center justify-center shrink-0 transition-all duration-200 hover:bg-cta-dark hover:scale-110"
+          className="w-7 h-7 rounded-tl-md bg-cta text-white flex items-center justify-center shrink-0 transition-all duration-200 hover:bg-cta-dark hover:scale-110 disabled:bg-surface-alt disabled:text-muted disabled:scale-100 disabled:cursor-not-allowed"
         >
           <Plus size={14} />
         </button>

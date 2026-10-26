@@ -20,6 +20,8 @@ export default function CategoriasPage() {
       items: getProductsBySubcategory(name),
     })),
     { slug: "pantaloneta-hombre", label: "Pantaloneta Hombre", items: products.filter((p) => p.category === "Pantalonetas") },
+    { slug: "jeans-hombre", label: "Jeans Hombre", items: products.filter((p) => p.category === "Jeans" && p.audience === "hombre") },
+    { slug: "jeans-dama", label: "Jeans Dama", items: products.filter((p) => p.category === "Jeans" && p.audience === "mujer") },
     { slug: "polo-hombre", label: "Polo Hombre", items: products.filter((p) => p.category === "Polos") },
     { slug: "unisex", label: "Buzos Unisex", items: products.filter((p) => p.category === "Buzos") },
     {
@@ -39,6 +41,11 @@ export default function CategoriasPage() {
     { slug: "tecnologia", label: "Tecnología", items: products.filter((p) => p.category === "Tecnología") },
     { slug: "zona-gamer", label: "Zona Gamer", items: products.filter((p) => p.category === "Zona Gamer") },
     { slug: "maletas-accesorios", label: "Maletas y Accesorios", items: products.filter((p) => p.category === "Maletas y Accesorios") },
+    { slug: "arte", label: "Arte", items: products.filter((p) => p.category === "Arte") },
+    { slug: "uniformes", label: "Uniformes", items: products.filter((p) => p.category === "Uniformes") },
+    { slug: "dotacion", label: "Dotación", items: products.filter((p) => p.category === "Dotación") },
+    { slug: "folclor", label: "Folclor", items: products.filter((p) => p.category === "Folclor") },
+    { slug: "gorras", label: "Gorras", items: products.filter((p) => p.category === "Gorras") },
   ].filter((s) => s.items.length > 0);
 
   const totalProducts = products.length;

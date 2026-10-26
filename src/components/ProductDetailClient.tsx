@@ -371,10 +371,15 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           <div className="mt-4 flex items-center gap-3">
             <button
               onClick={handleAdd}
-              className="flex-1 inline-flex items-center justify-center gap-2 bg-cta text-white text-sm font-semibold py-3.5 rounded-tl-lg transition-colors hover:bg-cta-dark"
+              disabled={product.stock === 0}
+              className="flex-1 inline-flex items-center justify-center gap-2 bg-cta text-white text-sm font-semibold py-3.5 rounded-tl-lg transition-colors hover:bg-cta-dark disabled:bg-surface-alt disabled:text-muted disabled:cursor-not-allowed"
             >
               <ShoppingBag size={16} />
-              {added ? "¡Agregado!" : `Agregar al carrito · ${currency.format(product.price)}`}
+              {product.stock === 0
+                ? "Agotado"
+                : added
+                  ? "¡Agregado!"
+                  : `Agregar al carrito · ${currency.format(product.price)}`}
             </button>
             <button
               onClick={() => toggleFavorite(product.id)}

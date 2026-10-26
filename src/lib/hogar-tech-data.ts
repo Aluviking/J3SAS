@@ -3322,12 +3322,20 @@ export const hogarTechProducts: Product[] = [
   },
 ];
 
+// Nombre histórico: también se usa para excluir "Arte" de la vitrina
+// general de Ropa (cualquier categoría con su propia sección dedicada va
+// aquí, no solo hogar/tecnología).
 export const HOGAR_TECH_CATEGORIES = [
   "Hogar y Cocina",
   "Electrodomésticos",
   "Tecnología",
   "Zona Gamer",
   "Maletas y Accesorios",
+  "Arte",
+  "Uniformes",
+  "Dotación",
+  "Folclor",
+  "Gorras",
 ];
 
 // Subcategorias reales por categoria, para los sub-filtros de cada seccion.

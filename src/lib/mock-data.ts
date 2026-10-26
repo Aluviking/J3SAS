@@ -1,5 +1,8 @@
 import { Flame, Mars, Smile, Users, Venus, type LucideIcon } from "lucide-react";
+import { arteProducts } from "./arte-data";
 import { hogarTechProducts } from "./hogar-tech-data";
+import { jeansAliadoProducts } from "./jeans-aliado-data";
+import { rellenoProducts } from "./relleno-data";
 
 export type Category = {
   id: string;
@@ -109,8 +112,8 @@ export type Product = {
 // audiencia (Hombres / Dama). Niños no usa esta tabla: se desglosa por
 // Niño/Niña en vez de por tipo de prenda.
 export const AUDIENCE_GROUP_TYPES: Record<"hombre" | "dama", string[]> = {
-  hombre: ["Camisetas", "Buzos", "Pantalonetas", "Polos", "Chaquetas"],
-  dama: ["Camisetas", "T-shirts", "Buzos", "Camisas", "Blusas", "Vestidos", "Chaquetas"],
+  hombre: ["Camisetas", "Buzos", "Pantalonetas", "Polos", "Chaquetas", "Jeans"],
+  dama: ["Camisetas", "T-shirts", "Buzos", "Camisas", "Blusas", "Vestidos", "Chaquetas", "Jeans"],
 };
 
 const HOGAR_TECH_SLUGS: Record<string, string> = {
@@ -119,6 +122,11 @@ const HOGAR_TECH_SLUGS: Record<string, string> = {
   "Tecnología": "tecnologia",
   "Zona Gamer": "zona-gamer",
   "Maletas y Accesorios": "maletas-accesorios",
+  "Arte": "arte",
+  "Uniformes": "uniformes",
+  "Dotación": "dotacion",
+  "Folclor": "folclor",
+  "Gorras": "gorras",
 };
 
 export function audienceGroupSlug(product: Pick<Product, "category" | "audience">): string {
@@ -6288,3 +6296,12 @@ export function getRelatedProducts(
 // maletas — se agrega al mismo arreglo de productos para que funcione con
 // todo lo existente (carrito, checkout, búsqueda, relacionados).
 products.push(...hogarTechProducts);
+
+// Catálogo de Arte (cuadros, esculturas, cerámica) — misma mecánica.
+products.push(...arteProducts);
+
+// Jeans del nuevo aliado textil (SKU pendiente) — misma mecánica.
+products.push(...jeansAliadoProducts);
+
+// Productos de relleno (sin SKU, stock 0 — no son inventario real).
+products.push(...rellenoProducts);

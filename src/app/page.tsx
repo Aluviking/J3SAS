@@ -46,6 +46,11 @@ const topCategories = [
   { id: "tecnologia", label: "Tecnología", image: "/products/category-covers/tecnologia.webp", href: "/categorias/tecnologia" },
   { id: "zona-gamer", label: "Zona Gamer", image: "/products/category-covers/zona-gamer.webp", href: "/categorias/zona-gamer" },
   { id: "maletas-accesorios", label: "Maletas y Accesorios", image: "/products/category-covers/maletas.webp", href: "/categorias/maletas-accesorios" },
+  { id: "arte", label: "Arte", image: "/products/category-covers/arte.webp", href: "/categorias/arte" },
+  { id: "uniformes", label: "Uniformes", image: "/products/category-covers/uniformes.webp", href: "/categorias/uniformes" },
+  { id: "dotacion", label: "Dotación", image: "/products/category-covers/dotacion.webp", href: "/categorias/dotacion" },
+  { id: "folclor", label: "Folclor", image: "/products/category-covers/folclor.webp", href: "/categorias/folclor" },
+  { id: "gorras", label: "Gorras", image: "/products/category-covers/gorras.webp", href: "/categorias/gorras" },
 ];
 
 export default function Home() {
