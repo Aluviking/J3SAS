@@ -23,7 +23,7 @@ export default function CategoryTile({ id, label, image, images, href }: Categor
 
   return (
     <Link
-      href={href ?? `/categorias/${id}`}
+      href={`${href ?? `/categorias/${id}`}#resultados`}
       className="group relative overflow-hidden aspect-[4/5] rounded-tl-lg bg-ink transition-transform duration-200 hover:-translate-y-1"
     >
       {slides.map((src, i) => (

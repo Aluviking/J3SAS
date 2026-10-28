@@ -6,8 +6,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { currency, products } from "@/lib/mock-data";
 
-const FIRST_SHOW_DELAY_MS = 30000;
-const INTERVAL_MS = 30000;
+const FIRST_SHOW_DELAY_MS = 8 * 60 * 1000;
+const INTERVAL_MS = 8 * 60 * 1000;
 
 const rescateProducts = products.filter((p) => p.category === "Rescate");
 
@@ -16,7 +16,7 @@ export default function RescateToast() {
   const [entered, setEntered] = useState(false);
   const [index, setIndex] = useState(0);
 
-  // A propósito sin "recordar" el cierre: debe seguir saliendo cada 10s
+  // A propósito sin "recordar" el cierre: debe seguir saliendo cada 8 min
   // aunque el usuario haya cerrado la anterior con la X.
   useEffect(() => {
     if (rescateProducts.length === 0) return;

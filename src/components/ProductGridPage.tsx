@@ -285,15 +285,17 @@ export default function ProductGridPage({
         </div>
       )}
 
-      {visibleProducts.length === 0 ? (
-        <p className="mt-6 text-sm text-muted">No hay productos que coincidan con esos filtros.</p>
-      ) : (
-        <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {visibleProducts.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
-      )}
+      <div id="resultados" className="scroll-mt-24">
+        {visibleProducts.length === 0 ? (
+          <p className="mt-6 text-sm text-muted">No hay productos que coincidan con esos filtros.</p>
+        ) : (
+          <div className="mt-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {visibleProducts.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
