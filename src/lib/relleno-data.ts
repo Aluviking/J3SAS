@@ -439,7 +439,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-amarilla",
     name: "Gorra de Malla Amarilla",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Amarillo"],
     variantGroup: "relleno-gorra-malla",
@@ -456,7 +456,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-azul-marino",
     name: "Gorra de Malla Azul Marino",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Azul Marino"],
     variantGroup: "relleno-gorra-malla",
@@ -472,7 +472,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-azul-rey",
     name: "Gorra de Malla Azul Rey",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Azul Rey"],
     variantGroup: "relleno-gorra-malla",
@@ -488,7 +488,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-blanca",
     name: "Gorra de Malla Blanca",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Blanco"],
     variantGroup: "relleno-gorra-malla",
@@ -504,7 +504,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-fucsia",
     name: "Gorra de Malla Fucsia",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Fucsia"],
     variantGroup: "relleno-gorra-malla",
@@ -520,7 +520,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-gris-claro",
     name: "Gorra de Malla Gris Claro",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Gris Claro"],
     variantGroup: "relleno-gorra-malla",
@@ -536,7 +536,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-gris-oscuro",
     name: "Gorra de Malla Gris Oscuro",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Gris Oscuro"],
     variantGroup: "relleno-gorra-malla",
@@ -552,7 +552,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-naranja",
     name: "Gorra de Malla Naranja",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Naranja"],
     variantGroup: "relleno-gorra-malla",
@@ -568,7 +568,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-rosada",
     name: "Gorra de Malla Rosada",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Rosado"],
     variantGroup: "relleno-gorra-malla",
@@ -584,7 +584,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-verde-limon",
     name: "Gorra de Malla Verde Limón",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Verde Limón"],
     variantGroup: "relleno-gorra-malla",
@@ -600,7 +600,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-verde-militar",
     name: "Gorra de Malla Verde Militar",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Verde Militar"],
     variantGroup: "relleno-gorra-malla",
@@ -616,7 +616,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-verde-oscuro",
     name: "Gorra de Malla Verde Oscuro",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Verde Oscuro"],
     variantGroup: "relleno-gorra-malla",
@@ -632,7 +632,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-de-malla-vinotinto",
     name: "Gorra de Malla Vinotinto",
-    category: "Dotación",
+    category: "Gorras",
     price: 22900,
     colors: ["Vinotinto"],
     variantGroup: "relleno-gorra-malla",
@@ -648,7 +648,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-flex-hebilla-azul-marino",
     name: "Gorra Flex Hebilla Azul Marino",
-    category: "Dotación",
+    category: "Gorras",
     price: 24900,
     colors: ["Azul Marino"],
     variantGroup: "relleno-gorra-flex-hebilla",
@@ -665,7 +665,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-flex-hebilla-azul-rey",
     name: "Gorra Flex Hebilla Azul Rey",
-    category: "Dotación",
+    category: "Gorras",
     price: 24900,
     colors: ["Azul Rey"],
     variantGroup: "relleno-gorra-flex-hebilla",
@@ -681,7 +681,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-flex-hebilla-gris-oscuro",
     name: "Gorra Flex Hebilla Gris Oscuro",
-    category: "Dotación",
+    category: "Gorras",
     price: 24900,
     colors: ["Gris Oscuro"],
     variantGroup: "relleno-gorra-flex-hebilla",
@@ -697,7 +697,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-flex-hebilla-negra",
     name: "Gorra Flex Hebilla Negra",
-    category: "Dotación",
+    category: "Gorras",
     price: 24900,
     colors: ["Negro"],
     variantGroup: "relleno-gorra-flex-hebilla",
@@ -713,7 +713,7 @@ export const rellenoProducts: Product[] = [
   {
     id: "relleno-gorra-flex-hebilla-roja",
     name: "Gorra Flex Hebilla Roja",
-    category: "Dotación",
+    category: "Gorras",
     price: 24900,
     colors: ["Rojo"],
     variantGroup: "relleno-gorra-flex-hebilla",
