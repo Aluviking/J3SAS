@@ -6232,6 +6232,15 @@ export function getVariantSiblings(product: Product): Product[] {
   return products.filter((p) => p.variantGroup === product.variantGroup);
 }
 
+// Para el swipe entre productos en la ficha (móvil): el mismo conjunto que
+// vería el usuario en la grilla de la categoría/audiencia de la que vino,
+// una tarjeta por diseño (dedupeVariants), así el gesto recorre justo lo que
+// ya veía en esa sección sin tener que volver a la lista.
+export function getCategorySiblings(product: Product): Product[] {
+  const slug = audienceGroupSlug(product);
+  return dedupeVariants(products.filter((p) => audienceGroupSlug(p) === slug));
+}
+
 // Para vitrinas/grillas: cuando varios productos son la misma prenda en
 // distintos colores (mismo `variantGroup`), se muestra una sola card — el
 // color se elige dentro de la página del producto, no repitiendo la prenda.

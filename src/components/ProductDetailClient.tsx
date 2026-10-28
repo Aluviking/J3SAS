@@ -24,6 +24,7 @@ import { useFavorites } from "@/lib/favorites-context";
 import {
   audienceGroupSlug,
   currency,
+  getCategorySiblings,
   getRelatedProducts,
   getVariantSiblings,
   isBasicCatalogPhoto,
@@ -79,13 +80,17 @@ export default function ProductDetailClient({ product }: { product: Product }) {
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const colorVariants = getVariantSiblings(product);
   const rescateDesignKey = product.variantGroup ?? product.id;
-  const variantIndex = colorVariants.findIndex((v) => v.id === product.id);
 
-  // Deslizar sobre la foto en móvil pasa al siguiente/anterior color — misma
-  // navegación que ya usan los puntos de color, solo con gesto de swipe.
-  const goToVariant = (direction: 1 | -1) => {
-    if (colorVariants.length <= 1 || variantIndex === -1) return;
-    const next = colorVariants[(variantIndex + direction + colorVariants.length) % colorVariants.length];
+  // Deslizar sobre la foto en móvil pasa al siguiente/anterior producto de la
+  // misma categoría/audiencia — el mismo conjunto que se ve en esa grilla —
+  // para no tener que salir y volver a entrar a cada producto.
+  const categorySiblings = getCategorySiblings(product);
+  const designKey = product.variantGroup ?? product.id;
+  const categoryIndex = categorySiblings.findIndex((p) => (p.variantGroup ?? p.id) === designKey);
+  const goToProduct = (direction: 1 | -1) => {
+    if (categorySiblings.length <= 1 || categoryIndex === -1) return;
+    const next =
+      categorySiblings[(categoryIndex + direction + categorySiblings.length) % categorySiblings.length];
     if (next.id !== product.id) router.push(`/producto/${next.id}`);
   };
 
@@ -95,7 +100,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
     const deltaX = e.changedTouches[0].clientX - touchStartX;
     setTouchStartX(null);
     if (Math.abs(deltaX) < 50) return;
-    goToVariant(deltaX < 0 ? 1 : -1);
+    goToProduct(deltaX < 0 ? 1 : -1);
   };
 
   // Mismo gesto con mouse (arrastrar y soltar) — para que también funcione
@@ -106,7 +111,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
     const deltaX = e.clientX - touchStartX;
     setTouchStartX(null);
     if (Math.abs(deltaX) < 50) return;
-    goToVariant(deltaX < 0 ? 1 : -1);
+    goToProduct(deltaX < 0 ? 1 : -1);
   };
 
   const handleAdd = () => {
@@ -133,13 +138,13 @@ export default function ProductDetailClient({ product }: { product: Product }) {
           onDismiss={() => markRescateDisclaimerSeen(rescateDesignKey)}
         />
       )}
-      <button
-        onClick={() => router.back()}
+      <Link
+        href={`/categorias/${audienceGroupSlug(product)}`}
         className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-cta mb-2"
       >
         <ArrowLeft size={14} />
         Volver a {product.category}
-      </button>
+      </Link>
 
       <div className="text-sm text-muted mb-3">
         <Link href="/" className="hover:text-ink">
@@ -165,10 +170,10 @@ export default function ProductDetailClient({ product }: { product: Product }) {
         )}
 
         <div
-          onTouchStart={colorVariants.length > 1 ? handleTouchStart : undefined}
-          onTouchEnd={colorVariants.length > 1 ? handleTouchEnd : undefined}
-          onMouseDown={colorVariants.length > 1 ? handleMouseDown : undefined}
-          onMouseUp={colorVariants.length > 1 ? handleMouseUp : undefined}
+          onTouchStart={categorySiblings.length > 1 ? handleTouchStart : undefined}
+          onTouchEnd={categorySiblings.length > 1 ? handleTouchEnd : undefined}
+          onMouseDown={categorySiblings.length > 1 ? handleMouseDown : undefined}
+          onMouseUp={categorySiblings.length > 1 ? handleMouseUp : undefined}
           className={`relative mt-3 rounded-tl-3xl overflow-hidden border border-border aspect-[4/5] select-none ${
             basicCatalogPhoto ? "bg-white" : "bg-surface-alt"
           }`}
@@ -179,6 +184,11 @@ export default function ProductDetailClient({ product }: { product: Product }) {
             fill
             className={basicCatalogPhoto ? "object-contain p-6" : "object-cover"}
           />
+          {categorySiblings.length > 1 && (
+            <span className="absolute top-2.5 right-2.5 bg-ink/60 text-white text-[10px] font-medium px-2 py-1 rounded-tl-md pointer-events-none">
+              Desliza ↔
+            </span>
+          )}
           {colorVariants.length > 1 && (
             <>
               {/* degradado para que los puntos se vean aunque la foto tenga
@@ -200,10 +210,7 @@ export default function ProductDetailClient({ product }: { product: Product }) {
 
         {colorVariants.length > 1 && (
           <div className="mt-3">
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-medium text-ink">Selecciona el color</p>
-              <p className="text-[11px] text-muted">Desliza la foto para cambiar ↔</p>
-            </div>
+            <p className="text-sm font-medium text-ink">Selecciona el color</p>
             <div className="mt-2 flex gap-2 flex-wrap">
               {colorVariants.map((v) => (
                 <button
